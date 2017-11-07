@@ -1,0 +1,90 @@
+{
+  "name": "react-super-styled",
+  "version": "0.0.1",
+  "description": "Responsive JSX layouts with Styled Components",
+  "author": "moarwick",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "react-component",
+    "styled-components",
+    "layout",
+    "library",
+    "css"
+  ],
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moarwick/react-super-styled"
+  },
+  "bugs": "https://github.com/moarwick/react-super-styled/issues",
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
+  },
+  "scripts": {
+    "build": "NODE_ENV=production webpack -p",
+    "start": "webpack-dev-server",
+    "deploy": "gh-pages -d demo",
+    "precommit": "lint-staged",
+    "postcommit": "git reset",
+    "dist": "rimraf lib && babel src/lib --out-dir lib",
+    "prepublish": "npm run dist"
+  },
+  "dependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-hot-loader": "^3.1.1",
+    "styled-components": "2.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-styled-components": "^1.1.5",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.17",
+    "eslint": "^4.8.0",
+    "eslint-config-prettier": "^2.6.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-prettier": "^2.3.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "gh-pages": "^1.0.0",
+    "html-webpack-plugin": "^2.30.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.2.3",
+    "prettier": "^1.7.3",
+    "progress-bar-webpack-plugin": "^1.10.0",
+    "prop-types": "^15.6.0",
+    "react-live": "^1.7.1",
+    "rimraf": "^2.6.2",
+    "standard": "^10.0.3",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.3"
+  },
+  "peerDependencies": {
+    "react": ">= 15.0",
+    "styled-components": ">= 2.2.0"
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "prettier --no-semi --single-quote --print-width 100 --write",
+      "git add"
+    ]
+  },
+  "standard": {
+    "ignore": [
+      "src/demoData.js",
+      "/demo/",
+      "/lib/"
+    ]
+  }
+}

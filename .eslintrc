@@ -1,0 +1,19 @@
+{
+  "extends": ["standard", "prettier", "prettier/react"],
+  "parser": "babel-eslint",
+  "plugins": ["prettier"],  // apply prettier through ESLint
+  "rules": {
+    "prettier/prettier": [
+      "warn",
+      {
+        "semi": false,
+        "singleQuote": true,
+        "printWidth": 100
+      }
+    ],
+    "strict": 0, // for babel-eslint
+
+    "jsx-quotes": "prefer-double"
+
+  }
+}
