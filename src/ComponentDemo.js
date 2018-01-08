@@ -1,7 +1,23 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import { css } from 'styled-components'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 import { Block, Flex, FlexItem, Heading, Section, Text, Wrap } from './lib/index'
+
+const styles = {
+  section: css`
+    background-color: #ddd;
+  `,
+  preview: css`
+    background-color: #fff;
+  `,
+  propNames: css`
+    background: linear-gradient(to right, #eee, #bbb);
+    padding: 10px;
+  `,
+  editor: {
+    overflowX: 'hidden'
+  }
+}
 
 const ComponentDemo = props => {
   if (!Object.keys(props).length) return null
@@ -40,15 +56,3 @@ const ComponentDemo = props => {
 }
 
 export default ComponentDemo
-
-const styles = {
-  section: css`background-color: #ddd;`,
-  preview: css`background-color: #fff;`,
-  propNames: css`
-    background: linear-gradient(to right, #eee, #bbb);
-    padding: 10px;
-  `,
-  editor: {
-    overflowX: 'hidden'
-  }
-}

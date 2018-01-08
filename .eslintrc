@@ -1,19 +1,21 @@
 {
-  "extends": ["standard", "prettier", "prettier/react"],
+  "env": { "browser": true }, // do not trip on browser globals, e.g. window, document..
+  "extends": ["airbnb", "prettier", "prettier/react"],
   "parser": "babel-eslint",
   "plugins": ["prettier"],  // apply prettier through ESLint
   "rules": {
     "prettier/prettier": [
       "warn",
       {
-        "semi": false,
+        "printWidth": 100,
         "singleQuote": true,
-        "printWidth": 100
+        "trailingComma": "es5"
       }
     ],
     "strict": 0, // for babel-eslint
 
-    "jsx-quotes": "prefer-double"
-
+    "jsx-quotes": [2, "prefer-double"],
+    "react/jsx-filename-extension": "off",
+    "react/require-default-props": "off"
   }
 }

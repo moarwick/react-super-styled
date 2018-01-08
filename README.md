@@ -2,7 +2,6 @@
 React Super Styled
 ==================
 
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://standardjs.com)
 [![js-standard-style](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](http://https://prettier.io/)
 
 
@@ -13,11 +12,10 @@ A small collection of React "convenience components" to render common HTML "layo
 * Quickly author HTML & CSS the "React Way"
 * Semantic component and prop naming
 * Handy built-in props for common styling rules
-* Pass down additional custom CSS `styles`
-* Media breakpoint props for `styles` and `display` (show/hide)
 * Flexbox and flex-based 12-column grid
-* Extendanble theme vars
-* Padding and margin "shorthands"
+* Media breakpoint props for columns, styles, and display (show/hide)
+* Extensible theme vars
+* Spacing "shorthands" for margin, pagging, gutters
 
 Caveats:
 1) Not a full-fledged styling "framework"

@@ -13,6 +13,14 @@ const Logo = styled.div`
   text-align: center;
 `
 
+const styles = {
+  container: css`
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  `
+}
+
 function App() {
   return (
     <Block padding="0 2" styles={styles.container}>
@@ -49,11 +57,3 @@ function App() {
 }
 
 export default App
-
-const styles = {
-  container: css`
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
-  `
-}
