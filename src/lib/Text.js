@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import styled, { css } from 'styled-components'
+import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
 import {
   addTheme,
   cssSpacing,
@@ -9,8 +9,8 @@ import {
   justifyPropTypes,
   withJustify,
   mediaStylesPropTypes,
-  withMediaStyles
-} from './utils'
+  withMediaStyles,
+} from './utils';
 
 /**
  * Text paragraph
@@ -23,8 +23,8 @@ const propTypes = {
   ...basePropTypes,
   ...fontPropTypes,
   ...justifyPropTypes,
-  ...mediaStylesPropTypes
-}
+  ...mediaStylesPropTypes,
+};
 
 // prettier-ignore
 const getCss = props => css`
@@ -36,6 +36,8 @@ const getCss = props => css`
   ${withMediaStyles(props)}
 `
 
-const Text = styled.p`${props => getCss(addTheme(props))};`
-Text.propTypes = propTypes
-export default Text
+const Text = styled.p`
+  ${props => getCss(addTheme(props))};
+`;
+Text.propTypes = propTypes;
+export default Text;

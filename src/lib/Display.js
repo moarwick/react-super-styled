@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components'
-import { addTheme, basePropTypes, displayPropTypes } from './utils'
+import styled, { css } from 'styled-components';
+import { addTheme, basePropTypes, displayPropTypes } from './utils';
 
 /**
  * Wrapper to show/hide contents based on media breakpoints
@@ -7,10 +7,9 @@ import { addTheme, basePropTypes, displayPropTypes } from './utils'
  */
 const propTypes = {
   ...basePropTypes,
-  ...displayPropTypes
-}
+  ...displayPropTypes,
+};
 
-// prettier-ignore
 const getCss = props => {
   const {
     mdHide,
@@ -25,27 +24,46 @@ const getCss = props => {
     mdShowInlineBlock,
     smShowInlineBlock,
     xsShowInlineBlock,
-    theme
-  } = props
+    theme,
+  } = props;
 
   // TODO: rework this, so it can act on multiple breakpoints per use
 
-  let breakpoint = ''
-  let displayType = ''
+  let breakpoint = '';
+  let displayType = '';
 
-  if (mdShow || mdShowInline || mdShowInlineBlock || mdHide) { breakpoint = 'MD_MAX' }
-  if (smShow || smShowInline || smShowInlineBlock || smHide) { breakpoint = 'SM_MAX' }
-  if (xsShow || xsShowInline || xsShowInlineBlock || xsHide) { breakpoint = 'XS_MAX' }
+  if (mdShow || mdShowInline || mdShowInlineBlock || mdHide) {
+    breakpoint = 'MD_MAX';
+  }
+  if (smShow || smShowInline || smShowInlineBlock || smHide) {
+    breakpoint = 'SM_MAX';
+  }
+  if (xsShow || xsShowInline || xsShowInlineBlock || xsHide) {
+    breakpoint = 'XS_MAX';
+  }
 
-  const isHide = mdHide || smHide || xsHide
-  const isShow = mdShow || smShow || xsShow ||
-    mdShowInline || smShowInline || xsShowInline ||
-    mdShowInlineBlock || smShowInlineBlock || xsShowInlineBlock
+  const isHide = mdHide || smHide || xsHide;
+  const isShow =
+    mdShow ||
+    smShow ||
+    xsShow ||
+    mdShowInline ||
+    smShowInline ||
+    xsShowInline ||
+    mdShowInlineBlock ||
+    smShowInlineBlock ||
+    xsShowInlineBlock;
 
   if (isShow) {
-    if (mdShow || smShow || xsShow) { displayType = 'block' }
-    if (mdShowInlineBlock || smShowInlineBlock || xsShowInlineBlock) { displayType = 'inline-block' }
-    if (mdShowInline || smShowInline || xsShowInline) { displayType = 'inline' }
+    if (mdShow || smShow || xsShow) {
+      displayType = 'block';
+    }
+    if (mdShowInlineBlock || smShowInlineBlock || xsShowInlineBlock) {
+      displayType = 'inline-block';
+    }
+    if (mdShowInline || smShowInline || xsShowInline) {
+      displayType = 'inline';
+    }
   }
 
   // prettier-ignore
@@ -53,8 +71,10 @@ const getCss = props => {
     ${isShow && `display: none; ${theme['MEDIA_' + breakpoint]} { display: ${displayType};`}
     ${isHide && `${theme['MEDIA_' + breakpoint]} { display: none; }`}
   `
-}
+};
 
-const Display = styled.span`${props => getCss(addTheme(props))};`
-Display.propTypes = propTypes
-export default Display
+const Display = styled.span`
+  ${props => getCss(addTheme(props))};
+`;
+Display.propTypes = propTypes;
+export default Display;

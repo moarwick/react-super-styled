@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import styled, { css } from 'styled-components'
+import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
 import {
   addTheme,
   basePropTypes,
@@ -10,8 +10,8 @@ import {
   spacingPropTypes,
   withSpacing,
   mediaStylesPropTypes,
-  withMediaStyles
-} from './utils'
+  withMediaStyles,
+} from './utils';
 
 /**
  * Non-block wrapper
@@ -24,8 +24,8 @@ const propTypes = {
   ...fontPropTypes,
   ...justifyPropTypes,
   ...spacingPropTypes,
-  ...mediaStylesPropTypes
-}
+  ...mediaStylesPropTypes,
+};
 
 // prettier-ignore
 const getCss = props => css`
@@ -37,6 +37,8 @@ const getCss = props => css`
   ${withMediaStyles(props)}
 `
 
-const Wrap = styled.span`${props => getCss(addTheme(props))};`
-Wrap.propTypes = propTypes
-export default Wrap
+const Wrap = styled.span`
+  ${props => getCss(addTheme(props))};
+`;
+Wrap.propTypes = propTypes;
+export default Wrap;

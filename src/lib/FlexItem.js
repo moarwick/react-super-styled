@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import styled, { css } from 'styled-components'
+import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
 import {
   addTheme,
   basePropTypes,
@@ -8,8 +8,8 @@ import {
   spacingPropTypes,
   withSpacing,
   mediaStylesPropTypes,
-  withMediaStyles
-} from './utils'
+  withMediaStyles,
+} from './utils';
 
 /**
  * Flex item wrapper, with 12-column support, media breakpoints
@@ -37,15 +37,15 @@ const propTypes = {
   ...basePropTypes,
   ...columnPropTypes,
   ...spacingPropTypes,
-  ...mediaStylesPropTypes
-}
+  ...mediaStylesPropTypes,
+};
 
 function getCss({ flex, flexGrow, flexShrink, flexBasis, ...props }) {
   if (!flex) {
     flex =
       flexGrow || flexShrink || flexBasis
         ? `${flexGrow || 0} ${flexShrink || 1} ${flexBasis || 'auto'}`
-        : 'initial' // 0 1 auto
+        : 'initial'; // 0 1 auto
   }
 
   // prettier-ignore
@@ -60,6 +60,8 @@ function getCss({ flex, flexGrow, flexShrink, flexBasis, ...props }) {
   `
 }
 
-const FlexItem = styled.div`${props => getCss(addTheme(props))};`
-FlexItem.propTypes = propTypes
-export default FlexItem
+const FlexItem = styled.div`
+  ${props => getCss(addTheme(props))};
+`;
+FlexItem.propTypes = propTypes;
+export default FlexItem;

@@ -1,13 +1,15 @@
-import PropTypes from 'prop-types'
-import styled, { css } from 'styled-components'
+import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
 import {
   addTheme,
   basePropTypes,
+  containerPropTypes,
+  withContainer,
   spacingPropTypes,
   withSpacing,
   mediaStylesPropTypes,
-  withMediaStyles
-} from './utils'
+  withMediaStyles,
+} from './utils';
 
 /**
  * Flex "container", to contain FlexItems
@@ -17,7 +19,7 @@ import {
  * CSS Defaults:
  *   flex-direction: row;
  *   flex-wrap: nowrap;
- *   justify-content: stretch;
+ *   justify-content: flex-start;
  *   align-items: stretch;
  *   align-content: stretch;
  */
@@ -30,7 +32,7 @@ const propTypes = {
     'flex-end',
     'center',
     'space-between',
-    'space-around'
+    'space-around',
   ]),
   alignItems: PropTypes.oneOf(['stretch', 'center', 'flex-start', 'flex-end', 'baseline']),
   alignContent: PropTypes.oneOf([
@@ -39,18 +41,19 @@ const propTypes = {
     'flex-start',
     'flex-end',
     'space-between',
-    'space-around'
+    'space-around',
   ]),
   ...basePropTypes,
+  ...containerPropTypes,
   ...spacingPropTypes,
-  ...mediaStylesPropTypes
-}
+  ...mediaStylesPropTypes,
+};
 
 // Change certain defaults for grid-like behavior
 const defaultProps = {
   flexWrap: 'wrap',
-  justifyContent: 'space-between'
-}
+  justifyContent: 'flex-start',
+};
 
 // prettier-ignore
 const getCss = props => css`
@@ -60,11 +63,14 @@ const getCss = props => css`
   ${props.justifyContent && `justify-content: ${props.justifyContent};`}
   ${props.alignItems && `align-items: ${props.alignItems};`}
   ${props.alignContent && `align-content: ${props.alignContent};`}
+  ${withContainer(props)}
   ${withSpacing(props)}
   ${withMediaStyles(props)}
 `
 
-const Flex = styled.div`${props => getCss(addTheme(props))};`
-Flex.propTypes = propTypes
-Flex.defaultProps = defaultProps
-export default Flex
+const Flex = styled.div`
+  ${props => getCss(addTheme(props))};
+`;
+Flex.propTypes = propTypes;
+Flex.defaultProps = defaultProps;
+export default Flex;
