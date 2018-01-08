@@ -1,7 +1,7 @@
-import React from 'react'
-import { css } from 'styled-components'
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
-import { Block, Flex, FlexItem, Heading, Section, Text, Wrap } from './lib/index'
+import React from 'react';
+import { css } from 'styled-components';
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
+import { Block, Flex, FlexItem, Heading, Section, Text, Wrap } from './lib/index';
 
 const styles = {
   section: css`
@@ -17,12 +17,12 @@ const styles = {
   editor: {
     overflowX: 'hidden'
   }
-}
+};
 
 const ComponentDemo = props => {
-  if (!Object.keys(props).length) return null
+  if (!Object.keys(props).length) return null;
 
-  const { code, name, description, propList, scope } = props
+  const { code, name, description, propList, scope } = props;
 
   return (
     <Section styles={styles.section}>
@@ -41,18 +41,18 @@ const ComponentDemo = props => {
         </Block>
         <LiveProvider code={code} scope={scope}>
           <Flex>
-            <FlexItem col="6|1" xsCol={12}>
+            <FlexItem smCol={12} mdCol="6">
               <LiveEditor style={styles.editor} />
               <LiveError />
             </FlexItem>
-            <FlexItem col="6|1" xsCol={12} styles={styles.preview}>
+            <FlexItem smCol={12} mdCol="6" styles={styles.preview}>
               <LivePreview />
             </FlexItem>
           </Flex>
         </LiveProvider>
       </Block>
     </Section>
-  )
-}
+  );
+};
 
-export default ComponentDemo
+export default ComponentDemo;

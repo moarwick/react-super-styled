@@ -1,5 +1,5 @@
-import React from 'react'
-import * as Components from './lib/index'
+import React from 'react';
+import * as Components from './lib/index';
 
 /**
  * Code examples and meta
@@ -10,10 +10,10 @@ const DEMO = {
     CODE: `
 <Block>
 	<Block margin="0 10 2 0" styles='border: 2px solid firebrick;'>
-	  My parent DIV has neat "shorthand" margins applied.
+	  My DIV has neat "shorthand" margins applied.
 	</Block>
 	<Block padding="2 -" center styles='background-color: gold;'>
-	  My parent DIV gave me padding, alignment, and... jaundice :|
+	  My DIV gave me padding, alignment, and... jaundice :|
 	</Block>
 </Block>`
   },
@@ -33,7 +33,7 @@ const DEMO = {
         Flex "container", renders DIV tag. Supports standard flex props, defaults to&nbsp;
         <code>flexWrap:'wrap'</code>
         &nbsp;and&nbsp;
-        <code>justifyContent:'space-between'</code>.
+        <code>justifyContent:'flex-start'</code>.
       </span>
     ),
     CODE: `
@@ -45,21 +45,32 @@ const DEMO = {
   FLEXITEM: {
     DESCRIPTION: (
       <span>
-        Flex "item" wrapper, renders DIV tag. Supports standard flex props and responsive columns.
-        Gutter can be specified as "column|gutter" (a SPACER multiplier).
+        Flex "item" wrapper, renders DIV tag. Supports standard flex props, plus props for
+        media-enabled 12-column grid. Syntax supports width, offset and gutter.
       </span>
     ),
     EXTRA_SCOPE: ['Flex'],
     CODE: `
 <Flex>
-	<FlexItem mdCol="4|1" xsCol="12" padding="1" styles="background-color: firebrick;">
-		4 md → 12 xs
+	<FlexItem xsCol="4" mdCol="4" padding="1" styles="background-color: firebrick">
+	  4 col (xs) → 4 col (md)
 	</FlexItem>
-	<FlexItem mdCol="2|1" xsCol="12" padding="1" styles="background-color: orange;">
-		2 md → 12 xs
+	<FlexItem xsCol="8" mdCol="4" padding="1" styles="background-color: orange">
+		8 col (xs) → 4 col (md)
 	</FlexItem>
-	<FlexItem mdCol="6|1" xsCol="12" padding="1" styles="background-color: gold;">
-		6 md → 12 xs
+	<FlexItem xsCol="12" mdCol="4" padding="1" styles="background-color: gold">
+		12 col (xs) → 4 col (md)
+	</FlexItem>
+	
+	<FlexItem xsCol="2 8" padding="1" styles="background-color: #ddd">
+	  2 col offset, 8 col
+	</FlexItem>
+	
+	<FlexItem xsCol="8-1" padding="1" styles="background-color: firebrick">
+		8 col - 10px gutter
+	</FlexItem>
+	<FlexItem xsCol="4-1" padding="1" styles="background-color: orange">
+		8 col - 10px gutter
 	</FlexItem>
 </Flex>`
   },
@@ -112,13 +123,13 @@ const DEMO = {
 	<Wrap color="gray" italic margin="- - - 1">– Donald Trump</Wrap>
 </Block>`
   }
-}
+};
 
 /**
  * Deliver names of component's propTypes, as a comma-delimited string
  */
 function getPropNames(Component) {
-  return Object.keys(Component.propTypes || {}).join(', ')
+  return Object.keys(Component.propTypes || {}).join(', ');
 }
 
 /**
@@ -126,22 +137,22 @@ function getPropNames(Component) {
  * Always include the name'd component, and add any "EXTRA" components, as specified in DEMO meta
  */
 function getScopeForReactLive(name) {
-  const baseScope = { [name]: Components[name] }
+  const baseScope = { [name]: Components[name] };
   return (DEMO[name.toUpperCase()].EXTRA_SCOPE || []).reduce(
     (accum, compName) => ({ ...accum, [compName]: Components[compName] }),
     baseScope
-  )
+  );
 }
 
 /**
  * Deliver an object of props for a given ComponentDemo component
  */
 function getDemoComponentProps(name) {
-  const key = name.toUpperCase()
+  const key = name.toUpperCase();
 
-  if (!DEMO[key]) return null
+  if (!DEMO[key]) return null;
 
-  const Component = Components[name]
+  const Component = Components[name];
 
   return {
     code: DEMO[key].CODE.trim(),
@@ -149,7 +160,7 @@ function getDemoComponentProps(name) {
     description: DEMO[key].DESCRIPTION,
     propList: getPropNames(Component),
     scope: getScopeForReactLive(name)
-  }
+  };
 }
 
 export default {
@@ -157,4 +168,4 @@ export default {
   TYPOGRAPHY: ['Heading', 'Text'].map(name => getDemoComponentProps(name)),
   GRID: ['Flex', 'FlexItem'].map(name => getDemoComponentProps(name)),
   MISC: ['Display', 'Rule'].map(name => getDemoComponentProps(name))
-}
+};

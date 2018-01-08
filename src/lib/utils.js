@@ -87,7 +87,7 @@ export function cssSpacing(rule, props) {
  *
  * Ex. 12      --> 12 cols, entire width (100%)
  *     '3 6'   --> 3 cols left offset (25%) 6 cols width (50%),
- *     '2 4-1' --> 2 cols left offset (20%), 4 cols wide (33.33%), minus 5px left/right gutters (10px via spacer multiplier)
+ *     '2 4-1' --> 2 cols left offset (20%), 4 cols wide (33.33%), minus 10px left/right gutters (via spacer multiplier)
  */
 function toColumnCss(val, spacer) {
   const colPct = 100 / 12;
@@ -103,12 +103,12 @@ function toColumnCss(val, spacer) {
   const offsetColPct = val2 ? Number(val1) * colPct : 0;
   const gutterPx = gutter ? Number(gutter) * spacer : 0;
 
-  const width = gutterPx ? `calc(${colWidthPct}% - ${gutterPx}px)` : `${colWidthPct}%`;
-  const marginRight = gutterPx ? `${gutterPx / 2}px` : '0';
+  const width = gutterPx ? `calc(${colWidthPct}% - ${gutterPx * 2}px)` : `${colWidthPct}%`;
+  const marginRight = gutterPx ? `${gutterPx}px` : '0';
   const marginLeft =
     offsetColPct && gutterPx
-      ? `calc(${offsetColPct}% + ${gutterPx / 2}px)`
-      : offsetColPct && !gutterPx ? `${offsetColPct}%` : gutterPx ? `${gutterPx / 2}px` : '0';
+      ? `calc(${offsetColPct}% + ${gutterPx}px)`
+      : offsetColPct && !gutterPx ? `${offsetColPct}%` : gutterPx ? `${gutterPx}px` : '0';
 
   return `margin-left: ${marginLeft}; margin-right: ${marginRight}; width: ${width};`;
 }
@@ -118,7 +118,7 @@ function toColumnCss(val, spacer) {
 const basePropTypes = {
   children: PropTypes.node,
   innerRef: PropTypes.func,
-  theme: PropTypes.object,
+  theme: PropTypes.object
 };
 export { basePropTypes };
 
@@ -134,14 +134,14 @@ const displayPropTypes = {
   xsShowInline: PropTypes.bool,
   mdShowInlineBlock: PropTypes.bool,
   smShowInlineBlock: PropTypes.bool,
-  xsShowInlineBlock: PropTypes.bool,
+  xsShowInlineBlock: PropTypes.bool
 };
 export { displayPropTypes };
 
 /* ----- ENHANCERS ----- */
 
 const containerPropTypes = {
-  container: PropTypes.bool,
+  container: PropTypes.bool
 };
 export { containerPropTypes };
 export function withContainer(props) {
@@ -170,7 +170,7 @@ const fontPropTypes = {
   medium: PropTypes.bool,
   large: PropTypes.bool,
   xLarge: PropTypes.bool,
-  xxLarge: PropTypes.bool,
+  xxLarge: PropTypes.bool
 };
 export { fontPropTypes };
 export function withFont(props, isHeader = false) {
@@ -195,7 +195,7 @@ export function withFont(props, isHeader = false) {
 const justifyPropTypes = {
   left: PropTypes.bool,
   center: PropTypes.bool,
-  right: PropTypes.bool,
+  right: PropTypes.bool
 };
 export { justifyPropTypes };
 
@@ -220,7 +220,7 @@ const columnPropTypes = {
   xsCol: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   smCol: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   mdCol: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  lgCol: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  lgCol: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 export { columnPropTypes };
 export function withColumns({ col, xsCol, smCol, mdCol, lgCol, theme }) {
@@ -242,7 +242,7 @@ const mediaStylesPropTypes = {
   xsStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   smStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   mdStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
-  lgStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+  lgStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)])
 };
 export { mediaStylesPropTypes };
 export function withMediaStyles({ styles, xsStyles, smStyles, mdStyles, lgStyles, theme }) {
@@ -261,7 +261,7 @@ export function withMediaStyles({ styles, xsStyles, smStyles, mdStyles, lgStyles
  */
 const spacingPropTypes = {
   margin: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  padding: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  padding: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 export { spacingPropTypes };
 export function withSpacing(props) {

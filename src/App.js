@@ -1,9 +1,9 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
+import React from 'react';
+import styled, { css } from 'styled-components';
 
-import { Block, Heading, Text } from './lib/index'
-import ComponentDemo from './ComponentDemo'
-import DEMO from './demoData'
+import { Block, Heading, Text } from './lib/index';
+import ComponentDemo from './ComponentDemo';
+import DEMO from './demoData';
 
 const Logo = styled.div`
   background: linear-gradient(to right, firebrick, gold);
@@ -11,7 +11,7 @@ const Logo = styled.div`
   font-family: 'Racing Sans One', cursive;
   font-size: 48px;
   text-align: center;
-`
+`;
 
 const styles = {
   container: css`
@@ -19,7 +19,7 @@ const styles = {
     margin-left: auto;
     margin-right: auto;
   `
-}
+};
 
 function App() {
   return (
@@ -53,7 +53,7 @@ function App() {
       </Heading>
       {DEMO.MISC.map((demoProps, index) => <ComponentDemo key={'misc-' + index} {...demoProps} />)}
     </Block>
-  )
+  );
 }
 
-export default App
+export default App;
