@@ -1,75 +1,72 @@
 import styled, { css } from 'styled-components';
 import { addTheme, basePropTypes, displayPropTypes } from './utils';
 
+function toDisplayCss(hide, show, showInline) {
+  if (hide) return 'display: none;';
+  const display = show ? 'block' : showInline ? 'inline' : 'inline-block';
+  return `display: ${display};`;
+}
+
 /**
  * Wrapper to show/hide contents based on media breakpoints
  * Renders <span> tag
  */
 const propTypes = {
   ...basePropTypes,
-  ...displayPropTypes,
+  ...displayPropTypes
 };
 
 const getCss = props => {
   const {
-    mdHide,
+    hide,
     smHide,
-    xsHide,
-    mdShow,
+    mdHide,
+    lgHide,
+
+    show,
     smShow,
-    xsShow,
-    mdShowInline,
+    mdShow,
+    lgShow,
+
+    showInline,
     smShowInline,
-    xsShowInline,
-    mdShowInlineBlock,
+    mdShowInline,
+    lgShowInline,
+
+    showInlineBlock,
     smShowInlineBlock,
-    xsShowInlineBlock,
-    theme,
+    mdShowInlineBlock,
+    lgShowInlineBlock,
+
+    theme
   } = props;
 
-  // TODO: rework this, so it can act on multiple breakpoints per use
+  const xsShow = !hide && (show || showInline || showInlineBlock || smHide || mdHide || lgHide);
 
-  let breakpoint = '';
-  let displayType = '';
+  const xsHide =
+    hide ||
+    (!xsShow &&
+      (smShow ||
+        smShowInline ||
+        smShowInlineBlock ||
+        mdShow ||
+        mdShowInline ||
+        mdShowInlineBlock ||
+        lgShow ||
+        lgShowInline ||
+        lgShowInlineBlock));
 
-  if (mdShow || mdShowInline || mdShowInlineBlock || mdHide) {
-    breakpoint = 'MD_MAX';
-  }
-  if (smShow || smShowInline || smShowInlineBlock || smHide) {
-    breakpoint = 'SM_MAX';
-  }
-  if (xsShow || xsShowInline || xsShowInlineBlock || xsHide) {
-    breakpoint = 'XS_MAX';
-  }
-
-  const isHide = mdHide || smHide || xsHide;
-  const isShow =
-    mdShow ||
-    smShow ||
-    xsShow ||
-    mdShowInline ||
-    smShowInline ||
-    xsShowInline ||
-    mdShowInlineBlock ||
-    smShowInlineBlock ||
-    xsShowInlineBlock;
-
-  if (isShow) {
-    if (mdShow || smShow || xsShow) {
-      displayType = 'block';
-    }
-    if (mdShowInlineBlock || smShowInlineBlock || xsShowInlineBlock) {
-      displayType = 'inline-block';
-    }
-    if (mdShowInline || smShowInline || xsShowInline) {
-      displayType = 'inline';
-    }
-  }
+  const isSmRules = smHide || smShow || smShowInline || smShowInlineBlock;
+  const isMdRules = mdHide || mdShow || mdShowInline || mdShowInlineBlock;
+  const isLgRules = lgHide || lgShow || lgShowInline || lgShowInlineBlock;
 
   // prettier-ignore
   return css`
-    ${isShow && `display: none; ${theme['MEDIA_' + breakpoint]} { display: ${displayType};`}
-    ${isHide && `${theme['MEDIA_' + breakpoint]} { display: none; }`}
+    ${xsHide && 'display: none;'}
+    ${xsShow && toDisplayCss(false, show, showInline)}
+    ${isSmRules && `${theme.MEDIA_XS_MIN} { ${toDisplayCss(smHide, smShow, smShowInline)} }`}
+    ${isMdRules && `${theme.MEDIA_SM_MIN} { ${toDisplayCss(mdHide, mdShow, mdShowInline)} }`}
+    ${isLgRules && `${theme.MEDIA_MD_MIN} { ${toDisplayCss(lgHide, lgShow, lgShowInline)} }`}
   `
 };
 

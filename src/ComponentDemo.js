@@ -26,7 +26,7 @@ const styles = {
 
 function renderPropTypesColumns(list) {
   return list.map(propValPair => (
-    <FlexItem col={6} lgCol={3}>
+    <FlexItem col={12} smCol={6} lgCol={3}>
       <Code bold color="firebrick">
         {propValPair[0]}:&nbsp;
         <Wrap normal color="black">

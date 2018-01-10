@@ -117,6 +117,12 @@ const PROP_TYPES = {
   height: TYPES.STRING_OR_NUMBER
 };
 
+/*
+<Display mdHide>I'm going undercover below MD.</Display>
+<Display mdShow>Above MD, I come out of the closet!</Display>
+<Display smShow>SM stands for "small size".</Display>
+*/
+
 /**
  * Code examples and meta
  */
@@ -234,9 +240,7 @@ const DEMO = {
     EXTRA_SCOPE: ['Wrap'],
     CODE: `
 <Wrap block color="gold" padding="1">
-  <Display mdHide>I'll go undercover below MD.</Display>
-  <Display mdShow>While I will emerge!</Display>
-	<Display xsShow>See me at XS sizes only!</Display> 
+  <Display hide>HELLO WORLD</Display>
 </Wrap>`
   },
 

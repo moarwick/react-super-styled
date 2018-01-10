@@ -116,22 +116,22 @@ const basePropTypes = {
 export { basePropTypes };
 
 const displayPropTypes = {
-  hide: PropTypes.bool,
+  hide: PropTypes.bool, // xs, or when no media
   smHide: PropTypes.bool,
   mdHide: PropTypes.bool,
   lgHide: PropTypes.bool,
 
-  show: PropTypes.bool,
+  show: PropTypes.bool, // xs, or when no media
   smShow: PropTypes.bool,
   mdShow: PropTypes.bool,
   lgShow: PropTypes.bool,
 
-  showInline: PropTypes.bool,
+  showInline: PropTypes.bool, // xs, or when no media
   smShowInline: PropTypes.bool,
   mdShowInline: PropTypes.bool,
   lgShowInline: PropTypes.bool,
 
-  showInlineBlock: PropTypes.bool,
+  showInlineBlock: PropTypes.bool, // xs, or when no media
   smShowInlineBlock: PropTypes.bool,
   mdShowInlineBlock: PropTypes.bool,
   lgShowInlineBlock: PropTypes.bool
@@ -207,7 +207,7 @@ export function withJustify(props) {
 }
 
 const gutterPropTypes = {
-  gutter: PropTypes.number, // use when no media
+  gutter: PropTypes.number, // xs, or when no media
   smGutter: PropTypes.number,
   mdGutter: PropTypes.number,
   lgGutter: PropTypes.number
@@ -217,19 +217,19 @@ export function withRowGutters({ gutter, smGutter, mdGutter, lgGutter, theme }) 
   // prettier-ignore
   return css`
     ${gutter && toRowGuttersCss(gutter)}
-    ${smGutter && `${theme.MEDIA_SM_MIN} { ${toRowGuttersCss(smGutter)} }`}
-    ${mdGutter && `${theme.MEDIA_MD_MIN} { ${toRowGuttersCss(mdGutter)} }`}
-    ${lgGutter && `${theme.MEDIA_LG_MIN} { ${toRowGuttersCss(lgGutter)} }`}
+    ${smGutter && `${theme.MEDIA_XS_MIN} { ${toRowGuttersCss(smGutter)} }`}
+    ${mdGutter && `${theme.MEDIA_SM_MIN} { ${toRowGuttersCss(mdGutter)} }`}
+    ${lgGutter && `${theme.MEDIA_MD_MIN} { ${toRowGuttersCss(lgGutter)} }`}
   `;
 }
 
 const columnPropTypes = {
-  col: PropTypes.number, // use when no media
+  col: PropTypes.number, // xs, or when no media
   smCol: PropTypes.number,
   mdCol: PropTypes.number,
   lgCol: PropTypes.number,
 
-  offset: PropTypes.number, // use when no media
+  offset: PropTypes.number, // xs, or when no media
   smOffset: PropTypes.number,
   mdOffset: PropTypes.number,
   lgOffset: PropTypes.number,
@@ -255,9 +255,9 @@ export function withColumns({
   // prettier-ignore
   return css`
     ${col && toColumnCss(col, offset, gutter)}
-    ${smCol && `${theme.MEDIA_SM_MIN} { ${toColumnCss(smCol, smOffset, smGutter || gutter)} }`}
-    ${mdCol && `${theme.MEDIA_MD_MIN} { ${toColumnCss(mdCol, mdOffset, mdGutter || gutter)} }`}
-    ${lgCol && `${theme.MEDIA_LG_MIN} { ${toColumnCss(lgCol, lgOffset, lgGutter || gutter)} }`}
+    ${smCol && `${theme.MEDIA_XS_MIN} { ${toColumnCss(smCol, smOffset, smGutter || gutter)} }`}
+    ${mdCol && `${theme.MEDIA_SM_MIN} { ${toColumnCss(mdCol, mdOffset, mdGutter || gutter)} }`}
+    ${lgCol && `${theme.MEDIA_MD_MIN} { ${toColumnCss(lgCol, lgOffset, lgGutter || gutter)} }`}
   `;
 }
 
@@ -272,9 +272,9 @@ export function withMediaStyles({ styles, smStyles, mdStyles, lgStyles, theme })
   // prettier-ignore
   return css`
     ${styles && styles};
-    ${smStyles && `${theme.MEDIA_SM_MIN} { ${smStyles} }`}
-    ${mdStyles && `${theme.MEDIA_MD_MIN} { ${mdStyles} }`}
-    ${lgStyles && `${theme.MEDIA_LG_MIN} { ${lgStyles} }`}
+    ${smStyles && `${theme.MEDIA_XS_MIN} { ${smStyles} }`}
+    ${mdStyles && `${theme.MEDIA_SM_MIN} { ${mdStyles} }`}
+    ${lgStyles && `${theme.MEDIA_MD_MIN} { ${lgStyles} }`}
   `;
 }
 
