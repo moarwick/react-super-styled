@@ -10,7 +10,7 @@ import {
   justifyPropTypes,
   withJustify,
   mediaStylesPropTypes,
-  withMediaStyles,
+  withMediaStyles
 } from './utils';
 
 /**
@@ -18,6 +18,7 @@ import {
  * Renders <h1> - <h4> tag
  */
 const propTypes = {
+  ...basePropTypes,
   h1: PropTypes.bool,
   h2: PropTypes.bool,
   h3: PropTypes.bool,
@@ -25,10 +26,9 @@ const propTypes = {
   color: PropTypes.string,
   lineHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   margin: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  ...basePropTypes,
   ...fontPropTypes,
   ...justifyPropTypes,
-  ...mediaStylesPropTypes,
+  ...mediaStylesPropTypes
 };
 
 const getCss = props => {

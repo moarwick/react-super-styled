@@ -24,7 +24,7 @@ const styles = {
 function App() {
   return (
     <Block padding="0 2" styles={styles.container}>
-      <Logo>&lt; REACT SUPER STYLED &gt;</Logo>
+      <Logo>&lt; React Super Styled &gt;</Logo>
       <Text center color="#D4752C" bold medium italic margin="1 - 2">
         Responsive JSX layouts with Styled Components
       </Text>

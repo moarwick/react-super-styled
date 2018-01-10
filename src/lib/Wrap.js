@@ -10,7 +10,7 @@ import {
   spacingPropTypes,
   withSpacing,
   mediaStylesPropTypes,
-  withMediaStyles,
+  withMediaStyles
 } from './utils';
 
 /**
@@ -19,17 +19,19 @@ import {
  */
 const propTypes = {
   color: PropTypes.string,
+  block: PropTypes.bool,
   inlineBlock: PropTypes.bool,
   ...basePropTypes,
   ...fontPropTypes,
   ...justifyPropTypes,
   ...spacingPropTypes,
-  ...mediaStylesPropTypes,
+  ...mediaStylesPropTypes
 };
 
 // prettier-ignore
 const getCss = props => css`
   ${props.color && `color: ${props.color};`}  
+  ${props.block && 'display: block;'}
   ${props.inlineBlock && 'display: inline-block;'}
   ${withFont(props)}
   ${withJustify(props)}

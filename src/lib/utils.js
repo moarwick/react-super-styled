@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import { css } from 'styled-components';
 import THEME from './THEME';
 
+const COL_PCT = 8.333333333333334;
+
 /**
  * Extend the theme prop onto the base THEME, and return all props
  */
@@ -27,24 +29,24 @@ export function toCssUnits(val) {
 export function cssSize(val, spacer) {
   // check if val matches legit pattern, e.g. 1px, 50%, 2.5em, or 'auto'
   // if true, return val as-is
-  const isExplicit = /^[0-9.]+(px|em|rem|%)$/.test(val) || val === 'auto';
+  const isExplicit = /^[-0-9.]+(px|em|rem|%)$/.test(val) || val === 'auto';
   if (isExplicit) return val;
 
-  // otherwise, assume a SPACER multiplier, e.g. 1, 2.5, etc
-  const multi = Number((val.match(/[0-9.]/g) || []).join(''));
+  // otherwise, assume a SPACER multiplier, e.g. -1, 2.5, etc
+  const multi = Number((val.match(/[-0-9.]/g) || []).join('')); // negative multipliers ok
   return `${multi * spacer}px`;
 }
 
 /**
  * Deliver CSS 'padding' or 'margin' rules derived from a shorthand string
  * Expect a space delimited string of up to 4 elems, in the CSS shorthand order "top right bottom left"
- * The values can be in known CSS units (10px), or numbers only (5) as SPACER multipliers (px)
- * If a dash is supplied for any direction, no rule is applied for it
+ * The values can be in known CSS units (12px), or numbers only (5) as SPACER multipliers (50px)
+ * If a '*' is supplied for any direction, no rule is applied for it
  *
- * Ex. spacingCss('padding', '1 5px 10% -') -->
+ * Ex. spacingCss('padding', '1 * -5px 10%') -->
  *   padding-top: 10px;
- *   padding-right: 5px;
- *   padding-bottom: 10%;
+ *   padding-bottom: -5px;
+ *   padding-left: 10%;
  */
 export function cssSpacing(rule, props) {
   rule = ['margin', 'padding'].find(supportedRule => supportedRule === rule.trim());
@@ -67,10 +69,10 @@ export function cssSpacing(rule, props) {
   }
 
   const spacer = props.theme.SPACER;
-  top = top && top !== '-' ? cssSize(top, spacer) : ''; // do not apply rule if '0'
-  right = right !== '-' ? (right ? cssSize(right, spacer) : top) : ''; // if not supplied, apply 'top'
-  bottom = bottom !== '-' ? (bottom ? cssSize(bottom, spacer) : top) : ''; // if not supplied, apply 'top'
-  left = left !== '-' ? (left ? cssSize(left, spacer) : right) : ''; // if not supplied, apply 'right'
+  top = top && top !== '*' ? cssSize(top, spacer) : ''; // do not apply rule if '0'
+  right = right !== '*' ? (right ? cssSize(right, spacer) : top) : ''; // if not supplied, apply 'top'
+  bottom = bottom !== '*' ? (bottom ? cssSize(bottom, spacer) : top) : ''; // if not supplied, apply 'top'
+  left = left !== '*' ? (left ? cssSize(left, spacer) : right) : ''; // if not supplied, apply 'right'
 
   // prettier-ignore
   return css`
@@ -82,38 +84,29 @@ export function cssSpacing(rule, props) {
 }
 
 /**
- * Parse supplied column value (number or string) into pertinent CSS rules
- * Supported syntax: "columns", "offset columns", "columns-gutter", "offset columns-gutter"
- *
- * Ex. 12      --> 12 cols, entire width (100%)
- *     '3 6'   --> 3 cols left offset (25%) 6 cols width (50%),
- *     '2 4-1' --> 2 cols left offset (20%), 4 cols wide (33.33%), minus 10px left/right gutters (via spacer multiplier)
+ * Given the supplied gutter, deliver negative left/right margin rules for FlexRow
+ * This is to ensure outer columns (with gutters) are flush with the container
  */
-function toColumnCss(val, spacer) {
-  const colPct = 100 / 12;
+function toRowGuttersCss(gutter) {
+  return `margin-left: -${gutter / 2}px; margin-right: -${gutter / 2}px;`;
+}
 
-  if (typeof val === 'number') {
-    return `margin-left: 0; margin-right: 0; width: ${val * colPct}%;`;
-  }
-
-  const [val1, val2] = val.match(/[^ ]+/g); // split by ' ' for offset
-  const [columns, gutter] = (val2 || val1).match(/[^-]+/g); // split by '-' for gutter
-
-  const colWidthPct = Number(columns) * colPct;
-  const offsetColPct = val2 ? Number(val1) * colPct : 0;
-  const gutterPx = gutter ? Number(gutter) * spacer : 0;
-
-  const width = gutterPx ? `calc(${colWidthPct}% - ${gutterPx * 2}px)` : `${colWidthPct}%`;
-  const marginRight = gutterPx ? `${gutterPx}px` : '0';
+/**
+ * Deliver correct column width and left/right margins, per the supplied props
+ */
+function toColumnCss(col, offset, gutter) {
+  const colWidthPct = col * COL_PCT;
+  const width = gutter ? `calc(${colWidthPct}% - ${gutter}px)` : `${colWidthPct}%`;
+  const marginRight = gutter ? `${gutter / 2}px` : '0';
   const marginLeft =
-    offsetColPct && gutterPx
-      ? `calc(${offsetColPct}% + ${gutterPx}px)`
-      : offsetColPct && !gutterPx ? `${offsetColPct}%` : gutterPx ? `${gutterPx}px` : '0';
+    offset && gutter
+      ? `calc(${offset * COL_PCT}% + ${gutter / 2}px)`
+      : offset && !gutter ? `${offset * COL_PCT}%` : gutter ? `${gutter / 2}px` : '0';
 
   return `margin-left: ${marginLeft}; margin-right: ${marginRight}; width: ${width};`;
 }
 
-/* ----- COMMON PROP TYPES ----- */
+/* ----- ENHANCERS ----- */
 
 const basePropTypes = {
   children: PropTypes.node,
@@ -123,22 +116,27 @@ const basePropTypes = {
 export { basePropTypes };
 
 const displayPropTypes = {
-  mdHide: PropTypes.bool,
+  hide: PropTypes.bool,
   smHide: PropTypes.bool,
-  xsHide: PropTypes.bool,
-  mdShow: PropTypes.bool,
+  mdHide: PropTypes.bool,
+  lgHide: PropTypes.bool,
+
+  show: PropTypes.bool,
   smShow: PropTypes.bool,
-  xsShow: PropTypes.bool,
-  mdShowInline: PropTypes.bool,
+  mdShow: PropTypes.bool,
+  lgShow: PropTypes.bool,
+
+  showInline: PropTypes.bool,
   smShowInline: PropTypes.bool,
-  xsShowInline: PropTypes.bool,
-  mdShowInlineBlock: PropTypes.bool,
+  mdShowInline: PropTypes.bool,
+  lgShowInline: PropTypes.bool,
+
+  showInlineBlock: PropTypes.bool,
   smShowInlineBlock: PropTypes.bool,
-  xsShowInlineBlock: PropTypes.bool
+  mdShowInlineBlock: PropTypes.bool,
+  lgShowInlineBlock: PropTypes.bool
 };
 export { displayPropTypes };
-
-/* ----- ENHANCERS ----- */
 
 const containerPropTypes = {
   container: PropTypes.bool
@@ -162,6 +160,7 @@ const fontPropTypes = {
   inline: PropTypes.bool,
   italic: PropTypes.bool,
   roman: PropTypes.bool,
+  underline: PropTypes.bool,
   light: PropTypes.bool,
   normal: PropTypes.bool,
   bold: PropTypes.bool,
@@ -186,6 +185,7 @@ export function withFont(props, isHeader = false) {
   // prettier-ignore
   return css`
     ${props.inline && `display: inline;`}
+    ${props.underline && 'text-decoration: underline;'}
     ${fontSize && `font-size: ${fontSize};`} 
     ${fontStyle && `font-style: ${fontStyle};`} 
     ${fontWeight && `font-weight: ${fontWeight};`}
@@ -206,59 +206,78 @@ export function withJustify(props) {
   `;
 }
 
-/**
- * Interpret media-based column props into CSS rules
- * Assumes Bootstrap-style 12 column grid, with optional offset and gutter
- * Supported syntax: "columns", "offset columns", "columns-gutter", "offset columns-gutter"
- *
- * Ex. xsCol={ 12 }  --> margin-left: 0; margin-right: 0; width: 100%;
- *     smCol="3 6"   --> margin-left: 25%; margin-right: 0; width: 50%;
- *     mdCol="6 6-1" --> margin-left: 50% + 5px; margin-right: 5px; width: 50% - 10px;
- */
-const columnPropTypes = {
-  col: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), // use when no media
-  xsCol: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  smCol: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  mdCol: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  lgCol: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+const gutterPropTypes = {
+  gutter: PropTypes.number, // use when no media
+  smGutter: PropTypes.number,
+  mdGutter: PropTypes.number,
+  lgGutter: PropTypes.number
 };
-export { columnPropTypes };
-export function withColumns({ col, xsCol, smCol, mdCol, lgCol, theme }) {
+export { gutterPropTypes };
+export function withRowGutters({ gutter, smGutter, mdGutter, lgGutter, theme }) {
   // prettier-ignore
   return css`
-    ${col && toColumnCss(col, theme.SPACER)}
-    ${xsCol && toColumnCss(xsCol, theme.SPACER)}
-    ${smCol && `${theme.MEDIA_SM_MIN} { ${toColumnCss(smCol, theme.SPACER)} }`}
-    ${mdCol && `${theme.MEDIA_MD_MIN} { ${toColumnCss(mdCol, theme.SPACER)} }`}
-    ${lgCol && `${theme.MEDIA_LG_MIN} { ${toColumnCss(lgCol, theme.SPACER)} }`}
+    ${gutter && toRowGuttersCss(gutter)}
+    ${smGutter && `${theme.MEDIA_SM_MIN} { ${toRowGuttersCss(smGutter)} }`}
+    ${mdGutter && `${theme.MEDIA_MD_MIN} { ${toRowGuttersCss(mdGutter)} }`}
+    ${lgGutter && `${theme.MEDIA_LG_MIN} { ${toRowGuttersCss(lgGutter)} }`}
   `;
 }
 
-/**
- * Add passed-in CSS, with media-based breakpoint support
- */
+const columnPropTypes = {
+  col: PropTypes.number, // use when no media
+  smCol: PropTypes.number,
+  mdCol: PropTypes.number,
+  lgCol: PropTypes.number,
+
+  offset: PropTypes.number, // use when no media
+  smOffset: PropTypes.number,
+  mdOffset: PropTypes.number,
+  lgOffset: PropTypes.number,
+
+  ...gutterPropTypes
+};
+export { columnPropTypes };
+export function withColumns({
+  col,
+  offset,
+  gutter,
+  smCol,
+  smOffset,
+  smGutter,
+  mdCol,
+  mdOffset,
+  mdGutter,
+  lgCol,
+  lgOffset,
+  lgGutter,
+  theme
+}) {
+  // prettier-ignore
+  return css`
+    ${col && toColumnCss(col, offset, gutter)}
+    ${smCol && `${theme.MEDIA_SM_MIN} { ${toColumnCss(smCol, smOffset, smGutter || gutter)} }`}
+    ${mdCol && `${theme.MEDIA_MD_MIN} { ${toColumnCss(mdCol, mdOffset, mdGutter || gutter)} }`}
+    ${lgCol && `${theme.MEDIA_LG_MIN} { ${toColumnCss(lgCol, lgOffset, lgGutter || gutter)} }`}
+  `;
+}
+
 const mediaStylesPropTypes = {
   styles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]), // use when no media
-  xsStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   smStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   mdStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   lgStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)])
 };
 export { mediaStylesPropTypes };
-export function withMediaStyles({ styles, xsStyles, smStyles, mdStyles, lgStyles, theme }) {
+export function withMediaStyles({ styles, smStyles, mdStyles, lgStyles, theme }) {
   // prettier-ignore
   return css`
     ${styles && styles};
-    ${xsStyles && xsStyles};
     ${smStyles && `${theme.MEDIA_SM_MIN} { ${smStyles} }`}
     ${mdStyles && `${theme.MEDIA_MD_MIN} { ${mdStyles} }`}
     ${lgStyles && `${theme.MEDIA_LG_MIN} { ${lgStyles} }`}
   `;
 }
 
-/**
- * Margin and padding "shorthand" enhancers
- */
 const spacingPropTypes = {
   margin: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   padding: PropTypes.oneOfType([PropTypes.string, PropTypes.number])

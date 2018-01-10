@@ -1,28 +1,47 @@
 import React from 'react';
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import { Block, Flex, FlexItem, Heading, Section, Text, Wrap } from './lib/index';
+
+const Code = styled.code`
+  font-weight: bold;
+  color: firebrick;
+`;
 
 const styles = {
   section: css`
     background-color: #ddd;
   `,
   preview: css`
-    background-color: #fff;
+    background-color: #1d1f21;
+    border-top: 2px solid #ddd;
   `,
   propNames: css`
     background: linear-gradient(to right, #eee, #bbb);
-    padding: 10px;
   `,
   editor: {
     overflowX: 'hidden'
   }
 };
 
+function renderPropTypesColumns(list) {
+  return list.map(propValPair => (
+    <FlexItem col={6} lgCol={3}>
+      <Code bold color="firebrick">
+        {propValPair[0]}:&nbsp;
+        <Wrap normal color="black">
+          {propValPair[1]}
+        </Wrap>
+      </Code>
+    </FlexItem>
+  ));
+}
+
 const ComponentDemo = props => {
   if (!Object.keys(props).length) return null;
 
-  const { code, name, description, propList, scope } = props;
+  const { code, name, description, propTypesList, scope } = props;
+  const renderedPropTypesList = renderPropTypesColumns(propTypesList);
 
   return (
     <Section styles={styles.section}>
@@ -32,20 +51,17 @@ const ComponentDemo = props => {
             {name}&nbsp;&nbsp;
           </Heading>
           <Text inline>{description}</Text>
-          <Text styles={styles.propNames} margin="- - 0">
-            <Wrap bold>Props:</Wrap>&nbsp;&nbsp;
-            <Wrap small color="firebrick">
-              <code>{propList}</code>
-            </Wrap>
-          </Text>
+          <Flex gutter={10} margin="1 * 2">
+            {renderedPropTypesList}
+          </Flex>
         </Block>
         <LiveProvider code={code} scope={scope}>
-          <Flex>
-            <FlexItem smCol={12} mdCol="6">
+          <Flex lgGutter={10}>
+            <FlexItem col={12} lgCol={6}>
               <LiveEditor style={styles.editor} />
               <LiveError />
             </FlexItem>
-            <FlexItem smCol={12} mdCol="6" styles={styles.preview}>
+            <FlexItem col={12} lgCol={6} styles={styles.preview} lgStyles="border: none">
               <LivePreview />
             </FlexItem>
           </Flex>
