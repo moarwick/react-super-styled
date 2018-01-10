@@ -111,7 +111,7 @@ function toColumnCss(col, offset, gutter) {
 const basePropTypes = {
   children: PropTypes.node,
   innerRef: PropTypes.func,
-  theme: PropTypes.object
+  theme: PropTypes.object,
 };
 export { basePropTypes };
 
@@ -121,25 +121,15 @@ const displayPropTypes = {
   mdHide: PropTypes.bool,
   lgHide: PropTypes.bool,
 
-  show: PropTypes.bool, // xs, or when no media
-  smShow: PropTypes.bool,
-  mdShow: PropTypes.bool,
-  lgShow: PropTypes.bool,
-
-  showInline: PropTypes.bool, // xs, or when no media
-  smShowInline: PropTypes.bool,
-  mdShowInline: PropTypes.bool,
-  lgShowInline: PropTypes.bool,
-
-  showInlineBlock: PropTypes.bool, // xs, or when no media
-  smShowInlineBlock: PropTypes.bool,
-  mdShowInlineBlock: PropTypes.bool,
-  lgShowInlineBlock: PropTypes.bool
+  show: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), // xs, or when no media
+  smShow: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  mdShow: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  lgShow: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 export { displayPropTypes };
 
 const containerPropTypes = {
-  container: PropTypes.bool
+  container: PropTypes.bool,
 };
 export { containerPropTypes };
 export function withContainer(props) {
@@ -169,7 +159,7 @@ const fontPropTypes = {
   medium: PropTypes.bool,
   large: PropTypes.bool,
   xLarge: PropTypes.bool,
-  xxLarge: PropTypes.bool
+  xxLarge: PropTypes.bool,
 };
 export { fontPropTypes };
 export function withFont(props, isHeader = false) {
@@ -195,7 +185,7 @@ export function withFont(props, isHeader = false) {
 const justifyPropTypes = {
   left: PropTypes.bool,
   center: PropTypes.bool,
-  right: PropTypes.bool
+  right: PropTypes.bool,
 };
 export { justifyPropTypes };
 
@@ -210,7 +200,7 @@ const gutterPropTypes = {
   gutter: PropTypes.number, // xs, or when no media
   smGutter: PropTypes.number,
   mdGutter: PropTypes.number,
-  lgGutter: PropTypes.number
+  lgGutter: PropTypes.number,
 };
 export { gutterPropTypes };
 export function withRowGutters({ gutter, smGutter, mdGutter, lgGutter, theme }) {
@@ -234,7 +224,7 @@ const columnPropTypes = {
   mdOffset: PropTypes.number,
   lgOffset: PropTypes.number,
 
-  ...gutterPropTypes
+  ...gutterPropTypes,
 };
 export { columnPropTypes };
 export function withColumns({
@@ -250,7 +240,7 @@ export function withColumns({
   lgCol,
   lgOffset,
   lgGutter,
-  theme
+  theme,
 }) {
   // prettier-ignore
   return css`
@@ -265,7 +255,7 @@ const mediaStylesPropTypes = {
   styles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]), // use when no media
   smStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   mdStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
-  lgStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)])
+  lgStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
 };
 export { mediaStylesPropTypes };
 export function withMediaStyles({ styles, smStyles, mdStyles, lgStyles, theme }) {
@@ -280,7 +270,7 @@ export function withMediaStyles({ styles, smStyles, mdStyles, lgStyles, theme })
 
 const spacingPropTypes = {
   margin: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  padding: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  padding: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 export { spacingPropTypes };
 export function withSpacing(props) {

@@ -20,13 +20,13 @@ const styles = {
     background: linear-gradient(to right, #eee, #bbb);
   `,
   editor: {
-    overflowX: 'hidden'
-  }
+    overflowX: 'hidden',
+  },
 };
 
 function renderPropTypesColumns(list) {
   return list.map(propValPair => (
-    <FlexItem col={12} smCol={6} lgCol={3}>
+    <FlexItem key={propValPair[0]} col={12} smCol={6} mdCol={4} lgCol={3}>
       <Code bold color="firebrick">
         {propValPair[0]}:&nbsp;
         <Wrap normal color="black">

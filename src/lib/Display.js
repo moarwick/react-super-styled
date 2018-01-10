@@ -1,10 +1,10 @@
 import styled, { css } from 'styled-components';
 import { addTheme, basePropTypes, displayPropTypes } from './utils';
 
-function toDisplayCss(hide, show, showInline) {
+function toDisplayCss(hide, show) {
   if (hide) return 'display: none;';
-  const display = show ? 'block' : showInline ? 'inline' : 'inline-block';
-  return `display: ${display};`;
+  if (!show || typeof show === 'boolean') show = 'block';
+  return `display: ${show};`;
 }
 
 /**
@@ -13,7 +13,7 @@ function toDisplayCss(hide, show, showInline) {
  */
 const propTypes = {
   ...basePropTypes,
-  ...displayPropTypes
+  ...displayPropTypes,
 };
 
 const getCss = props => {
@@ -28,45 +28,22 @@ const getCss = props => {
     mdShow,
     lgShow,
 
-    showInline,
-    smShowInline,
-    mdShowInline,
-    lgShowInline,
-
-    showInlineBlock,
-    smShowInlineBlock,
-    mdShowInlineBlock,
-    lgShowInlineBlock,
-
-    theme
+    theme,
   } = props;
 
-  const xsShow = !hide && (show || showInline || showInlineBlock || smHide || mdHide || lgHide);
-
-  const xsHide =
-    hide ||
-    (!xsShow &&
-      (smShow ||
-        smShowInline ||
-        smShowInlineBlock ||
-        mdShow ||
-        mdShowInline ||
-        mdShowInlineBlock ||
-        lgShow ||
-        lgShowInline ||
-        lgShowInlineBlock));
-
-  const isSmRules = smHide || smShow || smShowInline || smShowInlineBlock;
-  const isMdRules = mdHide || mdShow || mdShowInline || mdShowInlineBlock;
-  const isLgRules = lgHide || lgShow || lgShowInline || lgShowInlineBlock;
+  const xsShow = !hide && (show || smHide || mdHide || lgHide);
+  const xsHide = hide || (!xsShow && (smShow || mdShow || lgShow));
+  const isSmRules = smHide || smShow;
+  const isMdRules = mdHide || mdShow;
+  const isLgRules = lgHide || lgShow;
 
   // prettier-ignore
   return css`
     ${xsHide && 'display: none;'}
-    ${xsShow && toDisplayCss(false, show, showInline)}
-    ${isSmRules && `${theme.MEDIA_XS_MIN} { ${toDisplayCss(smHide, smShow, smShowInline)} }`}
-    ${isMdRules && `${theme.MEDIA_SM_MIN} { ${toDisplayCss(mdHide, mdShow, mdShowInline)} }`}
-    ${isLgRules && `${theme.MEDIA_MD_MIN} { ${toDisplayCss(lgHide, lgShow, lgShowInline)} }`}
+    ${xsShow && toDisplayCss(false, show)}
+    ${isSmRules && `${theme.MEDIA_XS_MIN} { ${toDisplayCss(smHide, smShow)} }`}
+    ${isMdRules && `${theme.MEDIA_SM_MIN} { ${toDisplayCss(mdHide, mdShow)} }`}
+    ${isLgRules && `${theme.MEDIA_MD_MIN} { ${toDisplayCss(lgHide, lgShow)} }`}
   `
 };
 

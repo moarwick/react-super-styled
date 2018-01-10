@@ -1,10 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import * as Components from './lib/index';
 
 const TYPES = {
   ARRAY: 'Array',
   BOOL: 'Boolean',
+  BOOL_OR_STRING: 'Boolean, String',
   NUMBER: 'Number',
   STRING: 'String',
   STRING_OR_NUMBER: 'String, Number',
@@ -17,7 +17,7 @@ const TYPES = {
   STRING_JUSTIFY_CONTENT: 'String (flex-start, flex-end, center, space-between, space-around)',
   STRING_ALIGN_ITEMS: 'String (stretch, center, flex-start, flex-end, baseline)',
   STRING_ALIGN_CONTENT:
-    'String (stretch, center, flex-start, flex-end, space-between, space-around)'
+    'String (stretch, center, flex-start, flex-end, space-between, space-around)',
 };
 
 const PROP_TYPES = {
@@ -30,20 +30,10 @@ const PROP_TYPES = {
   mdHide: TYPES.BOOL,
   lgHide: TYPES.BOOL,
 
-  show: TYPES.BOOL,
-  smShow: TYPES.BOOL,
-  mdShow: TYPES.BOOL,
-  lgShow: TYPES.BOOL,
-
-  showInline: TYPES.BOOL,
-  smShowInline: TYPES.BOOL,
-  mdShowInline: TYPES.BOOL,
-  lgShowInline: TYPES.BOOL,
-
-  showInlineBlock: TYPES.BOOL,
-  smShowInlineBlock: TYPES.BOOL,
-  mdShowInlineBlock: TYPES.BOOL,
-  lgShowInlineBlock: TYPES.BOOL,
+  show: TYPES.BOOL_OR_STRING,
+  smShow: TYPES.BOOL_OR_STRING,
+  mdShow: TYPES.BOOL_OR_STRING,
+  lgShow: TYPES.BOOL_OR_STRING,
 
   container: TYPES.BOOL,
 
@@ -114,14 +104,8 @@ const PROP_TYPES = {
 
   borderStyle: TYPES.STRING,
   colorTo: TYPES.STRING,
-  height: TYPES.STRING_OR_NUMBER
+  height: TYPES.STRING_OR_NUMBER,
 };
-
-/*
-<Display mdHide>I'm going undercover below MD.</Display>
-<Display mdShow>Above MD, I come out of the closet!</Display>
-<Display smShow>SM stands for "small size".</Display>
-*/
 
 /**
  * Code examples and meta
@@ -137,7 +121,7 @@ const DEMO = {
 	<Block margin="2 10 * 10" styles='background-color: gold;'>
 	  My DIV has neat "shorthand" margins applied.
 	</Block>
-</Block>`
+</Block>`,
   },
 
   ARTICLE: {
@@ -145,7 +129,7 @@ const DEMO = {
     CODE: `
 <Article center styles='background-color: orange;'>
 	I'm just like a <em>Block</em>, only more "semantic", ok?
-</Article>`
+</Article>`,
   },
 
   SECTION: {
@@ -153,7 +137,7 @@ const DEMO = {
     CODE: `
 <Section center styles='background-color: orange;'>
 	I'm just like a <em>Block</em>, only more "semantic", ok?
-</Section>`
+</Section>`,
   },
 
   WRAP: {
@@ -168,7 +152,7 @@ const DEMO = {
 <Block styles='background-color: gold;'>
 	I will build a <Wrap bold medium>GREAT</Wrap> wall, and <Wrap underline>nobody</Wrap> builds walls better than me! 
 	<Wrap color="gray" italic margin="* * * 1">– Donald Trump</Wrap>
-</Block>`
+</Block>`,
   },
 
   FLEX: {
@@ -183,7 +167,7 @@ const DEMO = {
     CODE: `
 <Flex justifyContent="center" alignItems="center" styles="height: 60px;">
 	<Text color="gold">By gosh, I'm centered, even vertically!</Text>
-</Flex>`
+</Flex>`,
   },
 
   FLEXITEM: {
@@ -216,7 +200,7 @@ const DEMO = {
 	<FlexItem col={4} gutter={1} padding="1" styles="background-color: firebrick">
 		8 col - 10px gutter
 	</FlexItem>
-</Flex>`
+</Flex>`,
   },
 
   HEADING: {
@@ -224,7 +208,7 @@ const DEMO = {
     CODE: `
 <Heading h1 center color='gold' margin={0} xLarge>
 	Super Styled
-</Heading>`
+</Heading>`,
   },
 
   TEXT: {
@@ -232,7 +216,7 @@ const DEMO = {
     CODE: `
 <Text color='gold' center italic medium>
 	Pack my box with five dozen liquor jugs. What am I?
-</Text>`
+</Text>`,
   },
 
   DISPLAY: {
@@ -240,8 +224,11 @@ const DEMO = {
     EXTRA_SCOPE: ['Wrap'],
     CODE: `
 <Wrap block color="gold" padding="1">
-  <Display hide>HELLO WORLD</Display>
-</Wrap>`
+  <Display lgHide>Shown as "block" (default), up until LG.</Display>
+  <Display mdShow="inline">Hidden, showing up at MD "inline".</Display>
+  <Display mdShow="inline"> Also "inline" at MD!</Display>
+  <Display smHide lgShow>"Block" show, hide at SM, back at LG.</Display>
+</Wrap>`,
   },
 
   RULE: {
@@ -257,8 +244,8 @@ const DEMO = {
 		
 	gradient
 	<Rule color="firebrick" colorTo="gold" height={10} margin="1 * *"/>
-</Wrap>`
-  }
+</Wrap>`,
+  },
 };
 
 /**
@@ -267,7 +254,7 @@ const DEMO = {
 function getPropTypes(Component) {
   return Object.keys(Component.propTypes || {}).map(propName => [
     propName,
-    PROP_TYPES[propName] || '???'
+    PROP_TYPES[propName] || '???',
   ]);
 }
 
@@ -298,7 +285,7 @@ function getDemoComponentData(name) {
     name,
     description: DEMO[key].DESCRIPTION,
     propTypesList: getPropTypes(Component),
-    scope: getScopeForReactLive(name)
+    scope: getScopeForReactLive(name),
   };
 }
 
@@ -306,5 +293,5 @@ export default {
   WRAPPERS: ['Block', 'Article', 'Section', 'Wrap'].map(name => getDemoComponentData(name)),
   TYPOGRAPHY: ['Heading', 'Text'].map(name => getDemoComponentData(name)),
   GRID: ['Flex', 'FlexItem'].map(name => getDemoComponentData(name)),
-  MISC: ['Display', 'Rule'].map(name => getDemoComponentData(name))
+  MISC: ['Display', 'Rule'].map(name => getDemoComponentData(name)),
 };

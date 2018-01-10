@@ -18,12 +18,12 @@ const styles = {
     max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
-  `
+  `,
 };
 
 function App() {
   return (
-    <Block padding="0 2" styles={styles.container}>
+    <Block styles={styles.container}>
       <Logo>&lt; React Super Styled &gt;</Logo>
       <Text center color="#D4752C" bold medium italic margin="1 - 2">
         Responsive JSX layouts with Styled Components

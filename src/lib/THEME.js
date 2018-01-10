@@ -1,7 +1,7 @@
 /**
  * Media breakpoints
  */
-const MEDIA_XS = 576;
+const MEDIA_XS = 576; // xs rules at 0 - 5
 const MEDIA_SM = 768;
 const MEDIA_MD = 992;
 const MEDIA_LG = 1280;
@@ -44,7 +44,7 @@ const THEME = {
   MEDIA_MD_MAX: `@media (max-width: ${MEDIA_MD - 1}px)`,
   MEDIA_LG_MAX: `@media (max-width: ${MEDIA_LG - 1}px)`,
 
-  SPACER: 10 // multiplier for margin, padding, column gutter shorthands
+  SPACER: 10, // multiplier for margin, padding, column gutter shorthands
 };
 
 export default THEME;
