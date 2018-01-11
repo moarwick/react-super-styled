@@ -5,3 +5,4 @@ yarn.lock
 webpack.config.js
 .babelrc
 .eslintrc
+_config.yml

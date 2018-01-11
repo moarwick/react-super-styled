@@ -52,12 +52,14 @@ function MyArticle({text, title}) {
 ```
 
 ### Theme
-*RSS* components rely on a built-in [default theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js). You can pass in your own theme object (or a subset thereof) via the `theme` prop, and it will be extended over the defaults. You can pass it in directly, or using Styled Components' `ThemeProvider` [wrapper](https://www.styled-components.com/docs/advanced#theming).
+*RSS* components rely on a built-in [default theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js). It is used to define media breakpoints, a shorthand [spacer multiplier](#spacing-shorthands), plus font weights & sizing (for typography props). This being a layout-oriented library, the theme avoids concerning itself with colors or other design-oriented values.
+
+You can pass in your own theme object (or a subset thereof) via the `theme` prop, and it will be "extended over" the defaults. You can pass it in directly, or using Styled Components' `ThemeProvider` [wrapper](https://www.styled-components.com/docs/advanced#theming), to override existing values or to add more variables in case you decide to [extend](#extending-styling) any *RSS* components further.
 
 ### Responsive Styles
 All *RSS* components accept styling props per each media breakpoint (defined in the theme): `styles`, `smStyles`, `mdStyles` and `lgStyles`. It's a Bootstrap-style "mobile-first" approach, so think of it in that order -- use `styles` as the default style, which applies at the smallest widths; then pass in styling into any of the other style props to trigger when those breakpoints are exceeded.
 
-Styles can be passed in as a basic string of CSS, e.g. `color: red; font-size: 32` or an array of CSS interpolations from Styled Components' `css` helper. Have a look at the demo [source code](https://github.com/moarwick/react-super-styled/blob/master/src/ComponentDemo.js) for usage examples.
+Styles can be passed in as a basic string of CSS, e.g. `color: red; font-size: 32px` or an array of CSS interpolations from Styled Components' `css` helper. Have a look at the demo [source code](https://github.com/moarwick/react-super-styled/blob/master/src/ComponentDemo.js) for usage examples.
 
 ### Extending Styling
 Majority of *RSS* components are functional native Styled Components, so alternatively, they can be extended via Styled Components' [extend method](https://www.styled-components.com/docs/basics#extending-styles). The exceptions currently are `Heading` and `Flex` which would need to use the `styled(Comp)` approach.
@@ -70,7 +72,7 @@ The `Flex` (container) and `FlexItem` components implement all valid Flexbox pro
 Since gutters are optional, negative margins are applied to a `Flex` (row) only if any gutter props are present. While `FlexItem` supports gutter props, they should be specified at the `Flex` row level (and will be passed down automatically to all direct `FlexItem` children). See the [DEMO](https://moarwick.github.io/react-super-styled/) for examples.
 
 ### Spacing Shorthands
-Since much about web work involves massaging of margins and padding, most *RSS* components accept `margin` and `padding` props. The expected "shorthand" syntax is enhanced to interpret pure numbers as "multipliers" for `THEME.SPACER` (10px), and asterisks `*` to skip a given direction altogether.
+Since much about web work involves massaging of margins and padding, most *RSS* components accept `margin` and `padding` props. The standard CSS "shorthand" syntax is enhanced to interpret pure numbers as "multipliers" for `THEME.SPACER` (10px), and asterisks `*` to skip a given direction altogether.
 
 For instance, `padding="1"` will result in `padding: 10px;` all around, while `margin="0 2 * *"` will result in `margin-top: 0; margin-right: 20px;`. You can mix the units, e.g. `padding="3 15px * *"` would result in `padding-top: 30px; padding-right: 15px`, but.. maybe keep it consistent? ;)
 
