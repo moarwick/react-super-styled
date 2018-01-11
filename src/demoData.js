@@ -109,14 +109,14 @@ const DEMO = {
   BLOCK: {
     DESCRIPTION: 'Block wrapper, renders DIV tag.',
     CODE: `
-	<Block 
-	  center
-	  margin="2 20 * 2" 
-	  padding="1"
-	  styles='background-color: gold;'
-	>
-	  I'm using margins & padding "shorthands".
-  </Block>`,
+<Block 
+  center
+  margin="2 20 * 2" 
+  padding="1"
+  styles='background-color: gold;'
+>
+  I'm using margins & padding "shorthands".
+</Block>`,
   },
 
   SECTION: {
