@@ -1,27 +1,31 @@
-import PropTypes from 'prop-types'
-import styled, { css } from 'styled-components'
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
 import {
   addTheme,
   basePropTypes,
+  gutterPropTypes,
+  withRowGutters,
+  mediaStylesPropTypes,
+  withMediaStyles,
   spacingPropTypes,
   withSpacing,
-  mediaStylesPropTypes,
-  withMediaStyles
-} from './utils'
+} from './utils';
 
 /**
- * Flex "container", to contain FlexItems
+ * Flex "container", to wrap FlexItems
  * Renders <div>
  * https://scotch.io/tutorials/a-visual-guide-to-css3-flexbox-properties
  *
  * CSS Defaults:
  *   flex-direction: row;
  *   flex-wrap: nowrap;
- *   justify-content: stretch;
+ *   justify-content: flex-start;
  *   align-items: stretch;
  *   align-content: stretch;
  */
 const propTypes = {
+  ...basePropTypes,
   inline: PropTypes.bool,
   flexDirection: PropTypes.oneOf(['row', 'row-reverse', 'column', 'column-reverse']),
   flexWrap: PropTypes.oneOf(['nowrap', 'wrap', 'wrap-reverse']),
@@ -30,7 +34,7 @@ const propTypes = {
     'flex-end',
     'center',
     'space-between',
-    'space-around'
+    'space-around',
   ]),
   alignItems: PropTypes.oneOf(['stretch', 'center', 'flex-start', 'flex-end', 'baseline']),
   alignContent: PropTypes.oneOf([
@@ -39,18 +43,17 @@ const propTypes = {
     'flex-start',
     'flex-end',
     'space-between',
-    'space-around'
+    'space-around',
   ]),
-  ...basePropTypes,
   ...spacingPropTypes,
-  ...mediaStylesPropTypes
-}
+  ...gutterPropTypes,
+  ...mediaStylesPropTypes,
+};
 
 // Change certain defaults for grid-like behavior
 const defaultProps = {
   flexWrap: 'wrap',
-  justifyContent: 'space-between'
-}
+};
 
 // prettier-ignore
 const getCss = props => css`
@@ -62,9 +65,26 @@ const getCss = props => css`
   ${props.alignContent && `align-content: ${props.alignContent};`}
   ${withSpacing(props)}
   ${withMediaStyles(props)}
+  ${withRowGutters(props)} // apply gutters last (overrides any prior left/right margins)
 `
 
-const Flex = styled.div`${props => getCss(addTheme(props))};`
-Flex.propTypes = propTypes
-Flex.defaultProps = defaultProps
-export default Flex
+const FlexStyled = styled.div`
+  ${props => getCss(addTheme(props))};
+`;
+
+// Pass down gutter props to any FlexItem children
+function Flex(props) {
+  const { children, gutter, smGutter, mdGutter, lgGutter } = props;
+
+  const childrenWithGutterProps = React.Children.map(children, child => {
+    return child.type && child.type.displayName === 'FlexItem'
+      ? React.cloneElement(child, { gutter, smGutter, mdGutter, lgGutter })
+      : child;
+  });
+
+  return <FlexStyled {...props}>{childrenWithGutterProps}</FlexStyled>;
+}
+
+Flex.propTypes = propTypes;
+Flex.defaultProps = defaultProps;
+export default Flex;

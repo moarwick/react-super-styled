@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled, { css } from 'styled-components'
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
 import {
   addTheme,
   cssSpacing,
@@ -10,14 +10,15 @@ import {
   justifyPropTypes,
   withJustify,
   mediaStylesPropTypes,
-  withMediaStyles
-} from './utils'
+  withMediaStyles,
+} from './utils';
 
 /**
  * Heading
  * Renders <h1> - <h4> tag
  */
 const propTypes = {
+  ...basePropTypes,
   h1: PropTypes.bool,
   h2: PropTypes.bool,
   h3: PropTypes.bool,
@@ -25,14 +26,13 @@ const propTypes = {
   color: PropTypes.string,
   lineHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   margin: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  ...basePropTypes,
   ...fontPropTypes,
   ...justifyPropTypes,
-  ...mediaStylesPropTypes
-}
+  ...mediaStylesPropTypes,
+};
 
-// prettier-ignore
 const getCss = props => {
+  // prettier-ignore
   return css`
     ${props.color && `color: ${props.color};`}
     ${props.lineHeight && `line-height: ${props.lineHeight};`}
@@ -40,14 +40,16 @@ const getCss = props => {
     ${withFont(props, true)}
     ${withJustify(props)}
     ${withMediaStyles(props)}
-  `
-}
+  `;
+};
 
 // NOTE: Not using withComponent(), because reasons..
 const Heading = props => {
-  const hTag = ['h1', 'h2', 'h3', 'h4'].find(hTag => hTag in props) || 'h1'
-  const H = styled[hTag]`${getCss(addTheme({ ...props }))};` // had to clone, otherwise "object not extensible" error
-  return <H>{props.children}</H>
-}
-Heading.propTypes = propTypes
-export default Heading
+  const hTag = ['h1', 'h2', 'h3', 'h4'].find(hTag => hTag in props) || 'h1';
+  const H = styled[hTag]`
+    ${getCss(addTheme({ ...props }))};
+  `; // had to clone, otherwise "object not extensible" error
+  return <H>{props.children}</H>;
+};
+Heading.propTypes = propTypes;
+export default Heading;

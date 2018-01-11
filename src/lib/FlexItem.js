@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import styled, { css } from 'styled-components'
+import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
 import {
   addTheme,
   basePropTypes,
@@ -8,17 +8,16 @@ import {
   spacingPropTypes,
   withSpacing,
   mediaStylesPropTypes,
-  withMediaStyles
-} from './utils'
+  withMediaStyles,
+} from './utils';
 
 /**
  * Flex item wrapper, with 12-column support, media breakpoints
  * Renders <div>
- * Column props can define gutter as "column|gutter" (gutter is a SPACER multiplier)
  * https://scotch.io/tutorials/a-visual-guide-to-css3-flexbox-properties
  * https://www.w3.org/TR/styles-flexbox/#flex-common
  *
- * Defaults:
+ * CSS Defaults:
  *   order: 0;
  *   align-self: auto;
  *   flex: 0 1 auto;      <-- recommended 'shorthand' for below props
@@ -28,24 +27,24 @@ import {
  *   flex-basis: auto;
  */
 const propTypes = {
+  ...basePropTypes,
   alignSelf: PropTypes.oneOf(['auto', 'flex-start', 'flex-end', 'center', 'baseline', 'stretch']),
   flex: PropTypes.string,
   flexBasis: PropTypes.string,
   flexGrow: PropTypes.number,
   flexShrink: PropTypes.number,
   order: PropTypes.number,
-  ...basePropTypes,
   ...columnPropTypes,
   ...spacingPropTypes,
-  ...mediaStylesPropTypes
-}
+  ...mediaStylesPropTypes,
+};
 
 function getCss({ flex, flexGrow, flexShrink, flexBasis, ...props }) {
   if (!flex) {
     flex =
       flexGrow || flexShrink || flexBasis
         ? `${flexGrow || 0} ${flexShrink || 1} ${flexBasis || 'auto'}`
-        : 'initial' // 0 1 auto
+        : 'initial'; // 0 1 auto
   }
 
   // prettier-ignore
@@ -60,6 +59,9 @@ function getCss({ flex, flexGrow, flexShrink, flexBasis, ...props }) {
   `
 }
 
-const FlexItem = styled.div`${props => getCss(addTheme(props))};`
-FlexItem.propTypes = propTypes
-export default FlexItem
+const FlexItem = styled.div`
+  ${props => getCss(addTheme(props))};
+`;
+FlexItem.propTypes = propTypes;
+FlexItem.displayName = 'FlexItem';
+export default FlexItem;

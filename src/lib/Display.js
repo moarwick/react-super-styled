@@ -1,5 +1,11 @@
-import styled, { css } from 'styled-components'
-import { addTheme, basePropTypes, displayPropTypes } from './utils'
+import styled, { css } from 'styled-components';
+import { addTheme, basePropTypes, displayPropTypes } from './utils';
+
+function toDisplayCss(hide, show) {
+  if (hide) return 'display: none;';
+  if (!show || typeof show === 'boolean') show = 'block';
+  return `display: ${show};`;
+}
 
 /**
  * Wrapper to show/hide contents based on media breakpoints
@@ -7,54 +13,42 @@ import { addTheme, basePropTypes, displayPropTypes } from './utils'
  */
 const propTypes = {
   ...basePropTypes,
-  ...displayPropTypes
-}
+  ...displayPropTypes,
+};
 
-// prettier-ignore
 const getCss = props => {
   const {
-    mdHide,
+    hide,
     smHide,
-    xsHide,
-    mdShow,
+    mdHide,
+    lgHide,
+
+    show,
     smShow,
-    xsShow,
-    mdShowInline,
-    smShowInline,
-    xsShowInline,
-    mdShowInlineBlock,
-    smShowInlineBlock,
-    xsShowInlineBlock,
-    theme
-  } = props
+    mdShow,
+    lgShow,
 
-  // TODO: rework this, so it can act on multiple breakpoints per use
+    theme,
+  } = props;
 
-  let breakpoint = ''
-  let displayType = ''
-
-  if (mdShow || mdShowInline || mdShowInlineBlock || mdHide) { breakpoint = 'MD_MAX' }
-  if (smShow || smShowInline || smShowInlineBlock || smHide) { breakpoint = 'SM_MAX' }
-  if (xsShow || xsShowInline || xsShowInlineBlock || xsHide) { breakpoint = 'XS_MAX' }
-
-  const isHide = mdHide || smHide || xsHide
-  const isShow = mdShow || smShow || xsShow ||
-    mdShowInline || smShowInline || xsShowInline ||
-    mdShowInlineBlock || smShowInlineBlock || xsShowInlineBlock
-
-  if (isShow) {
-    if (mdShow || smShow || xsShow) { displayType = 'block' }
-    if (mdShowInlineBlock || smShowInlineBlock || xsShowInlineBlock) { displayType = 'inline-block' }
-    if (mdShowInline || smShowInline || xsShowInline) { displayType = 'inline' }
-  }
+  const xsShow = !hide && (show || smHide || mdHide || lgHide);
+  const xsHide = hide || (!xsShow && (smShow || mdShow || lgShow));
+  const isSmRules = smHide || smShow;
+  const isMdRules = mdHide || mdShow;
+  const isLgRules = lgHide || lgShow;
 
   // prettier-ignore
   return css`
-    ${isShow && `display: none; ${theme['MEDIA_' + breakpoint]} { display: ${displayType};`}
-    ${isHide && `${theme['MEDIA_' + breakpoint]} { display: none; }`}
+    ${xsHide && 'display: none;'}
+    ${xsShow && toDisplayCss(false, show)}
+    ${isSmRules && `${theme.MEDIA_XS_MIN} { ${toDisplayCss(smHide, smShow)} }`}
+    ${isMdRules && `${theme.MEDIA_SM_MIN} { ${toDisplayCss(mdHide, mdShow)} }`}
+    ${isLgRules && `${theme.MEDIA_MD_MIN} { ${toDisplayCss(lgHide, lgShow)} }`}
   `
-}
+};
 
-const Display = styled.span`${props => getCss(addTheme(props))};`
-Display.propTypes = propTypes
-export default Display
+const Display = styled.span`
+  ${props => getCss(addTheme(props))};
+`;
+Display.propTypes = propTypes;
+export default Display;

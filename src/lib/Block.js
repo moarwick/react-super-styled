@@ -1,14 +1,16 @@
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components';
 import {
   addTheme,
   basePropTypes,
+  containerPropTypes,
+  withContainer,
   justifyPropTypes,
   withJustify,
   spacingPropTypes,
   withSpacing,
   mediaStylesPropTypes,
-  withMediaStyles
-} from './utils'
+  withMediaStyles,
+} from './utils';
 
 /**
  * Block wrapper
@@ -16,18 +18,22 @@ import {
  */
 const propTypes = {
   ...basePropTypes,
+  ...containerPropTypes,
   ...justifyPropTypes,
   ...spacingPropTypes,
-  ...mediaStylesPropTypes
-}
+  ...mediaStylesPropTypes,
+};
 
 // prettier-ignore
 const getCss = props => css`
+  ${withContainer(props)}
   ${withJustify(props)}
   ${withSpacing(props)}
   ${withMediaStyles(props)}
-`
+`;
 
-const Block = styled.div`${props => getCss(addTheme(props))};`
-Block.propTypes = propTypes
-export default Block
+const Block = styled.div`
+  ${props => getCss(addTheme(props))};
+`;
+Block.propTypes = propTypes;
+export default Block;

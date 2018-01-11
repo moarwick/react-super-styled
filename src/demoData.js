@@ -1,5 +1,106 @@
-import React from 'react'
-import * as Components from './lib/index'
+import React from 'react';
+import * as Components from './lib/index';
+
+const TYPES = {
+  ARRAY: 'Array',
+  BOOL: 'Boolean',
+  BOOL_OR_NUMBER: 'Boolean, Number',
+  BOOL_OR_STRING: 'Boolean, String',
+  FUNC: 'Function',
+  NODE: 'React Elem(s)',
+  NUMBER: 'Number',
+  OBJECT: 'Object',
+  STRING: 'String',
+  STRING_OR_NUMBER: 'String, Number',
+  STRING_OR_ARRAY_OF_CSS: 'String, Array (css)',
+};
+
+const PROP_TYPES = {
+  children: TYPES.NODE,
+  innerRef: TYPES.FUNC,
+  theme: TYPES.OBJECT,
+
+  hide: TYPES.BOOL,
+  smHide: TYPES.BOOL,
+  mdHide: TYPES.BOOL,
+  lgHide: TYPES.BOOL,
+
+  show: TYPES.BOOL_OR_STRING,
+  smShow: TYPES.BOOL_OR_STRING,
+  mdShow: TYPES.BOOL_OR_STRING,
+  lgShow: TYPES.BOOL_OR_STRING,
+
+  container: TYPES.BOOL_OR_NUMBER,
+
+  margin: TYPES.STRING_OR_NUMBER,
+  padding: TYPES.STRING_OR_NUMBER,
+
+  block: TYPES.BOOL,
+  inline: TYPES.BOOL,
+  inlineBlock: TYPES.BOOL,
+
+  color: TYPES.STRING,
+  lineHeight: TYPES.STRING_OR_NUMBER,
+
+  italic: TYPES.BOOL,
+  roman: TYPES.BOOL,
+  underline: TYPES.BOOL,
+  light: TYPES.BOOL,
+  normal: TYPES.BOOL,
+  bold: TYPES.BOOL,
+  small: TYPES.BOOL,
+  base: TYPES.BOOL,
+  medium: TYPES.BOOL,
+  large: TYPES.BOOL,
+  xLarge: TYPES.BOOL,
+  xxLarge: TYPES.BOOL,
+
+  left: TYPES.BOOL,
+  center: TYPES.BOOL,
+  right: TYPES.BOOL,
+
+  h1: TYPES.BOOL,
+  h2: TYPES.BOOL,
+  h3: TYPES.BOOL,
+  h4: TYPES.BOOL,
+
+  flexDirection: TYPES.STRING,
+  flexWrap: TYPES.STRING,
+  justifyContent: TYPES.STRING,
+  alignItems: TYPES.STRING,
+  alignContent: TYPES.STRING,
+
+  alignSelf: TYPES.STRING,
+  flex: TYPES.STRING,
+  flexBasis: TYPES.STRING,
+  flexGrow: TYPES.NUMBER,
+  flexShrink: TYPES.NUMBER,
+  order: TYPES.NUMBER,
+
+  gutter: TYPES.NUMBER,
+  smGutter: TYPES.NUMBER,
+  mdGutter: TYPES.NUMBER,
+  lgGutter: TYPES.NUMBER,
+
+  col: TYPES.NUMBER,
+  smCol: TYPES.NUMBER,
+  mdCol: TYPES.NUMBER,
+  lgCol: TYPES.NUMBER,
+
+  offset: TYPES.NUMBER,
+  smOffset: TYPES.NUMBER,
+  mdOffset: TYPES.NUMBER,
+  lgOffset: TYPES.NUMBER,
+
+  styles: TYPES.STRING_OR_ARRAY_OF_CSS,
+  smStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
+  mdStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
+  lgStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
+
+  borderStyle: TYPES.STRING,
+  colorTo: TYPES.STRING,
+  height: TYPES.STRING_OR_NUMBER,
+};
 
 /**
  * Code examples and meta
@@ -8,153 +109,197 @@ const DEMO = {
   BLOCK: {
     DESCRIPTION: 'Block wrapper, renders DIV tag.',
     CODE: `
-<Block>
-	<Block margin="0 10 2 0" styles='border: 2px solid firebrick;'>
-	  My parent DIV has neat "shorthand" margins applied.
-	</Block>
-	<Block padding="2 -" center styles='background-color: gold;'>
-	  My parent DIV gave me padding, alignment, and... jaundice :|
-	</Block>
-</Block>`
+<Block 
+  center
+  margin="2 20 * 2" 
+  padding="1"
+  styles='background-color: orange; border: 2px solid white'
+>
+  I'm using margins & padding "shorthands".
+</Block>`,
   },
 
-  DISPLAY: {
-    DESCRIPTION: 'Wrapper to show or hide children based on media breakpoints. Renders SPAN tag.',
+  SECTION: {
+    DESCRIPTION: 'Block variant, renders SECTION tag.',
     CODE: `
-<p>
-	Nobody builds walls better than me<Display mdHide>, believe me</Display>!
-	<Display mdShowInline>It will be great!</Display> 
-</p>`
+<Section 
+  padding="1"
+  styles='background-color: firebrick'
+  smStyles='background-color: orangered'
+  mdStyles='background-color: orange'
+  lgStyles='background-color: gold'
+>
+	Watch me change styles at different breakpoints!
+</Section>`,
+  },
+
+  ARTICLE: {
+    DESCRIPTION: 'Block variant, renders ARTICLE tag.',
+    CODE: `
+<Article center padding="1" styles='background-color: gold'>
+	I'm also just like <em>Block</em>, but more "semantic"  ¯\\_(ツ)_/¯
+</Article>`,
+  },
+
+  WRAP: {
+    DESCRIPTION: <span>SPAN wrapper, supports a wide range of display and typography props.</span>,
+    EXTRA_SCOPE: ['Block'],
+    CODE: `
+<Block padding="1" styles='background-color: gold'>
+	I will build a <Wrap bold medium>GREAT</Wrap> wall, 
+	and <Wrap underline>nobody</Wrap> builds walls better than me! 
+	<Wrap color="olive" italic margin="* * * 1">– D. Trump</Wrap>
+</Block>`,
   },
 
   FLEX: {
     DESCRIPTION: (
       <span>
-        Flex "container", renders DIV tag. Supports standard flex props, defaults to&nbsp;
-        <code>flexWrap:'wrap'</code>
-        &nbsp;and&nbsp;
-        <code>justifyContent:'space-between'</code>.
+        Flex "container", renders DIV tag. Supports standard flex props, plus props for
+        media-enabled 12-column grid. Defaults to&nbsp;
+        <code>flexWrap:'wrap'</code>.
       </span>
     ),
+    EXTRA_SCOPE: ['Text'],
     CODE: `
-<Flex justifyContent="center" alignItems="center" styles="height: 60px;">
-	By gosh, I'm centered, even vertically!
-</Flex>`
+<Flex justifyContent="center" alignItems="center" styles="height: 60px">
+	<Text color="gold">By gosh, I'm centered, even vertically!</Text>
+</Flex>`,
   },
 
   FLEXITEM: {
     DESCRIPTION: (
       <span>
-        Flex "item" wrapper, renders DIV tag. Supports standard flex props and responsive columns.
-        Gutter can be specified as "column|gutter" (a SPACER multiplier).
+        Flex "item" wrapper, renders DIV tag. Supports standard flex props, plus props for
+        media-enabled 12-column grid (gutters are typically passed down by <code>Flex</code>).
       </span>
     ),
-    EXTRA_SCOPE: ['Flex'],
+    EXTRA_SCOPE: ['Block', 'Flex'],
     CODE: `
-<Flex>
-	<FlexItem mdCol="4|1" xsCol="12" padding="1" styles="background-color: firebrick;">
-		4 md → 12 xs
-	</FlexItem>
-	<FlexItem mdCol="2|1" xsCol="12" padding="1" styles="background-color: orange;">
-		2 md → 12 xs
-	</FlexItem>
-	<FlexItem mdCol="6|1" xsCol="12" padding="1" styles="background-color: gold;">
-		6 md → 12 xs
-	</FlexItem>
-</Flex>`
+<Block>
+  <Flex>
+    <FlexItem col={4} lgCol={4} padding="1" styles="background-color: gold">
+      4 col (xs) → 4 col (lg)
+    </FlexItem>
+    <FlexItem col={8} lgCol={4} padding="1" styles="background-color: orange">
+      8 col (xs) → 4 col (lg)
+    </FlexItem>
+    <FlexItem col={12} lgCol={4} padding="1" styles="background-color: firebrick">
+      12 col (xs) → 4 col (lg)
+    </FlexItem>
+  </Flex>
+  
+  <Flex margin="1 *">
+    <FlexItem 
+      col={12} 
+      lgOffset={2} lgCol={8}
+      padding="1" 
+      styles="background-color: #999"
+    >  
+      12 col (xs) → 2 col offset, 8 col (lg)
+    </FlexItem>
+	</Flex>
+	
+  <Flex gutter={10}>
+    <FlexItem col={8} padding="1" styles="background-color: orange">
+      8 col - 10px gutter
+    </FlexItem>
+    <FlexItem col={4} padding="1" styles="background-color: firebrick">
+      4 col - 10px gutter
+    </FlexItem>
+	</Flex>
+</Block>`,
   },
 
   HEADING: {
     DESCRIPTION: 'Renders H1, H2, H3, or H4 tag.',
     CODE: `
-<Heading h1 center xLarge color='firebrick' margin="0">
-	Story Time
-</Heading>`
-  },
-
-  RULE: {
-    DESCRIPTION: 'A "smarter" HR, just for fun. Renders DIV tag.',
-    CODE: `
-<span>
-	Dotted
-	<Rule borderStyle="dotted" margin="- - 2"/>
-	
-	Dashed
-	<Rule borderStyle="dashed" color="gray" height={4} margin="- - 2"/>
-		
-	Gradient
-	<Rule color="purple" colorTo="gold" height={10}/>
-</span>`
-  },
-
-  SECTION: {
-    DESCRIPTION: 'Block wrapper, renders SECTION tag.',
-    CODE: `
-<Section center styles='border: 2px solid firebrick;'>
-	<p>I'm just like a <em>DIV</em>, only more "semantic", ok?</p>
-</Section>`
+<Heading h1 center color='gold' margin={0} normal xLarge>
+	Super Styled
+</Heading>`,
   },
 
   TEXT: {
     DESCRIPTION: 'Text paragraph, renders P tag.',
     CODE: `
-<Text medium right>
+<Text color='gold' center italic medium>
 	Pack my box with five dozen liquor jugs. What am I?
-</Text>`
+</Text>`,
   },
 
-  WRAP: {
-    DESCRIPTION: 'Non-block wrapper, renders SPAN tag, as inline (default) or inline-block.',
-    EXTRA_SCOPE: ['Block'],
+  DISPLAY: {
+    DESCRIPTION: 'Wrapper to show or hide children based on media breakpoints. Renders SPAN tag.',
+    EXTRA_SCOPE: ['Wrap'],
     CODE: `
-<Block>
-	I will build a <Wrap bold medium>GREAT</Wrap> wall, and nobody builds walls better than me! 
-	<Wrap color="gray" italic margin="- - - 1">– Donald Trump</Wrap>
-</Block>`
-  }
-}
+<Wrap block color="gold" padding="1">
+  <Display lgHide>I'm shown as "block" by default, up until LG.</Display>
+  <Display mdShow="inline">I appear at MD as "inline".</Display>
+  <Display mdShow="inline"> #MeToo!</Display>
+  <Display smHide lgShow>See me go hide at SM, back at LG!</Display>
+</Wrap>`,
+  },
+
+  RULE: {
+    DESCRIPTION: 'A "smarter" HR, just for fun. Renders DIV tag.',
+    EXTRA_SCOPE: ['Wrap'],
+    CODE: `
+<Wrap block color="gold" padding="1">
+	dotted
+	<Rule borderStyle="dotted" color="gold" margin="1 * 2"/>
+	
+	dashed
+	<Rule borderStyle="dashed" color="orange" height={4} margin="1 * 2"/>
+		
+	gradient
+	<Rule color="firebrick" colorTo="gold" height={10} margin="1 * *"/>
+</Wrap>`,
+  },
+};
 
 /**
- * Deliver names of component's propTypes, as a comma-delimited string
+ * Deliver component's propTypes as a list of [propName, propType] value pairs
  */
-function getPropNames(Component) {
-  return Object.keys(Component.propTypes || {}).join(', ')
+function getPropTypes(Component) {
+  return Object.keys(Component.propTypes || {}).map(propName => [
+    propName,
+    PROP_TYPES[propName] || '???',
+  ]);
 }
 
 /**
  * Deliver scope object, as required by React Live's LiveProvider
- * Always include the name'd component, and add any "EXTRA" components, as specified in DEMO meta
+ * Always include the name'd component, adding any "EXTRA" components if specified in DEMO meta
  */
 function getScopeForReactLive(name) {
-  const baseScope = { [name]: Components[name] }
+  const baseScope = { [name]: Components[name] };
   return (DEMO[name.toUpperCase()].EXTRA_SCOPE || []).reduce(
     (accum, compName) => ({ ...accum, [compName]: Components[compName] }),
     baseScope
-  )
+  );
 }
 
 /**
- * Deliver an object of props for a given ComponentDemo component
+ * Deliver a data object for a given ComponentDemo component
  */
-function getDemoComponentProps(name) {
-  const key = name.toUpperCase()
+function getDemoComponentData(name) {
+  const key = name.toUpperCase();
 
-  if (!DEMO[key]) return null
+  if (!DEMO[key]) return null;
 
-  const Component = Components[name]
+  const Component = Components[name];
 
   return {
     code: DEMO[key].CODE.trim(),
     name,
     description: DEMO[key].DESCRIPTION,
-    propList: getPropNames(Component),
-    scope: getScopeForReactLive(name)
-  }
+    propTypesList: getPropTypes(Component),
+    scope: getScopeForReactLive(name),
+  };
 }
 
 export default {
-  WRAPPERS: ['Block', 'Wrap', 'Section'].map(name => getDemoComponentProps(name)),
-  TYPOGRAPHY: ['Heading', 'Text'].map(name => getDemoComponentProps(name)),
-  GRID: ['Flex', 'FlexItem'].map(name => getDemoComponentProps(name)),
-  MISC: ['Display', 'Rule'].map(name => getDemoComponentProps(name))
-}
+  WRAPPERS: ['Block', 'Section', 'Article', 'Wrap'].map(name => getDemoComponentData(name)),
+  TYPOGRAPHY: ['Heading', 'Text'].map(name => getDemoComponentData(name)),
+  GRID: ['Flex', 'FlexItem'].map(name => getDemoComponentData(name)),
+  MISC: ['Display', 'Rule'].map(name => getDemoComponentData(name)),
+};

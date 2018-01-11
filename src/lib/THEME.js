@@ -1,10 +1,10 @@
 /**
  * Media breakpoints
  */
-const MEDIA_LG = 1280
-const MEDIA_MD = 992
-const MEDIA_SM = 768
-const MEDIA_XS = 576
+const MEDIA_XS = 576; // xs rules at 0 - 5
+const MEDIA_SM = 768;
+const MEDIA_MD = 992;
+const MEDIA_LG = 1280;
 
 /**
  * Theming Variables
@@ -24,22 +24,27 @@ const THEME = {
   FONT_H_NORMAL: 400, // Heading
   FONT_H_BOLD: 600, // Heading
 
-  MEDIA_LG,
-  MEDIA_MD,
-  MEDIA_SM,
+  CONTAINER: 980,
+  CONTAINER_SMALL: 740,
+
   MEDIA_XS,
+  MEDIA_SM,
+  MEDIA_MD,
+  MEDIA_LG,
 
-  MEDIA_LG_MAX: `@media screen and (max-width: ${MEDIA_LG}px)`,
-  MEDIA_MD_MAX: `@media screen and (max-width: ${MEDIA_MD}px)`,
-  MEDIA_SM_MAX: `@media screen and (max-width: ${MEDIA_SM}px)`,
-  MEDIA_XS_MAX: `@media screen and (max-width: ${MEDIA_XS}px)`,
+  // trigger at and above this width
+  MEDIA_XS_MIN: `@media (min-width: ${MEDIA_XS}px)`,
+  MEDIA_SM_MIN: `@media (min-width: ${MEDIA_SM}px)`,
+  MEDIA_MD_MIN: `@media (min-width: ${MEDIA_MD}px)`,
+  MEDIA_LG_MIN: `@media (min-width: ${MEDIA_LG}px)`,
 
-  MEDIA_LG_MIN: `@media screen and (min-width: ${MEDIA_MD + 1}px)`,
-  MEDIA_MD_MIN: `@media screen and (min-width: ${MEDIA_SM + 1}px)`,
-  MEDIA_SM_MIN: `@media screen and (min-width: ${MEDIA_XS + 1}px)`,
-  MEDIA_XS_MIN: `@media screen and (min-width: 0px)`,
+  // trigger below this width
+  MEDIA_XS_MAX: `@media (max-width: ${MEDIA_XS - 1}px)`,
+  MEDIA_SM_MAX: `@media (max-width: ${MEDIA_SM - 1}px)`,
+  MEDIA_MD_MAX: `@media (max-width: ${MEDIA_MD - 1}px)`,
+  MEDIA_LG_MAX: `@media (max-width: ${MEDIA_LG - 1}px)`,
 
-  SPACER: 10 // multiplier for margin, padding and column gutter shorthands
-}
+  SPACER: 10, // multiplier for margin, padding, column gutter shorthands
+};
 
-export default THEME
+export default THEME;

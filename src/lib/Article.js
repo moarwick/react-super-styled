@@ -17,9 +17,9 @@ const propTypes = {
 };
 
 /**
- * Section block wrapper
+ * Article block wrapper
  * Duplicates Block, renders <section> tag
  */
-const Section = Block.withComponent('section');
-Section.propTypes = propTypes;
-export default Section;
+const Article = Block.withComponent('article');
+Article.propTypes = propTypes;
+export default Article;
