@@ -113,7 +113,7 @@ const DEMO = {
   center
   margin="2 20 * 2" 
   padding="1"
-  styles='background-color: gold;'
+  styles='background-color: orange; border: 2px solid white'
 >
   I'm using margins & padding "shorthands".
 </Block>`,
@@ -124,10 +124,10 @@ const DEMO = {
     CODE: `
 <Section 
   padding="1"
-  styles='background-color: firebrick;'
-  smStyles='background-color: OrangeRed;'
-  mdStyles='background-color: orange;'
-  lgStyles='background-color: gold;'
+  styles='background-color: firebrick'
+  smStyles='background-color: orangered'
+  mdStyles='background-color: orange'
+  lgStyles='background-color: gold'
 >
 	Watch me change styles at different breakpoints!
 </Section>`,
@@ -136,7 +136,7 @@ const DEMO = {
   ARTICLE: {
     DESCRIPTION: 'Block variant, renders ARTICLE tag.',
     CODE: `
-<Article center padding="1" styles='background-color: gold;'>
+<Article center padding="1" styles='background-color: gold'>
 	I'm also just like <em>Block</em>, but more "semantic"  ¯\\_(ツ)_/¯
 </Article>`,
   },
@@ -145,7 +145,7 @@ const DEMO = {
     DESCRIPTION: <span>SPAN wrapper, supports a wide range of display and typography props.</span>,
     EXTRA_SCOPE: ['Block'],
     CODE: `
-<Block padding="1" styles='background-color: gold;'>
+<Block padding="1" styles='background-color: gold'>
 	I will build a <Wrap bold medium>GREAT</Wrap> wall, 
 	and <Wrap underline>nobody</Wrap> builds walls better than me! 
 	<Wrap color="olive" italic margin="* * * 1">– D. Trump</Wrap>
@@ -162,7 +162,7 @@ const DEMO = {
     ),
     EXTRA_SCOPE: ['Text'],
     CODE: `
-<Flex justifyContent="center" alignItems="center" styles="height: 60px;">
+<Flex justifyContent="center" alignItems="center" styles="height: 60px">
 	<Text color="gold">By gosh, I'm centered, even vertically!</Text>
 </Flex>`,
   },

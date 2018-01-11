@@ -142,6 +142,7 @@ export function withContainer(props) {
       max-width: ${props.container}px;
     `;
 
+  // passing in a 'boolean' behaves "just like Bootstrap"
   // prettier-ignore
   return css`
     margin-left: auto;
