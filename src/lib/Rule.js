@@ -1,12 +1,20 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { addTheme, cssSpacing, toCssUnits, mediaStylesPropTypes, withMediaStyles } from './utils';
+import {
+  addTheme,
+  basePropTypes,
+  cssSpacing,
+  toCssUnits,
+  mediaStylesPropTypes,
+  withMediaStyles,
+} from './utils';
 
 /**
  * A "smarter" <hr/>
  * Renders <div>
  */
 const propTypes = {
+  ...basePropTypes,
   borderStyle: PropTypes.string,
   color: PropTypes.string,
   colorTo: PropTypes.string,

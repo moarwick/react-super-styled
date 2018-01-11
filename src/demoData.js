@@ -4,20 +4,15 @@ import * as Components from './lib/index';
 const TYPES = {
   ARRAY: 'Array',
   BOOL: 'Boolean',
+  BOOL_OR_NUMBER: 'Boolean, Number',
   BOOL_OR_STRING: 'Boolean, String',
+  FUNC: 'Function',
+  NODE: 'React Elem(s)',
   NUMBER: 'Number',
+  OBJECT: 'Object',
   STRING: 'String',
   STRING_OR_NUMBER: 'String, Number',
-  STRING_OR_ARRAY_OF_CSS: 'String, Array (CSS)',
-  OBJECT: 'Object',
-  NODE: 'React Elem(s)',
-  FUNC: 'Function',
-  STRING_FLEX_DIR: 'String (row, row-reverse, column, column-reverse)',
-  STRING_FLEX_WRAP: 'String (nowrap, wrap, wrap-reverse)',
-  STRING_JUSTIFY_CONTENT: 'String (flex-start, flex-end, center, space-between, space-around)',
-  STRING_ALIGN_ITEMS: 'String (stretch, center, flex-start, flex-end, baseline)',
-  STRING_ALIGN_CONTENT:
-    'String (stretch, center, flex-start, flex-end, space-between, space-around)',
+  STRING_OR_ARRAY_OF_CSS: 'String, Array (css)',
 };
 
 const PROP_TYPES = {
@@ -35,7 +30,7 @@ const PROP_TYPES = {
   mdShow: TYPES.BOOL_OR_STRING,
   lgShow: TYPES.BOOL_OR_STRING,
 
-  container: TYPES.BOOL,
+  container: TYPES.BOOL_OR_NUMBER,
 
   margin: TYPES.STRING_OR_NUMBER,
   padding: TYPES.STRING_OR_NUMBER,
@@ -112,46 +107,48 @@ const PROP_TYPES = {
  */
 const DEMO = {
   BLOCK: {
-    DESCRIPTION: "Block wrapper, renders DIV tag. The 'container' prop is akin to Bootstrap.",
+    DESCRIPTION: 'Block wrapper, renders DIV tag.',
     CODE: `
-<Block>
-	<Block padding="2" center styles='background-color: orange;'>
-	  My DIV gave me padding, alignment, and... jaundice :|
-	</Block>
-	<Block margin="2 10 * 10" styles='background-color: gold;'>
-	  My DIV has neat "shorthand" margins applied.
-	</Block>
-</Block>`,
-  },
-
-  ARTICLE: {
-    DESCRIPTION: 'Block variant, renders ARTICLE tag.',
-    CODE: `
-<Article center styles='background-color: orange;'>
-	I'm just like a <em>Block</em>, only more "semantic", ok?
-</Article>`,
+	<Block 
+	  center
+	  margin="2 20 * 2" 
+	  padding="1"
+	  styles='background-color: gold;'
+	>
+	  I'm using margins & padding "shorthands".
+  </Block>`,
   },
 
   SECTION: {
     DESCRIPTION: 'Block variant, renders SECTION tag.',
     CODE: `
-<Section center styles='background-color: orange;'>
-	I'm just like a <em>Block</em>, only more "semantic", ok?
+<Section 
+  padding="1"
+  styles='background-color: firebrick;'
+  smStyles='background-color: OrangeRed;'
+  mdStyles='background-color: orange;'
+  lgStyles='background-color: gold;'
+>
+	Watch me change styles at different breakpoints!
 </Section>`,
   },
 
+  ARTICLE: {
+    DESCRIPTION: 'Block variant, renders ARTICLE tag.',
+    CODE: `
+<Article center padding="1" styles='background-color: gold;'>
+	I'm also just like <em>Block</em>, but more "semantic"  ¯\\_(ツ)_/¯
+</Article>`,
+  },
+
   WRAP: {
-    DESCRIPTION: (
-      <span>
-        Non-block wrapper, renders SPAN tag, as <code>inline</code> (default),{' '}
-        <code>inline-block</code>, or <code>block</code>.
-      </span>
-    ),
+    DESCRIPTION: <span>SPAN wrapper, supports a wide range of display and typography props.</span>,
     EXTRA_SCOPE: ['Block'],
     CODE: `
-<Block styles='background-color: gold;'>
-	I will build a <Wrap bold medium>GREAT</Wrap> wall, and <Wrap underline>nobody</Wrap> builds walls better than me! 
-	<Wrap color="gray" italic margin="* * * 1">– Donald Trump</Wrap>
+<Block padding="1" styles='background-color: gold;'>
+	I will build a <Wrap bold medium>GREAT</Wrap> wall, 
+	and <Wrap underline>nobody</Wrap> builds walls better than me! 
+	<Wrap color="olive" italic margin="* * * 1">– D. Trump</Wrap>
 </Block>`,
   },
 
@@ -177,36 +174,47 @@ const DEMO = {
         media-enabled 12-column grid (gutters are typically passed down by <code>Flex</code>).
       </span>
     ),
-    EXTRA_SCOPE: ['Flex'],
+    EXTRA_SCOPE: ['Block', 'Flex'],
     CODE: `
-<Flex>
-	<FlexItem col={4} mdCol={4} padding="1" styles="background-color: gold">
-	  4 col (xs) → 4 col (md)
-	</FlexItem>
-	<FlexItem col={8} mdCol={4} padding="1" styles="background-color: orange">
-		8 col (xs) → 4 col (md)
-	</FlexItem>
-	<FlexItem col={12} mdCol={4} padding="1" styles="background-color: firebrick">
-		12 col (xs) → 4 col (md)
-	</FlexItem>
-
-	<FlexItem offset={2} col={8} padding="1" styles="background-color: #999">
-	  2 col offset, 8 col
-	</FlexItem>
-
-	<FlexItem col={8} gutter={1} padding="1" styles="background-color: orange">
-		8 col - 10px gutter
-	</FlexItem>
-	<FlexItem col={4} gutter={1} padding="1" styles="background-color: firebrick">
-		8 col - 10px gutter
-	</FlexItem>
-</Flex>`,
+<Block>
+  <Flex>
+    <FlexItem col={4} lgCol={4} padding="1" styles="background-color: gold">
+      4 col (xs) → 4 col (lg)
+    </FlexItem>
+    <FlexItem col={8} lgCol={4} padding="1" styles="background-color: orange">
+      8 col (xs) → 4 col (lg)
+    </FlexItem>
+    <FlexItem col={12} lgCol={4} padding="1" styles="background-color: firebrick">
+      12 col (xs) → 4 col (lg)
+    </FlexItem>
+  </Flex>
+  
+  <Flex margin="1 *">
+    <FlexItem 
+      col={12} 
+      lgOffset={2} lgCol={8}
+      padding="1" 
+      styles="background-color: #999"
+    >  
+      12 col (xs) → 2 col offset, 8 col (lg)
+    </FlexItem>
+	</Flex>
+	
+  <Flex gutter={10}>
+    <FlexItem col={8} padding="1" styles="background-color: orange">
+      8 col - 10px gutter
+    </FlexItem>
+    <FlexItem col={4} padding="1" styles="background-color: firebrick">
+      4 col - 10px gutter
+    </FlexItem>
+	</Flex>
+</Block>`,
   },
 
   HEADING: {
     DESCRIPTION: 'Renders H1, H2, H3, or H4 tag.',
     CODE: `
-<Heading h1 center color='gold' margin={0} xLarge>
+<Heading h1 center color='gold' margin={0} normal xLarge>
 	Super Styled
 </Heading>`,
   },
@@ -224,10 +232,10 @@ const DEMO = {
     EXTRA_SCOPE: ['Wrap'],
     CODE: `
 <Wrap block color="gold" padding="1">
-  <Display lgHide>Shown as "block" (default), up until LG.</Display>
-  <Display mdShow="inline">Hidden, showing up at MD "inline".</Display>
-  <Display mdShow="inline"> Also "inline" at MD!</Display>
-  <Display smHide lgShow>"Block" show, hide at SM, back at LG.</Display>
+  <Display lgHide>I'm shown as "block" by default, up until LG.</Display>
+  <Display mdShow="inline">I appear at MD as "inline".</Display>
+  <Display mdShow="inline"> #MeToo!</Display>
+  <Display smHide lgShow>See me go hide at SM, back at LG!</Display>
 </Wrap>`,
   },
 
@@ -290,7 +298,7 @@ function getDemoComponentData(name) {
 }
 
 export default {
-  WRAPPERS: ['Block', 'Article', 'Section', 'Wrap'].map(name => getDemoComponentData(name)),
+  WRAPPERS: ['Block', 'Section', 'Article', 'Wrap'].map(name => getDemoComponentData(name)),
   TYPOGRAPHY: ['Heading', 'Text'].map(name => getDemoComponentData(name)),
   GRID: ['Flex', 'FlexItem'].map(name => getDemoComponentData(name)),
   MISC: ['Display', 'Rule'].map(name => getDemoComponentData(name)),

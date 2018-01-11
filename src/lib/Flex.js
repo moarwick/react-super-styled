@@ -9,7 +9,7 @@ import {
   mediaStylesPropTypes,
   withMediaStyles,
   spacingPropTypes,
-  withSpacing
+  withSpacing,
 } from './utils';
 
 /**
@@ -34,7 +34,7 @@ const propTypes = {
     'flex-end',
     'center',
     'space-between',
-    'space-around'
+    'space-around',
   ]),
   alignItems: PropTypes.oneOf(['stretch', 'center', 'flex-start', 'flex-end', 'baseline']),
   alignContent: PropTypes.oneOf([
@@ -43,17 +43,16 @@ const propTypes = {
     'flex-start',
     'flex-end',
     'space-between',
-    'space-around'
+    'space-around',
   ]),
   ...spacingPropTypes,
   ...gutterPropTypes,
-  ...mediaStylesPropTypes
+  ...mediaStylesPropTypes,
 };
 
 // Change certain defaults for grid-like behavior
 const defaultProps = {
   flexWrap: 'wrap',
-  justifyContent: 'flex-start'
 };
 
 // prettier-ignore
@@ -66,7 +65,7 @@ const getCss = props => css`
   ${props.alignContent && `align-content: ${props.alignContent};`}
   ${withSpacing(props)}
   ${withMediaStyles(props)}
-  ${withRowGutters(props)} // gutters last (overrides any prior left/right margins)
+  ${withRowGutters(props)} // apply gutters last (overrides any prior left/right margins)
 `
 
 const FlexStyled = styled.div`

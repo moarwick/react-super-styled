@@ -49,7 +49,7 @@ export function cssSize(val, spacer) {
  *   padding-left: 10%;
  */
 export function cssSpacing(rule, props) {
-  rule = ['margin', 'padding'].find(supportedRule => supportedRule === rule.trim());
+  // rule = ['margin', 'padding'].find(supportedRule => supportedRule === rule.trim());
 
   if (!rule) return '';
 
@@ -129,11 +129,19 @@ const displayPropTypes = {
 export { displayPropTypes };
 
 const containerPropTypes = {
-  container: PropTypes.bool,
+  container: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
 };
 export { containerPropTypes };
 export function withContainer(props) {
   if (!props.container) return '';
+
+  if (typeof props.container === 'number')
+    return css`
+      margin-left: auto;
+      margin-right: auto;
+      max-width: ${props.container}px;
+    `;
+
   // prettier-ignore
   return css`
     margin-left: auto;

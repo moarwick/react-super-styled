@@ -17,10 +17,10 @@ import {
  * Renders <p> tag
  */
 const propTypes = {
+  ...basePropTypes,
   color: PropTypes.string,
   lineHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   margin: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  ...basePropTypes,
   ...fontPropTypes,
   ...justifyPropTypes,
   ...mediaStylesPropTypes,

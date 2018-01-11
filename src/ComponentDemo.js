@@ -1,27 +1,30 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
-import { Block, Flex, FlexItem, Heading, Section, Text, Wrap } from './lib/index';
+import { Block, Flex, FlexItem, Heading, Rule, Section, Text, Wrap } from './lib/index';
 
 const Code = styled.code`
-  font-weight: bold;
   color: firebrick;
+  font-weight: bold;
+  font-size: 12px;
 `;
 
 const styles = {
   section: css`
-    background-color: #ddd;
-  `,
-  preview: css`
-    background-color: #1d1f21;
-    border-top: 2px solid #ddd;
+    background-color: #fff;
+    box-shadow: 1px 1px 10px 0 rgba(0, 100, 0, 0.2);
+    margin-bottom: 20px;
   `,
   propNames: css`
     background: linear-gradient(to right, #eee, #bbb);
   `,
   editor: {
     overflowX: 'hidden',
+    height: '100%',
   },
+  preview: css`
+    background-color: #1d1f21;
+  `,
 };
 
 function renderPropTypesColumns(list) {
@@ -45,28 +48,28 @@ const ComponentDemo = props => {
 
   return (
     <Section styles={styles.section}>
-      <Block padding="3 2 2">
-        <Block>
-          <Heading color="firebrick" margin={0} inline large>
-            {name}&nbsp;&nbsp;
-          </Heading>
-          <Text inline>{description}</Text>
-          <Flex gutter={10} margin="1 * 2">
-            {renderedPropTypesList}
-          </Flex>
-        </Block>
-        <LiveProvider code={code} scope={scope}>
-          <Flex lgGutter={10}>
-            <FlexItem col={12} lgCol={6}>
-              <LiveEditor style={styles.editor} />
-              <LiveError />
-            </FlexItem>
-            <FlexItem col={12} lgCol={6} styles={styles.preview} lgStyles="border: none">
-              <LivePreview />
-            </FlexItem>
-          </Flex>
-        </LiveProvider>
+      <Block padding="1 2">
+        <Heading color="firebrick" margin={0} inline large normal>
+          {name}&nbsp;&nbsp;
+        </Heading>
+        <Text inline>{description}</Text>
       </Block>
+      <Rule borderStyle="dotted" color="#999" />
+      <Block padding="* 2">
+        <Flex gutter={10} margin="1 * 2">
+          {renderedPropTypesList}
+        </Flex>
+      </Block>
+      <LiveProvider code={code} scope={scope}>
+        <Flex lgGutter={10}>
+          <FlexItem col={12} lgCol={6}>
+            <LiveEditor style={styles.editor} />
+          </FlexItem>
+          <FlexItem col={12} lgCol={6} styles={styles.preview} lgStyles="border: none">
+            <LivePreview />
+          </FlexItem>
+        </Flex>
+      </LiveProvider>
     </Section>
   );
 };

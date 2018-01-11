@@ -10,7 +10,7 @@ import {
   justifyPropTypes,
   withJustify,
   mediaStylesPropTypes,
-  withMediaStyles
+  withMediaStyles,
 } from './utils';
 
 /**
@@ -28,7 +28,7 @@ const propTypes = {
   margin: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   ...fontPropTypes,
   ...justifyPropTypes,
-  ...mediaStylesPropTypes
+  ...mediaStylesPropTypes,
 };
 
 const getCss = props => {
@@ -40,7 +40,7 @@ const getCss = props => {
     ${withFont(props, true)}
     ${withJustify(props)}
     ${withMediaStyles(props)}
-  `
+  `;
 };
 
 // NOTE: Not using withComponent(), because reasons..

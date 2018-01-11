@@ -8,7 +8,7 @@ import {
   spacingPropTypes,
   withSpacing,
   mediaStylesPropTypes,
-  withMediaStyles
+  withMediaStyles,
 } from './utils';
 
 /**
@@ -36,7 +36,7 @@ const propTypes = {
   order: PropTypes.number,
   ...columnPropTypes,
   ...spacingPropTypes,
-  ...mediaStylesPropTypes
+  ...mediaStylesPropTypes,
 };
 
 function getCss({ flex, flexGrow, flexShrink, flexBasis, ...props }) {
@@ -63,4 +63,5 @@ const FlexItem = styled.div`
   ${props => getCss(addTheme(props))};
 `;
 FlexItem.propTypes = propTypes;
+FlexItem.displayName = 'FlexItem';
 export default FlexItem;

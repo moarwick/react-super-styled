@@ -10,7 +10,7 @@ import {
   spacingPropTypes,
   withSpacing,
   mediaStylesPropTypes,
-  withMediaStyles
+  withMediaStyles,
 } from './utils';
 
 /**
@@ -18,14 +18,14 @@ import {
  * Renders <span> tag, as inline (default) or inline-block
  */
 const propTypes = {
+  ...basePropTypes,
   color: PropTypes.string,
   block: PropTypes.bool,
   inlineBlock: PropTypes.bool,
-  ...basePropTypes,
   ...fontPropTypes,
   ...justifyPropTypes,
   ...spacingPropTypes,
-  ...mediaStylesPropTypes
+  ...mediaStylesPropTypes,
 };
 
 // prettier-ignore
