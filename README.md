@@ -15,7 +15,7 @@ A small collection of React "convenience components" to render common HTML "layo
 * Flexbox and flex-based 12-column grid
 * Media breakpoint props for columns, styles, and display (show/hide)
 * Extensible theme vars
-* Spacing "shorthands" for margin, pagging
+* Spacing "shorthands" for margin, padding
 
 Caveats:
 1) Not a full-fledged styling "framework"
