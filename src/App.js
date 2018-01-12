@@ -7,6 +7,22 @@ import DEMO from './demoData';
 
 const CONTAINER_WIDTH = 1280;
 
+const RssLogo = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width={80} height={80}>
+    <g>
+      <path fill="#676" d="M634.5 481.5L319 633 4.5 481.5v-327L319 6l315.5 146.5z" />
+      <path
+        fill="#ccb"
+        d="M33.5 439.5l43-236h101c29 0 48.1 17.2 53 33 5 16 3 52-9 68-9 12-23 22-33 26 12 33 36 109 36 109h-72l-28-103-19 103h-72zm109-131c6 0 14-5 18-13 5.4-10.8 9-30 9-40s-1-23-12-23h-14l-15 76h14z"
+      />
+      <path
+        fill="#ccb"
+        d="M240.5 367.5h58v26c0 9 6 19 16 19 7 0 16-3 22-17 5.5-12.8 4-33-11-38-11.1-3.7-37-12-48-21s-25-23-25-53 18-57 41-69 49-16 68-15 44 6 59 19c-4 24-7 39-10 55h-54c0-11 2-27-1-34-2.1-4.9-11-9-20-7s-14 8-16 16-3 19.7 4 29c6 8 22 12 40 17s33.1 15.4 40 30c9 19 10 53-2 74-10 17.6-26 32-53 41-21 7-59 5-71 2-24-6-37-12-47-21 5-25 10-53 10-53zM424.5 367.5h58v26c0 9 6 19 16 19 7 0 16-3 22-17 5.5-12.8 4-33-11-38-11.1-3.7-37-12-48-21s-25-23-25-53 18-57 41-69 49-16 68-15 44 6 59 19c-4 24-7 39-10 55h-54c0-11 2-27-1-34-2.1-4.9-11-9-20-7s-14 8-16 16-3 19.7 4 29c6 8 22 12 40 17s33.1 15.4 40 30c9 19 10 53-2 74-10 17.6-26 32-53 41-21 7-59 5-71 2-24-6-37-12-47-21 5-25 10-53 10-53z"
+      />
+    </g>
+  </svg>
+);
+
 const GitHubLogo = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width={40} height={40}>
     <path
@@ -21,9 +37,15 @@ const GitHubLogo = () => (
   </svg>
 );
 
-const LogoWrapper = styled.span`
+const RssLogoWrapper = styled.span`
   position: absolute;
-  right: 20px;
+  left: 0;
+  top: 12px;
+`;
+
+const GitHubLogoWrapper = styled.span`
+  position: absolute;
+  right: 0;
   top: 12px;
 `;
 
@@ -53,11 +75,16 @@ function App() {
           <Heading normal styles={styles.title} mdStyles={styles.titleMd}>
             &lt; ReactSuperStyled /&gt;
           </Heading>
-          <LogoWrapper>
+          <RssLogoWrapper>
+            <Display smShow>
+              <RssLogo />
+            </Display>
+          </RssLogoWrapper>
+          <GitHubLogoWrapper>
             <Display smShow>
               <GitHubLogo />
             </Display>
-          </LogoWrapper>
+          </GitHubLogoWrapper>
           <Text center bold medium italic margin="0 * 1">
             Responsive JSX layouts with Styled Components
           </Text>

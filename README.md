@@ -2,6 +2,8 @@
 React Super Styled
 ==================
 
+![RSS](banner.jpg)
+
 [![js-standard-style](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](http://https://prettier.io/)
 
 
