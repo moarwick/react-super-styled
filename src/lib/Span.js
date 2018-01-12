@@ -15,7 +15,7 @@ import {
 
 /**
  * Non-block wrapper
- * Renders <span> tag, as inline (default) or inline-block
+ * Renders <span> tag
  */
 const propTypes = {
   ...basePropTypes,
@@ -39,8 +39,8 @@ const getCss = props => css`
   ${withMediaStyles(props)}
 `
 
-const Wrap = styled.span`
+const Span = styled.span`
   ${props => getCss(addTheme(props))};
 `;
-Wrap.propTypes = propTypes;
-export default Wrap;
+Span.propTypes = propTypes;
+export default Span;

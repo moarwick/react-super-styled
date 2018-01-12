@@ -45,15 +45,17 @@ const PROP_TYPES = {
   italic: TYPES.BOOL,
   roman: TYPES.BOOL,
   underline: TYPES.BOOL,
+
   light: TYPES.BOOL,
   normal: TYPES.BOOL,
   bold: TYPES.BOOL,
+
+  xSmall: TYPES.BOOL,
   small: TYPES.BOOL,
   base: TYPES.BOOL,
   medium: TYPES.BOOL,
   large: TYPES.BOOL,
   xLarge: TYPES.BOOL,
-  xxLarge: TYPES.BOOL,
 
   left: TYPES.BOOL,
   center: TYPES.BOOL,
@@ -141,14 +143,14 @@ const DEMO = {
 </Article>`,
   },
 
-  WRAP: {
+  SPAN: {
     DESCRIPTION: <span>SPAN wrapper, supports a wide range of display and typography props.</span>,
     EXTRA_SCOPE: ['Block'],
     CODE: `
 <Block padding="1" styles='background-color: gold'>
-	I will build a <Wrap bold medium>GREAT</Wrap> wall, 
-	and <Wrap underline>nobody</Wrap> builds walls better than me! 
-	<Wrap color="olive" italic margin="* * * 1">– D. Trump</Wrap>
+	I will build a <Span bold medium>GREAT</Span> wall, 
+	and <Span underline>nobody</Span> builds walls better than me! 
+	<Span color="olive" italic margin="* * * 1">– D. Trump</Span>
 </Block>`,
   },
 
@@ -157,7 +159,7 @@ const DEMO = {
       <span>
         Flex "container", renders DIV tag. Supports standard flex props, plus props for
         media-enabled 12-column grid. Defaults to&nbsp;
-        <code>flexWrap:'wrap'</code>.
+        <code>'wrap'</code>.
       </span>
     ),
     EXTRA_SCOPE: ['Text'],
@@ -223,27 +225,27 @@ const DEMO = {
     DESCRIPTION: 'Text paragraph, renders P tag.',
     CODE: `
 <Text color='gold' center italic medium>
-	Pack my box with five dozen liquor jugs. What am I?
+	Pack my box with five dozen liquor jugs.
 </Text>`,
   },
 
   DISPLAY: {
     DESCRIPTION: 'Wrapper to show or hide children based on media breakpoints. Renders SPAN tag.',
-    EXTRA_SCOPE: ['Wrap'],
+    EXTRA_SCOPE: ['Span'],
     CODE: `
-<Wrap block color="gold" padding="1">
+<Span block color="gold" padding="1">
   <Display lgHide>I'm shown as "block" by default, up until LG.</Display>
   <Display mdShow="inline">I appear at MD as "inline".</Display>
   <Display mdShow="inline"> #MeToo!</Display>
   <Display smHide lgShow>See me go hide at SM, back at LG!</Display>
-</Wrap>`,
+</Span>`,
   },
 
   RULE: {
-    DESCRIPTION: 'A "smarter" HR, just for fun. Renders DIV tag.',
-    EXTRA_SCOPE: ['Wrap'],
+    DESCRIPTION: 'A "smarter" HR, just for fun. Apply border styles or gradients. Renders DIV tag.',
+    EXTRA_SCOPE: ['Span'],
     CODE: `
-<Wrap block color="gold" padding="1">
+<Span block color="gold" padding="1">
 	dotted
 	<Rule borderStyle="dotted" color="gold" margin="1 * 2"/>
 	
@@ -252,7 +254,7 @@ const DEMO = {
 		
 	gradient
 	<Rule color="firebrick" colorTo="gold" height={10} margin="1 * *"/>
-</Wrap>`,
+</Span>`,
   },
 };
 
@@ -298,7 +300,7 @@ function getDemoComponentData(name) {
 }
 
 export default {
-  WRAPPERS: ['Block', 'Section', 'Article', 'Wrap'].map(name => getDemoComponentData(name)),
+  WRAPPERS: ['Block', 'Section', 'Article', 'Span'].map(name => getDemoComponentData(name)),
   TYPOGRAPHY: ['Heading', 'Text'].map(name => getDemoComponentData(name)),
   GRID: ['Flex', 'FlexItem'].map(name => getDemoComponentData(name)),
   MISC: ['Display', 'Rule'].map(name => getDemoComponentData(name)),

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
-import { Block, Flex, FlexItem, Heading, Rule, Section, Text, Wrap } from './lib/index';
+import { Block, Flex, FlexItem, Heading, Rule, Section, Text, Span } from './lib/index';
 
 const Code = styled.code`
   color: firebrick;
@@ -32,9 +32,9 @@ function renderPropTypesColumns(list) {
     <FlexItem key={propValPair[0]} col={12} smCol={6} mdCol={4} lgCol={3}>
       <Code bold color="firebrick">
         {propValPair[0]}:&nbsp;
-        <Wrap normal color="black">
+        <Span normal color="black">
           {propValPair[1]}
-        </Wrap>
+        </Span>
       </Code>
     </FlexItem>
   ));
@@ -64,6 +64,7 @@ const ComponentDemo = props => {
         <Flex lgGutter={10}>
           <FlexItem col={12} lgCol={6}>
             <LiveEditor style={styles.editor} />
+            <LiveError />
           </FlexItem>
           <FlexItem col={12} lgCol={6} styles={styles.preview} lgStyles="border: none">
             <LivePreview />

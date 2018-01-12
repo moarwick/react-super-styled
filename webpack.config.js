@@ -1,19 +1,19 @@
-const path = require('path')
-const webpack = require('webpack')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+const path = require('path');
+const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
-const isProd = process.env.NODE_ENV === 'production'
-const isDev = !isProd
-const ENV = isProd ? 'production' : 'development'
-const DEV_PORT = '8080'
+const isProd = process.env.NODE_ENV === 'production';
+const isDev = !isProd;
+const ENV = isProd ? 'production' : 'development';
+const DEV_PORT = '8080';
 
-const srcFolder = path.resolve(__dirname, 'src')
-const outFolder = path.resolve(__dirname, 'demo')
+const srcFolder = path.resolve(__dirname, 'src');
+const outFolder = path.resolve(__dirname, 'demo');
 
 module.exports = function() {
-  console.log(`Building for ${ENV}...`)
+  console.log(`Building for ${ENV}...`);
 
   /* ----- PLUGINS ----- */
 
@@ -22,21 +22,21 @@ module.exports = function() {
       template: 'src/index.html',
       hash: true,
       inject: 'body',
-      favicon: 'src/assets/img/favicon.ico'
+      favicon: 'src/assets/img/favicon.ico',
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(ENV)
+      'process.env.NODE_ENV': JSON.stringify(ENV),
     }),
     new webpack.NamedModulesPlugin(),
-    new ProgressBarPlugin()
-  ]
+    new ProgressBarPlugin(),
+  ];
 
   if (isDev) {
-    plugins.push(new webpack.HotModuleReplacementPlugin())
+    plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
   if (isProd) {
-    plugins.unshift(new CleanWebpackPlugin(['demo'])) // clear folder first!
+    plugins.unshift(new CleanWebpackPlugin(['demo'])); // clear folder first!
     plugins.push(
       new webpack.optimize.UglifyJsPlugin({
         sourceMap: true,
@@ -44,25 +44,25 @@ module.exports = function() {
         uglifyOptions: {
           compress: {
             dead_code: true,
-            drop_debugger: true
+            drop_debugger: true,
           },
-          warnings: true
-        }
+          warnings: true,
+        },
       })
-    )
+    );
   }
 
   /* ----- ENTRY ----- */
 
-  const entry = ['babel-polyfill']
+  const entry = ['babel-polyfill'];
 
   if (isDev) {
-    entry.push('react-hot-loader/patch')
-    entry.push(`webpack-dev-server/client?http://localhost:${DEV_PORT}`)
-    entry.push('webpack/hot/dev-server') // or 'webpack/hot/only-dev-server' to reload on success only
+    entry.push('react-hot-loader/patch');
+    entry.push(`webpack-dev-server/client?http://localhost:${DEV_PORT}`);
+    entry.push('webpack/hot/dev-server'); // or 'webpack/hot/only-dev-server' to reload on success only
   }
 
-  entry.push(path.join(srcFolder, 'index.js'))
+  entry.push(path.join(srcFolder, 'index.js'));
 
   /* ----- FINAL CONFIG ----- */
 
@@ -73,11 +73,11 @@ module.exports = function() {
       filename: 'bundle.js',
       path: outFolder,
       pathinfo: isDev,
-      publicPath: ''
+      publicPath: '',
     },
     resolve: {
       modules: [path.resolve('./src'), 'node_modules'],
-      extensions: ['.js', '.jsx']
+      extensions: ['.js', '.jsx'],
     },
     plugins: plugins,
     module: {
@@ -86,16 +86,16 @@ module.exports = function() {
           test: /\.(js|jsx)$/,
           loader: 'babel-loader',
           exclude: /node_modules/,
-          include: srcFolder
-        }
-      ]
+          include: srcFolder,
+        },
+      ],
     },
     devServer: {
       contentBase: outFolder,
       historyApiFallback: true,
       hot: true,
       hotOnly: true,
-      stats: 'minimal'
-    }
-  }
-}
+      stats: 'minimal',
+    },
+  };
+};
