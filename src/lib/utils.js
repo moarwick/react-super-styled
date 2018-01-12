@@ -163,17 +163,17 @@ const fontPropTypes = {
   light: PropTypes.bool,
   normal: PropTypes.bool,
   bold: PropTypes.bool,
+  xSmall: PropTypes.bool,
   small: PropTypes.bool,
   base: PropTypes.bool,
   medium: PropTypes.bool,
   large: PropTypes.bool,
   xLarge: PropTypes.bool,
-  xxLarge: PropTypes.bool,
 };
 export { fontPropTypes };
 export function withFont(props, isHeader = false) {
   let fontSize =
-    ['small', 'base', 'medium', 'large', 'xLarge', 'xxLarge'].find(size => size in props) || '';
+    ['xSmall', 'small', 'base', 'medium', 'large', 'xLarge'].find(size => size in props) || '';
   let fontStyle = ['italic', 'roman'].find(style => style in props) || '';
   let fontWeight = ['light', 'normal', 'bold'].find(weight => weight in props) || '';
 

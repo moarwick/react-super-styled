@@ -7,6 +7,6 @@ export { default as Heading } from './Heading';
 export { default as Rule } from './Rule';
 export { default as Section } from './Section';
 export { default as Text } from './Text';
-export { default as Wrap } from './Wrap';
+export { default as Span } from './Span';
 
 export { default as BASE_THEME } from './THEME';

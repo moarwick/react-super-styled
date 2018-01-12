@@ -10,12 +10,12 @@ const MEDIA_LG = 1280;
  * Theming Variables
  */
 const THEME = {
-  FONT_BASE: 16, // default <p> size (px), use strings for other units, e.g. '1.4rem'
+  FONT_XSMALL: 12,
   FONT_SMALL: 14,
-  FONT_MEDIUM: 20,
-  FONT_LARGE: 28,
-  FONT_XLARGE: 40,
-  FONT_XXLARGE: 56,
+  FONT_BASE: 16, // default <p> size (px), use strings for other units, e.g. '1.4rem'
+  FONT_MEDIUM: 18,
+  FONT_LARGE: 24,
+  FONT_XLARGE: 32,
 
   FONT_LIGHT: 300,
   FONT_NORMAL: 400,

@@ -3,7 +3,7 @@ import {
   containerPropTypes,
   justifyPropTypes,
   spacingPropTypes,
-  mediaStylesPropTypes
+  mediaStylesPropTypes,
 } from './utils';
 
 import Block from './Block';
@@ -13,12 +13,12 @@ const propTypes = {
   ...containerPropTypes,
   ...justifyPropTypes,
   ...spacingPropTypes,
-  ...mediaStylesPropTypes
+  ...mediaStylesPropTypes,
 };
 
 /**
  * Article block wrapper
- * Duplicates Block, renders <section> tag
+ * Duplicates Block, renders <article> tag
  */
 const Article = Block.withComponent('article');
 Article.propTypes = propTypes;
