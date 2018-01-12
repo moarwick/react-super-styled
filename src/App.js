@@ -8,7 +8,7 @@ import DEMO from './demoData';
 const CONTAINER_WIDTH = 1280;
 
 const RssLogo = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width={80} height={80}>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width={64} height={64}>
     <g>
       <path fill="#676" d="M634.5 481.5L319 633 4.5 481.5v-327L319 6l315.5 146.5z" />
       <path
