@@ -75,7 +75,7 @@ The `Flex` (container) and `FlexItem` components support all valid Flexbox props
 Since gutters are optional, negative margins are applied to a `Flex` (row) only if gutter props are present. While `FlexItem` supports gutter props, they should be specified at the `Flex` row level (and will be passed down automatically to all direct `FlexItem` children). See the [DEMO](https://moarwick.github.io/react-super-styled/) for examples.
 
 ### Spacing Shorthands
-Since web layouts involve frequent tweaking of margins and padding, most *RSS* components accept "shorthand" `margin` and `padding` props. The standard CSS syntax is enhanced to interpret pure numbers as "multipliers" for `THEME.SPACER` (10px), and asterisks `*` to skip a given direction altogether.
+Since web layouts involve frequent tweaking of margins and padding, most *RSS* components accept "shorthand" `margin` and `padding` props. The standard CSS syntax is enhanced to interpret pure numbers as "multipliers" of the `THEME.SPACER` (10px), and asterisks `*` to skip a given direction altogether.
 
 For instance, `padding="1"` will result in `padding: 10px;` all around, while `margin="0 2 * *"` will result in `margin-top: 0; margin-right: 20px;`. You can mix the units, e.g. `padding="3 15px * *"` would result in `padding-top: 30px; padding-right: 15px`, but.. maybe keep it consistent? ;)
 
