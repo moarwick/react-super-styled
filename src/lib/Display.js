@@ -22,20 +22,23 @@ const getCss = props => {
     smHide,
     mdHide,
     lgHide,
+    xlHide,
 
     show,
     smShow,
     mdShow,
     lgShow,
+    xlShow,
 
     theme,
   } = props;
 
-  const xsShow = !hide && (show || smHide || mdHide || lgHide);
-  const xsHide = hide || (!xsShow && (smShow || mdShow || lgShow));
+  const xsShow = !hide && (show || smHide || mdHide || lgHide || xlHide);
+  const xsHide = hide || (!xsShow && (smShow || mdShow || lgShow || xlShow));
   const isSmRules = smHide || smShow;
   const isMdRules = mdHide || mdShow;
   const isLgRules = lgHide || lgShow;
+  const isXlRules = xlHide || xlShow;
 
   // prettier-ignore
   return css`
@@ -44,6 +47,7 @@ const getCss = props => {
     ${isSmRules && `${theme.MEDIA_XS_MIN} { ${toDisplayCss(smHide, smShow)} }`}
     ${isMdRules && `${theme.MEDIA_SM_MIN} { ${toDisplayCss(mdHide, mdShow)} }`}
     ${isLgRules && `${theme.MEDIA_MD_MIN} { ${toDisplayCss(lgHide, lgShow)} }`}
+    ${isXlRules && `${theme.MEDIA_LG_MIN} { ${toDisplayCss(xlHide, xlShow)} }`}
   `
 };
 
