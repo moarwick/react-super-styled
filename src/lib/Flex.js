@@ -50,7 +50,7 @@ const propTypes = {
   ...mediaStylesPropTypes,
 };
 
-// Change certain defaults for grid-like behavior
+// change flexWrap default for more grid-like behavior
 const defaultProps = {
   flexWrap: 'wrap',
 };
@@ -72,12 +72,12 @@ const FlexStyled = styled.div`
   ${props => getCss(addTheme(props))};
 `;
 
-// Pass down gutter props to any FlexItem children
 function Flex(props) {
   const { children, gutter, smGutter, mdGutter, lgGutter } = props;
 
+  // pass gutter props to any FlexItem children
   const childrenWithGutterProps = React.Children.map(children, child => {
-    return child.type && child.type.displayName === 'FlexItem'
+    return child && child.type && child.type.displayName === 'FlexItem'
       ? React.cloneElement(child, { gutter, smGutter, mdGutter, lgGutter })
       : child;
   });
