@@ -60,7 +60,7 @@ Try out *React Super Styled* "live" in the [DEMO](https://moarwick.github.io/rea
 You can pass in your own theme (or a subset thereof) to any *RSS* component directly via the `theme` prop, or using Styled Components' `ThemeProvider` [wrapper](https://www.styled-components.com/docs/advanced#theming). The passed in theme will be "extended over" the defaults, so it can be used to override existing values or to add more variables in case you decide to [extend](#extending-styling) any *RSS* components further.
 
 ### Responsive Styles
-All *RSS* components accept styling props per each media breakpoint: `styles`, `smStyles`, `mdStyles` and `lgStyles`. It's a "mobile-first" approach, so think of it in that order -- use `styles` as the default style, which applies from the smallest width; then pass in styling into any of the other style props to trigger when those breakpoints are exceeded.
+All *RSS* components accept styling props per each media breakpoint: `styles`, `smStyles`, `mdStyles`, `lgStyles` and `xlStyles`. It's a "mobile-first" approach, so think of it in that order -- use `styles` as the default style, which applies from the smallest width (akin to "xs" in Bootstrap); then pass in additional styling into any of the other style props to trigger when those breakpoints are exceeded.
 
 Styles can be passed in as a basic string of CSS, e.g. `color: red; font-size: 32px` or an array of CSS interpolations from Styled Components' `css` helper. Have a look at the demo [source code](https://github.com/moarwick/react-super-styled/blob/master/src/ComponentDemo.js) for usage examples.
 
