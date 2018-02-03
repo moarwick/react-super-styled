@@ -55,7 +55,7 @@ Try out *React Super Styled* "live" in the [DEMO](https://moarwick.github.io/rea
 
 
 ### Theme
-*RSS* components rely on a built-in [default theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js), used to define media breakpoints, a shorthand [spacer multiplier](#spacing-shorthands). Being a layout-oriented library, its theme avoids concerning itself with colors or other design-oriented values (except for font weights & sizing, to enable some handy typography controls).
+*RSS* components rely on a built-in [default theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js). Being a layout-oriented library, its theme avoids concerning itself with colors or other design-oriented values (except for font weights & sizing, to enable some handy typography controls).
 
 You can pass in your own theme (or a subset thereof) to any *RSS* component directly via the `theme` prop, or using Styled Components' `ThemeProvider` [wrapper](https://www.styled-components.com/docs/advanced#theming). The passed in theme will be "extended over" the defaults, so it can be used to override existing values or to add more variables in case you decide to [extend](#extending-styling) any *RSS* components further.
 
