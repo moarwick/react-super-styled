@@ -24,11 +24,13 @@ const PROP_TYPES = {
   smHide: TYPES.BOOL,
   mdHide: TYPES.BOOL,
   lgHide: TYPES.BOOL,
+  xlHide: TYPES.BOOL,
 
   show: TYPES.BOOL_OR_STRING,
   smShow: TYPES.BOOL_OR_STRING,
   mdShow: TYPES.BOOL_OR_STRING,
   lgShow: TYPES.BOOL_OR_STRING,
+  xlShow: TYPES.BOOL_OR_STRING,
 
   container: TYPES.BOOL_OR_NUMBER,
 
@@ -83,21 +85,25 @@ const PROP_TYPES = {
   smGutter: TYPES.NUMBER,
   mdGutter: TYPES.NUMBER,
   lgGutter: TYPES.NUMBER,
+  xlGutter: TYPES.NUMBER,
 
   col: TYPES.NUMBER,
   smCol: TYPES.NUMBER,
   mdCol: TYPES.NUMBER,
   lgCol: TYPES.NUMBER,
+  xlCol: TYPES.NUMBER,
 
   offset: TYPES.NUMBER,
   smOffset: TYPES.NUMBER,
   mdOffset: TYPES.NUMBER,
   lgOffset: TYPES.NUMBER,
+  xlOffset: TYPES.NUMBER,
 
   styles: TYPES.STRING_OR_ARRAY_OF_CSS,
   smStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
   mdStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
   lgStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
+  xlStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
 
   borderStyle: TYPES.STRING,
   colorTo: TYPES.STRING,
