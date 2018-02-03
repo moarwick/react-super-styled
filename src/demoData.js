@@ -132,12 +132,13 @@ const DEMO = {
     CODE: `
 <Section 
   padding="1"
-  styles='background-color: firebrick'
-  smStyles='background-color: orangered'
-  mdStyles='background-color: orange'
-  lgStyles='background-color: gold'
+  styles='background-color: brown'
+  smStyles='background-color: firebrick'
+  mdStyles='background-color: orangered'
+  lgStyles='background-color: orange'
+  xlStyles='background-color: gold'
 >
-	Watch me change styles at different breakpoints!
+	Watch me change styles at different &lt;&mdash;&gt; breakpoints!
 </Section>`,
   },
 
