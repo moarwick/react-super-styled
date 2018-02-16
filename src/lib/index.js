@@ -10,3 +10,4 @@ export { default as Span } from './Span';
 export { default as Text } from './Text';
 
 export { default as RSS_THEME } from './THEME';
+export { default as withMedia } from './withMedia';

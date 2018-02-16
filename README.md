@@ -10,11 +10,10 @@ React Super Styled
 
 ### Responsive JSX layouts with Styled Components
 
-A collection of React "convenience components" to render common HTML "layout" elements when working with [Styled Components](https://www.styled-components.com/).
+A collection of semantic React "layout components" for working with [Styled Components](https://www.styled-components.com/).
 
-* Quickly author HTML & CSS the "React Way"
 * Semantic component and prop naming
-* Handy built-in props for common styling rules
+* Handy built-in props (booleans) for common styling rules
 * Flexbox and flex-based 12-column grid
 * Media breakpoint props for styles, grid, and display (show/hide)
 * Extensible theme vars
@@ -22,7 +21,8 @@ A collection of React "convenience components" to render common HTML "layout" el
 
 Caveats:
 1) Not a full-fledged styling "framework"
-2) Not performance-oriented (plenty fast for most client-side rendered apps, untested server-side)
+2) Dynamic prop parsing adds some overhead
+3) Untested server-side
 
 
 ### Installation
@@ -79,6 +79,11 @@ Since gutters are optional, negative margins are applied to a `Flex` (row) only 
 Since web layouts involve frequent tweaking of margins and padding, most *RSS* components accept "shorthand" `margin` and `padding` props. The standard CSS syntax is enhanced to interpret pure numbers as "multipliers" of the `THEME.SPACER` (10px), and asterisks `*` to skip a given direction altogether.
 
 For instance, `padding="1"` will result in `padding: 10px;` all around, while `margin="0 2 * *"` will result in `margin-top: 0; margin-right: 20px;`. You can mix the units, e.g. `padding="3 15px * *"` would result in `padding-top: 30px; padding-right: 15px`, but.. maybe keep it consistent? ;)
+
+### Utilities
+
+#### withMedia( [userTheme:Object] )( Component ) ⇒ <code>'xs'|'sm'|'md'|'lg'|'xl'</code>
+Component enhancer to supply the current "breakpoint" via prop `media`. Uses the `MEDIA_XS, MEDIA_SM, MEDIA_MD, MEDIA_LG` thresholds in [RSS theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js) to determine current breakpoint. The `userTheme` argument is optional, supply only if those theme attributes were [customized](https://github.com/moarwick/react-super-styled#theme). Typically, just: `export default withMedia()(MyComponent)`.
 
 ### Changelog
 * See [Releases](https://github.com/moarwick/react-super-styled/releases)

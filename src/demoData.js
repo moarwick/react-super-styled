@@ -181,7 +181,7 @@ const DEMO = {
     DESCRIPTION: (
       <span>
         Flex "item" wrapper, renders DIV tag. Supports standard flex props, plus props for
-        media-enabled 12-column grid (gutters are typically passed down by <code>Flex</code>).
+        media-enabled 12-column grid (gutters are passed down by <code>Flex</code>).
       </span>
     ),
     EXTRA_SCOPE: ['Block', 'Flex'],
