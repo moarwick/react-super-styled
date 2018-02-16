@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { Block, Display, Heading, Rule, Text } from './lib/index';
+import { Block, Display, Heading, Rule, Section, Span, Text, withMedia } from './lib/index';
 import ComponentDemo from './ComponentDemo';
 import DEMO from './demoData';
 
@@ -57,6 +57,11 @@ const Header = styled.a`
 `;
 
 const styles = {
+  section: css`
+    background-color: #fff;
+    box-shadow: 1px 1px 10px 0 rgba(0, 100, 0, 0.2);
+    margin-bottom: 20px;
+  `,
   title: css`
     font-family: 'Racing Sans One', cursive;
     font-size: 32px;
@@ -67,63 +72,99 @@ const styles = {
   `,
 };
 
-function App() {
-  return (
-    <div>
-      <Block container={CONTAINER_WIDTH} styles="position: relative">
-        <Header href="https://github.com/moarwick/react-super-styled">
-          <Heading normal styles={styles.title} mdStyles={styles.titleMd}>
-            &lt; ReactSuperStyled /&gt;
+class App extends React.Component {
+  componentWillMount() {
+    console.time('App Render');
+  }
+
+  componentDidMount() {
+    console.timeEnd('App Render');
+  }
+
+  render() {
+    return (
+      <div>
+        <Block container={CONTAINER_WIDTH} styles="position: relative">
+          <Header href="https://github.com/moarwick/react-super-styled">
+            <Heading normal styles={styles.title} mdStyles={styles.titleMd}>
+              &lt; ReactSuperStyled /&gt;
+            </Heading>
+            <RssLogoWrapper>
+              <Display smShow>
+                <RssLogo />
+              </Display>
+            </RssLogoWrapper>
+            <GitHubLogoWrapper>
+              <Display smShow>
+                <GitHubLogo />
+              </Display>
+            </GitHubLogoWrapper>
+            <Text center bold medium italic margin="0 * 1">
+              Responsive JSX layouts with Styled Components
+            </Text>
+          </Header>
+        </Block>
+
+        <Rule borderStyle="dotted" color="#676" />
+
+        <Block container={CONTAINER_WIDTH}>
+          <Heading h3 color="#676" large normal>
+            Wrappers &raquo;
           </Heading>
-          <RssLogoWrapper>
-            <Display smShow>
-              <RssLogo />
-            </Display>
-          </RssLogoWrapper>
-          <GitHubLogoWrapper>
-            <Display smShow>
-              <GitHubLogo />
-            </Display>
-          </GitHubLogoWrapper>
-          <Text center bold medium italic margin="0 * 1">
-            Responsive JSX layouts with Styled Components
-          </Text>
-        </Header>
-      </Block>
+          {DEMO.WRAPPERS.map((demoProps, index) => (
+            <ComponentDemo key={'wrappers-' + index} {...demoProps} />
+          ))}
 
-      <Rule borderStyle="dotted" color="#676" />
+          <Heading h3 color="#676" large normal>
+            Grid &raquo;
+          </Heading>
+          {DEMO.GRID.map((demoProps, index) => (
+            <ComponentDemo key={'grid-' + index} {...demoProps} />
+          ))}
 
-      <Block container={CONTAINER_WIDTH}>
-        <Heading h3 color="#676" large normal>
-          Wrappers &raquo;
-        </Heading>
-        {DEMO.WRAPPERS.map((demoProps, index) => (
-          <ComponentDemo key={'wrappers-' + index} {...demoProps} />
-        ))}
+          <Heading h3 color="#676" large normal>
+            Typography &raquo;
+          </Heading>
+          {DEMO.TYPOGRAPHY.map((demoProps, index) => (
+            <ComponentDemo key={'type-' + index} {...demoProps} />
+          ))}
 
-        <Heading h3 color="#676" large normal>
-          Grid &raquo;
-        </Heading>
-        {DEMO.GRID.map((demoProps, index) => (
-          <ComponentDemo key={'grid-' + index} {...demoProps} />
-        ))}
+          <Heading h3 color="#676" large normal>
+            Misc &raquo;
+          </Heading>
+          {DEMO.MISC.map((demoProps, index) => (
+            <ComponentDemo key={'misc-' + index} {...demoProps} />
+          ))}
 
-        <Heading h3 color="#676" large normal>
-          Typography &raquo;
-        </Heading>
-        {DEMO.TYPOGRAPHY.map((demoProps, index) => (
-          <ComponentDemo key={'type-' + index} {...demoProps} />
-        ))}
+          <Heading h3 color="#676" large normal>
+            Utilities &raquo;
+          </Heading>
 
-        <Heading h3 color="#676" large normal>
-          Misc &raquo;
-        </Heading>
-        {DEMO.MISC.map((demoProps, index) => (
-          <ComponentDemo key={'misc-' + index} {...demoProps} />
-        ))}
-      </Block>
-    </div>
-  );
+          <Section styles={styles.section}>
+            <Block padding="1 2">
+              <Heading color="firebrick" margin={0} inline large normal>
+                withMedia&nbsp;&nbsp;
+              </Heading>
+              <Text inline>
+                Component enhancer to supply the current "breakpoint" via prop &nbsp;<code>
+                  media
+                </code>.
+              </Text>
+            </Block>
+            <Rule borderStyle="dotted" color="#999" />
+            <Block padding="1 2">
+              <Text>
+                <Span italic color="#999">
+                  Current value:&nbsp;&nbsp;
+                </Span>
+                <strong>{this.props.media}</strong>
+              </Text>
+            </Block>
+          </Section>
+        </Block>
+      </div>
+    );
+  }
 }
 
-export default App;
+export default withMedia()(App);

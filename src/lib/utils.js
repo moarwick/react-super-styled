@@ -106,7 +106,24 @@ function toColumnCss(col, offset, gutter) {
   return `margin-left: ${marginLeft}; margin-right: ${marginRight}; width: ${width};`;
 }
 
-/* ----- ENHANCERS ----- */
+/**
+ * throttleEvent
+ */
+export function throttleEvent(type, name, obj) {
+  let isTriggered = false;
+  const func = () => {
+    if (isTriggered) return;
+    isTriggered = true;
+    requestAnimationFrame(() => {
+      obj.dispatchEvent(new CustomEvent(name));
+      isTriggered = false;
+    });
+  };
+  obj = obj || window;
+  obj.addEventListener(type, func);
+}
+
+/* ----- PROP TYPES & CSS RULE SETS ----- */
 
 const basePropTypes = {
   children: PropTypes.node,

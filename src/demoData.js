@@ -67,6 +67,7 @@ const PROP_TYPES = {
   h2: TYPES.BOOL,
   h3: TYPES.BOOL,
   h4: TYPES.BOOL,
+  h5: TYPES.BOOL,
 
   flexDirection: TYPES.STRING,
   flexWrap: TYPES.STRING,
@@ -180,7 +181,7 @@ const DEMO = {
     DESCRIPTION: (
       <span>
         Flex "item" wrapper, renders DIV tag. Supports standard flex props, plus props for
-        media-enabled 12-column grid (gutters are typically passed down by <code>Flex</code>).
+        media-enabled 12-column grid (gutters are passed down by <code>Flex</code>).
       </span>
     ),
     EXTRA_SCOPE: ['Block', 'Flex'],
@@ -221,9 +222,9 @@ const DEMO = {
   },
 
   HEADING: {
-    DESCRIPTION: 'Renders H1, H2, H3, or H4 tag.',
+    DESCRIPTION: 'Renders H1, H2, H3, H4, or H5 tag.',
     CODE: `
-<Heading h1 center color='gold' margin={0} normal xLarge>
+<Heading h2 center color='gold' margin="1 0 0" normal xLarge>
 	Super Styled
 </Heading>`,
   },
