@@ -83,7 +83,7 @@ For instance, `padding="1"` will result in `padding: 10px;` all around, while `m
 ### Utilities
 
 #### withMedia( [userTheme:Object] )( Component ) ⇒ <code>'xs'|'sm'|'md'|'lg'|'xl'</code>
-Component enhancer to supply the current "breakpoint" via prop `media`. Uses the `MEDIA_XS, MEDIA_SM, MEDIA_MD, MEDIA_LG` thresholds in [RSS theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js) to determine current breakpoint. The `userTheme` argument is optional, supply only if those theme attributes were [customized](https://github.com/moarwick/react-super-styled#theme). Typically, just: `export default withMedia()(MyComponent)`.
+Component enhancer to supply the current "breakpoint" via prop `media`. Uses the `MEDIA_XS, MEDIA_SM, MEDIA_MD, MEDIA_LG` thresholds in [RSS theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js) to determine the breakpoint -- the `userTheme` argument is optional, supply only if [customizing](https://github.com/moarwick/react-super-styled#theme) those theme attributes. Typically, just: `export default withMedia()(MyComponent)`.
 
 ### Changelog
 * See [Releases](https://github.com/moarwick/react-super-styled/releases)
