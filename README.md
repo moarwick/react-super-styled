@@ -13,7 +13,7 @@ React Super Styled
 A collection of semantic React "layout components" for working with [Styled Components](https://www.styled-components.com/).
 
 * Semantic component and prop naming
-* Handy built-in props (booleans) for common styling rules
+* Handy boolean props for common styling rules
 * Flexbox and flex-based 12-column grid
 * Media breakpoint props for styles, grid, and display (show/hide)
 * Extensible theme vars
