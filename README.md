@@ -21,8 +21,8 @@ A collection of semantic React "layout components" for working with [Styled Comp
 
 Caveats:
 1) Not a full-fledged styling "framework"
-2) Dynamic prop parsing adds some overhead
-3) Untested server-side
+2) Dynamic prop parsing adds some overhead (but plenty fast for most apps)
+3) Untested when rendering server-side
 
 
 ### Installation
