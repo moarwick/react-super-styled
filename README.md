@@ -54,21 +54,10 @@ function MyArticle({text, title}) {
 ### Interactive Docs
 Try out *React Super Styled* "live" in the [DEMO](https://moarwick.github.io/react-super-styled/). This README may be sparse but the intent behind *RSS* is to be intuitive and readable. Experiment with all listed props and inspect the results! :)
 
-
-### Theme
-*RSS* components rely on a built-in [default theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js). Being a layout-oriented library, its theme avoids concerning itself with colors or other design-oriented values (except for font weights & sizing, to enable some handy typography controls).
-
-You can pass in your own theme (or a subset thereof) to any *RSS* component directly via the `theme` prop, or using Styled Components' `ThemeProvider` [wrapper](https://www.styled-components.com/docs/advanced#theming). The passed in theme will be "extended over" the defaults, so it can be used to override existing values or to add more variables in case you decide to [extend](#extending-styling) any *RSS* components further.
-
 ### Responsive Styles
 All *RSS* components accept styling props per each media breakpoint: `styles`, `smStyles`, `mdStyles`, `lgStyles` and `xlStyles`. It's a "mobile-first" approach, so think of it in that order -- use `styles` as the default style, which applies from the smallest width (akin to "xs" in Bootstrap); then pass in additional styling into any of the other style props to trigger when those breakpoints are exceeded.
 
 Styles can be passed in as a basic string of CSS, e.g. `color: red; font-size: 32px` or an array of CSS interpolations from Styled Components' `css` helper. Have a look at the demo [source code](https://github.com/moarwick/react-super-styled/blob/master/src/ComponentDemo.js) for usage examples.
-
-### Extending Styling
-Majority of *RSS* components are functional native Styled Components, so alternatively, they can be extended via Styled Components' [extend method](https://www.styled-components.com/docs/basics#extending-styles). The exceptions currently are `Heading` and `Flex` which would need to use the `styled(Comp)` approach.
-
-*NOTE: RSS is intended for building layouts, However, there is some overhead in parsing all the props, so you should probably create "raw" styled components whenever building actual UI widgets or more custom or complex components.*
 
 ### Grid
 The `Flex` (container) and `FlexItem` components support all valid Flexbox props, plus a 12-column grid implementation, including media-based columns, offsets, and gutters. As with styles, the responsive grid props are applied in the "mobile-first" order.
@@ -79,6 +68,16 @@ Since gutters are optional, negative margins are applied to a `Flex` (row) only 
 Since web layouts involve frequent tweaking of margins and padding, most *RSS* components accept "shorthand" `margin` and `padding` props. The standard CSS syntax is enhanced to interpret pure numbers as "multipliers" of the `THEME.SPACER` (10px), and asterisks `*` to skip a given direction altogether.
 
 For instance, `padding="1"` will result in `padding: 10px;` all around, while `margin="0 2 * *"` will result in `margin-top: 0; margin-right: 20px;`. You can mix the units, e.g. `padding="3 15px * *"` would result in `padding-top: 30px; padding-right: 15px`, but.. maybe keep it consistent? ;)
+
+### Extending Styling
+Majority of *RSS* components are functional native Styled Components, so alternatively, they can be extended via Styled Components' [extend method](https://www.styled-components.com/docs/basics#extending-styles). For `Heading` and `Flex` you can use the `styled(Component)` approach.
+
+*NOTE: RSS is intended for building layouts, However, there is some overhead in parsing all the props, so you should probably create "raw" styled components whenever building actual UI widgets or more custom or complex components.*
+
+### Theme
+*RSS* components rely on a built-in [default theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js). Being a layout-oriented library, its theme avoids concerning itself with colors or other design-oriented values (except for font weights & sizing, to enable some handy typography controls).
+
+You can pass in your own theme (or a subset thereof) to any *RSS* component directly via the `theme` prop. Using Styled Components' `ThemeProvider` [wrapper](https://www.styled-components.com/docs/advanced#theming) should also work. The passed-in theme will be "extended over" the defaults, so it can be used to override existing values or to add more variables in case you decide to [extend](#extending-styling) any *RSS* components further.
 
 ### Utilities
 
