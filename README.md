@@ -67,7 +67,7 @@ Since gutters are optional, negative margins are applied to a `Flex` (row) only 
 ### Spacing Shorthands
 Since web layouts involve frequent tweaking of margins and padding, most *RSS* components accept "shorthand" `margin` and `padding` props. The standard CSS syntax is enhanced to interpret pure numbers as "multipliers" of the `THEME.SPACER` (10px), and asterisks `*` to skip a given direction altogether.
 
-For instance, `padding="1"` will result in `padding: 10px;` all around, while `margin="0 2 * *"` will result in `margin-top: 0; margin-right: 20px;`. You can mix the units, e.g. `padding="3 15px * *"` would result in `padding-top: 30px; padding-right: 15px`, but.. maybe keep it consistent? ;)
+For instance, `padding="1"` will result in `padding: 10px;` all around, while `margin="0 2 * *"` will result in `margin-top: 0; margin-right: 20px;`. You can mix the units, e.g. `padding="3 15px * *"`, but.. maybe you shouldn't! ;)
 
 ### Typography
 As of `0.4.0`, `Heading` and `Text` no longer apply any explicit font size or weights. Instead, you can specify browser-interpeted sizing, e.g. `small`, `medium` (matches 100%), `large`, `xLarge`, `xxLarge`, as well as relative sizing and weights, e.g. `smaller`, `larger`, `lighter`, `bolder`. Alternatively, size can be set using the `size` prop, which accepts numbers (px) or strings with desired units (px, em). Per "responsive principles", it is recommended that you set a default `font-size` on the `body`, e.g. `100%` (about 16px).
