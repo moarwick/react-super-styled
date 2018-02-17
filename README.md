@@ -20,9 +20,9 @@ A collection of semantic React "layout components" for working with [Styled Comp
 * Customizable theme, breakpoints
 
 Caveats:
-1) Not a full-fledged "styling library" (but makes for a great "base")
-2) Dynamic prop parsing adds some overhead (but plenty fast for most apps)
-3) Untested when rendering server-side (but "should" work)
+1) Not a full-fledged "styling library" (but makes for a great "base" :)
+2) Dynamic prop parsing adds some overhead (but plenty fast for most apps :)
+3) Untested when rendering server-side (but "should" work ;)
 
 
 ### Installation
@@ -80,13 +80,13 @@ Should you want to override any of those values, you can pass in your own theme 
 ### Extending Styling
 Majority of *RSS* components are functional native Styled Components, so alternatively, they can be extended via Styled Components' [extend method](https://www.styled-components.com/docs/basics#extending-styles). For `Heading` and `Flex` you can use the `styled(Component)` approach.
 
-> RSS is intended for building layouts. For heavy structures or components requiring lots of additional styling, it is recommended to create new "raw" styled components. Having said that, the dynamically generated [DEMO](https://moarwick.github.io/react-super-styled/) page is quite complex and 100% *RSS*, yet renders well under 200ms in production.*
+> RSS is intended for building layouts. For heavy structures or components requiring lots of additional styling, it is recommended to create new "raw" styled components. Having said that, the dynamically generated [DEMO](https://moarwick.github.io/react-super-styled/) page is quite complex and 100% *RSS*, yet renders well under 200ms in production.
 
 
 ### Utilities
 
 #### withMedia( [userTheme:Object] )( Component ) ⇒ <code>'xs'|'sm'|'md'|'lg'|'xl'</code>
-Component enhancer to supply the current "breakpoint" via prop `media`. Uses the `MEDIA_XS, MEDIA_SM, MEDIA_MD, MEDIA_LG` thresholds in [RSS theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js) to determine the breakpoint -- the `userTheme` argument is optional, supply only if [customizing](https://github.com/moarwick/react-super-styled#theme) those theme attributes. Typically, just: `export default withMedia()(MyComponent)`.
+Component enhancer to supply the current "breakpoint" via prop `media`. Uses the `MEDIA_XS, MEDIA_SM, MEDIA_MD, MEDIA_LG` thresholds in [RSS theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js) to determine the breakpoint -- the `userTheme` argument is optional, supply only if customizing those breakpoints. Typically, just: `export default withMedia()(MyComponent)`.
 
 ### Changelog
 * See [Releases](https://github.com/moarwick/react-super-styled/releases)
