@@ -62,7 +62,7 @@ Styles can be passed in as a basic string of CSS, e.g. `color: red; font-size: 3
 ### Grid
 The `Flex` (container) and `FlexItem` components support all valid Flexbox props, plus a 12-column grid implementation, including media-based columns, offsets, and gutters. As with styles, the responsive grid props are applied in the "mobile-first" order.
 
-Since gutters are optional, negative margins are applied to a `Flex` (row) only if gutter props are present. While `FlexItem` supports gutter props, they should be specified at the `Flex` row level (and will be passed down automatically to all direct `FlexItem` children). See the [DEMO](https://moarwick.github.io/react-super-styled/) for examples.
+Since gutters are optional, negative margins are applied to a `Flex` (row) only if gutter props are present. While `FlexItem` supports gutter props, they should be specified at the `Flex` row level (and will be passed down automatically to all direct `FlexItem` children).
 
 ### Spacing Shorthands
 Since web layouts involve frequent tweaking of margins and padding, most *RSS* components accept "shorthand" `margin` and `padding` props. The standard CSS syntax is enhanced to interpret pure numbers as "multipliers" of the `THEME.SPACER` (10px), and asterisks `*` to skip a given direction altogether.
@@ -72,7 +72,7 @@ For instance, `padding="1"` will result in `padding: 10px;` all around, while `m
 ### Extending Styling
 Majority of *RSS* components are functional native Styled Components, so alternatively, they can be extended via Styled Components' [extend method](https://www.styled-components.com/docs/basics#extending-styles). For `Heading` and `Flex` you can use the `styled(Component)` approach.
 
-*NOTE: RSS is intended for building layouts, However, there is some overhead in parsing all the props, so you should probably create "raw" styled components whenever building actual UI widgets or more custom or complex components.*
+*NOTE: RSS is intended for building layouts. For heavy structures or anything requiring lots of additional styling, it is recommended to create new "raw" styled components. Having said that, the dynamically generated [DEMO](https://moarwick.github.io/react-super-styled/) page is quite complex and 100% RSS, yet renders in ~170ms in production.*
 
 ### Theme
 *RSS* components rely on a built-in [default theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js). Being a layout-oriented library, its theme avoids concerning itself with colors or other design-oriented values (except for font weights & sizing, to enable some handy typography controls).
