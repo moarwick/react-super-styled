@@ -38,7 +38,7 @@ const getCss = props => {
     ${props.color && `color: ${props.color};`}
     ${props.lineHeight && `line-height: ${props.lineHeight};`}
     ${props.margin !== undefined && cssSpacing('margin', props)} 
-    ${withFont(props, true)}
+    ${withFont(props)}
     ${withJustify(props)}
     ${withMediaStyles(props)}
   `;

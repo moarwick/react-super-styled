@@ -180,29 +180,52 @@ export function withContainer(props) {
 
 const fontPropTypes = {
   inline: PropTypes.bool,
-  italic: PropTypes.bool,
+
   roman: PropTypes.bool,
-  underline: PropTypes.bool,
+  italic: PropTypes.bool,
+  oblique: PropTypes.bool,
+
   light: PropTypes.bool,
+  lighter: PropTypes.bool,
   normal: PropTypes.bool,
   bold: PropTypes.bool,
+  bolder: PropTypes.bool,
+
+  xxSmall: PropTypes.bool,
   xSmall: PropTypes.bool,
   small: PropTypes.bool,
-  base: PropTypes.bool,
   medium: PropTypes.bool,
   large: PropTypes.bool,
   xLarge: PropTypes.bool,
+  xxLarge: PropTypes.bool,
+  larger: PropTypes.bool,
+  smaller: PropTypes.bool,
+
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  underline: PropTypes.bool,
+};
+const FONT_SIZING = {
+  xxSmall: 'xx-small',
+  xSmall: 'x-small',
+  small: 'small',
+  medium: 'medium',
+  large: 'large',
+  xLarge: 'x-large',
+  xxLarge: 'xx-large',
+  larger: 'larger',
+  smaller: 'smaller',
 };
 export { fontPropTypes };
-export function withFont(props, isHeader = false) {
-  let fontSize =
-    ['xSmall', 'small', 'base', 'medium', 'large', 'xLarge'].find(size => size in props) || '';
-  let fontStyle = ['italic', 'roman'].find(style => style in props) || '';
-  let fontWeight = ['light', 'normal', 'bold'].find(weight => weight in props) || '';
-
-  fontSize = toCssUnits(props.theme['FONT_' + fontSize.toUpperCase()]);
+export function withFont(props) {
+  let fontStyle = ['roman', 'italic', 'oblique'].find(style => style in props);
   if (fontStyle === 'roman') fontStyle = 'normal';
-  fontWeight = props.theme[(isHeader ? 'FONT_H_' : 'FONT_') + fontWeight.toUpperCase()];
+
+  const fontWeight =
+    ['light', 'lighter', 'normal', 'bold', 'bolder'].find(weight => weight in props) || '';
+
+  const fontSize = props.size
+    ? toCssUnits(props.size)
+    : FONT_SIZING[Object.keys(FONT_SIZING).find(size => size in props)];
 
   // prettier-ignore
   return css`
@@ -211,7 +234,7 @@ export function withFont(props, isHeader = false) {
     ${fontSize && `font-size: ${fontSize};`} 
     ${fontStyle && `font-style: ${fontStyle};`} 
     ${fontWeight && `font-weight: ${fontWeight};`}
-  `
+  `;
 }
 
 const justifyPropTypes = {

@@ -44,20 +44,28 @@ const PROP_TYPES = {
   color: TYPES.STRING,
   lineHeight: TYPES.STRING_OR_NUMBER,
 
-  italic: TYPES.BOOL,
   roman: TYPES.BOOL,
+  italic: TYPES.BOOL,
+  oblique: TYPES.BOOL,
   underline: TYPES.BOOL,
 
   light: TYPES.BOOL,
+  lighter: TYPES.BOOL,
   normal: TYPES.BOOL,
   bold: TYPES.BOOL,
+  bolder: TYPES.BOOL,
 
+  xxSmall: TYPES.BOOL,
   xSmall: TYPES.BOOL,
   small: TYPES.BOOL,
-  base: TYPES.BOOL,
+  smaller: TYPES.BOOL,
   medium: TYPES.BOOL,
   large: TYPES.BOOL,
+  larger: TYPES.BOOL,
   xLarge: TYPES.BOOL,
+  xxLarge: TYPES.BOOL,
+
+  size: TYPES.STRING_OR_NUMBER,
 
   left: TYPES.BOOL,
   center: TYPES.BOOL,
@@ -224,7 +232,7 @@ const DEMO = {
   HEADING: {
     DESCRIPTION: 'Renders H1, H2, H3, H4, or H5 tag.',
     CODE: `
-<Heading h2 center color='gold' margin="1 0 0" normal xLarge>
+<Heading h2 center color='gold' margin={0} normal underline xxLarge>
 	Super Styled
 </Heading>`,
   },
@@ -232,7 +240,7 @@ const DEMO = {
   TEXT: {
     DESCRIPTION: 'Text paragraph, renders P tag.',
     CODE: `
-<Text color='gold' center italic medium>
+<Text color='gold' center italic large>
 	Pack my box with five dozen liquor jugs.
 </Text>`,
   },
