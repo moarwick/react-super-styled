@@ -6,7 +6,7 @@ import { Block, Flex, FlexItem, Heading, Rule, Section, Text, Span } from './lib
 const Code = styled.code`
   color: firebrick;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 0.95rem;
 `;
 
 const styles = {
@@ -49,7 +49,7 @@ const ComponentDemo = props => {
   return (
     <Section styles={styles.section}>
       <Block padding="1 2">
-        <Heading color="firebrick" margin={0} inline large normal>
+        <Heading color="firebrick" margin={0} inline xLarge normal>
           {name}&nbsp;&nbsp;
         </Heading>
         <Text inline>{description}</Text>

@@ -99,7 +99,7 @@ class App extends React.Component {
                 <GitHubLogo />
               </Display>
             </GitHubLogoWrapper>
-            <Text center bold medium italic margin="0 * 1">
+            <Text center bold large italic margin="0 * 1">
               Responsive JSX layouts with Styled Components
             </Text>
           </Header>
@@ -108,41 +108,41 @@ class App extends React.Component {
         <Rule borderStyle="dotted" color="#676" />
 
         <Block container={CONTAINER_WIDTH}>
-          <Heading h3 color="#676" large normal>
+          <Heading h3 color="#676" xLarge normal>
             Wrappers &raquo;
           </Heading>
           {DEMO.WRAPPERS.map((demoProps, index) => (
             <ComponentDemo key={'wrappers-' + index} {...demoProps} />
           ))}
 
-          <Heading h3 color="#676" large normal>
+          <Heading h3 color="#676" xLarge normal>
             Grid &raquo;
           </Heading>
           {DEMO.GRID.map((demoProps, index) => (
             <ComponentDemo key={'grid-' + index} {...demoProps} />
           ))}
 
-          <Heading h3 color="#676" large normal>
+          <Heading h3 color="#676" xLarge normal>
             Typography &raquo;
           </Heading>
           {DEMO.TYPOGRAPHY.map((demoProps, index) => (
             <ComponentDemo key={'type-' + index} {...demoProps} />
           ))}
 
-          <Heading h3 color="#676" large normal>
+          <Heading h3 color="#676" xLarge normal>
             Misc &raquo;
           </Heading>
           {DEMO.MISC.map((demoProps, index) => (
             <ComponentDemo key={'misc-' + index} {...demoProps} />
           ))}
 
-          <Heading h3 color="#676" large normal>
+          <Heading h3 color="#676" xLarge normal>
             Utilities &raquo;
           </Heading>
 
           <Section styles={styles.section}>
             <Block padding="1 2">
-              <Heading color="firebrick" margin={0} inline large normal>
+              <Heading color="firebrick" margin={0} inline xLarge normal>
                 withMedia&nbsp;&nbsp;
               </Heading>
               <Text inline>
@@ -153,6 +153,7 @@ class App extends React.Component {
             </Block>
             <Rule borderStyle="dotted" color="#999" />
             <Block padding="1 2">
+              <pre>export default withMedia()(MyComponent)</pre>
               <Text>
                 <Span italic color="#999">
                   Current value:&nbsp;&nbsp;
