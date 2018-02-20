@@ -10,7 +10,7 @@ React Super Styled
 
 ### Responsive JSX layouts with [Styled Components](https://www.styled-components.com/)
 
-RSS allows for rapid authoring & styling of your JSX layouts, and improved readability:
+RSS is a small React component library which aims to accelerate authoring of JSX layouts and to improve their readability:
 
 * Semantic component and prop naming
 * Handy boolean props for common styling rules
@@ -54,39 +54,46 @@ function MyArticle({text, title}) {
 ### Interactive Docs
 Try out *React Super Styled* "live" in the [DEMO](https://moarwick.github.io/react-super-styled/). The intent behind *RSS* is to be intuitive and readable. Experiment with all listed props and inspect the results! :)
 
+> RSS is intended for building layouts. For components requiring lots of additional styling, it is recommended to create new "raw" styled components. Having said that, the dynamically generated [DEMO](https://moarwick.github.io/react-super-styled/) page is quite complex and full-on *RSS*, yet renders under 180ms in production.
+
+
 ### Responsive Styles
 All *RSS* components accept styling props per each media breakpoint: `styles`, `smStyles`, `mdStyles`, `lgStyles` and `xlStyles`. It's a "mobile-first" approach, so use `styles` as the default (mobile "xs") style, then pass in additional styling into any of the other style props to trigger when those breakpoints are exceeded.
 
 Styles can be passed in as a basic string of CSS, e.g. `color: red; font-size: 32px` or an array of CSS interpolations from Styled Components' `css` helper. Have a look at the demo [source code](https://github.com/moarwick/react-super-styled/blob/master/src/ComponentDemo.js) for usage examples.
+
 
 ### Grid
 The `Flex` (container) and `FlexItem` components support all valid Flexbox props, plus a 12-column grid implementation, including media-based columns, offsets, and gutters. As with styles, the responsive grid props are applied in the "mobile-first" order.
 
 Since gutters are optional, negative margins are applied to a `Flex` (row) only if gutter props are present. While `FlexItem` supports gutter props, they should be specified at the `Flex` row level (and will be passed down automatically to all direct `FlexItem` children).
 
-### Spacing Shorthands
-Since web layouts involve frequent tweaking of margins and padding, most *RSS* components accept "shorthand" `margin` and `padding` props. The standard CSS syntax is enhanced to interpret pure numbers as "multipliers" of `THEME.SPACER` (10px), and asterisks `*` to skip a given direction altogether.
 
-For instance, `padding="1"` will result in `padding: 10px;`, while `margin="0 2.5 * *"` will result in `margin-top: 0; margin-right: 25px;`. You can mix the units, e.g. `padding="3 15px * *"`, but... you shouldn't! ;)
+### Spacing Shorthands
+Web layouts involve frequent tweaking of margins and padding, so most *RSS* components accept "shorthand" `margin` and `padding` props. The standard CSS syntax is enhanced to interpret pure numbers as "multipliers" of `THEME.SPACER` (10px), and asterisks `*` to skip a given direction altogether.
+
+For instance, `padding="1"` will result in `padding: 10px;`, while `margin="0 2.5 * *"` will result in `margin-top: 0; margin-right: 25px;`. You can mix units, e.g. `padding="3 15px * *"`, but... you shouldn't! ;)
+
 
 ### Typography
-As of `0.4.0`, `Heading` and `Text` no longer apply any explicit font size or weight. Instead, you can specify browser-interpeted sizing, e.g. `small`, `medium` (matches 100%), `large`, `xLarge`, `xxLarge`, as well as relative sizing and weights, e.g. `smaller`, `larger`, `lighter`, `bolder`. Alternatively, size can be set using the `size` prop, which accepts numbers (px) or strings with desired units (px, em). Per "responsive principles", it is recommended that you set a default `font-size` on the `body`, e.g. `100%` (about 16px).
+As of `0.4.0`, `Heading` and `Text` no longer apply any explicit font size or weight. Instead, you can specify browser-interpreted sizing, e.g. `small`, `medium` (matches 100%), `large`, `xLarge`, `xxLarge`, as well as relative sizing & weights, e.g. `smaller`, `larger`, `lighter`, `bolder`. Explicit sizing can be set via the `size` prop, which accepts numbers (px) or strings with desired units (rem, em, px). Per responsive "best practices", it is recommended to set a default `font-size` on the `body`, e.g. `100%` (about 16px), then resort to the built-in browser sizing or `rem` units.
+
 
 ### Theme
 *RSS* components rely on a built-in [default theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js). Being a layout-oriented library, the theme is "design neutral" and contains primarily (Bootstrap compatible) breakpoint values.
 
 Should you want to override any of those values, you can pass in your own theme (or a subset thereof) to any *RSS* component directly via the `theme` prop. Using Styled Components' `ThemeProvider` [wrapper](https://www.styled-components.com/docs/advanced#theming) should also work. The passed-in theme will be "extended over" the defaults, so it can be used to override existing values or to add more variables in case you decide to [extend](#extending-styling) any *RSS* components further.
 
+
 ### Extending Styling
 Majority of *RSS* components are functional native Styled Components, so alternatively, they can be extended via Styled Components' [extend method](https://www.styled-components.com/docs/basics#extending-styles). For `Heading` and `Flex` you can use the `styled(Component)` approach.
-
-> RSS is intended for building layouts. For heavy structures or components requiring lots of additional styling, it is recommended to create new "raw" styled components. Having said that, the dynamically generated [DEMO](https://moarwick.github.io/react-super-styled/) page is quite complex and 100% *RSS*, yet renders well under 200ms in production.
 
 
 ### Utilities
 
 #### withMedia( [userTheme:Object] )( Component ) ⇒ <code>'xs'|'sm'|'md'|'lg'|'xl'</code>
 Component enhancer to supply the current "breakpoint" via prop `media`. Uses the `MEDIA_XS, MEDIA_SM, MEDIA_MD, MEDIA_LG` thresholds in [RSS theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js) to determine the breakpoint -- the `userTheme` argument is optional, supply only if customizing those breakpoints. Typically, just: `export default withMedia()(MyComponent)`.
+
 
 ### Changelog
 * See [Releases](https://github.com/moarwick/react-super-styled/releases)
