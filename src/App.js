@@ -1,9 +1,10 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { Block, Display, Heading, Rule, Section, Span, Text, withMedia } from './lib/index';
+import { Block, Display, Flex, Heading, Rule, Section, Span, Text, withMedia } from './lib/index';
 import ComponentDemo from './ComponentDemo';
 import DEMO from './demoData';
+import { version } from '../package.json';
 
 const CONTAINER_WIDTH = 1280;
 
@@ -91,7 +92,10 @@ class App extends React.Component {
             </Heading>
             <RssLogoWrapper>
               <Display smShow>
-                <RssLogo />
+                <Flex alignItems="center">
+                  <RssLogo />&nbsp;&nbsp;
+                  {version}
+                </Flex>
               </Display>
             </RssLogoWrapper>
             <GitHubLogoWrapper>

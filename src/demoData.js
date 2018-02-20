@@ -160,7 +160,7 @@ const DEMO = {
   },
 
   SPAN: {
-    DESCRIPTION: <span>SPAN wrapper, supports a wide range of display and typography props.</span>,
+    DESCRIPTION: <span>SPAN wrapper, allows for typography and display controls.</span>,
     EXTRA_SCOPE: ['Block'],
     CODE: `
 <Block padding="1" styles='background-color: gold'>

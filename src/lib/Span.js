@@ -30,7 +30,7 @@ const propTypes = {
 
 // prettier-ignore
 const getCss = props => css`
-  ${props.color && `color: ${props.color};`}  
+  color: ${props.color};
   ${props.block && 'display: block;'}
   ${props.inlineBlock && 'display: inline-block;'}
   ${withFont(props)}

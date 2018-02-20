@@ -58,11 +58,11 @@ const defaultProps = {
 // prettier-ignore
 const getCss = props => css`
   display: ${props.inline ? 'inline-flex' : 'flex'};
-  ${props.flexDirection && `flex-direction: ${props.flexDirection};`}
-  ${props.flexWrap && `flex-wrap: ${props.flexWrap};`}
-  ${props.justifyContent && `justify-content: ${props.justifyContent};`}
-  ${props.alignItems && `align-items: ${props.alignItems};`}
-  ${props.alignContent && `align-content: ${props.alignContent};`}
+  flex-direction: ${props.flexDirection};
+  flex-wrap: ${props.flexWrap};
+  justify-content: ${props.justifyContent};
+  align-items: ${props.alignItems};
+  align-content: ${props.alignContent};
   ${withSpacing(props)}
   ${withMediaStyles(props)}
   ${withRowGutters(props)} // apply gutters last (overrides any prior left/right margins)

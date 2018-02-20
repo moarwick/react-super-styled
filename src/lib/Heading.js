@@ -35,8 +35,8 @@ const propTypes = {
 const getCss = props => {
   // prettier-ignore
   return css`
-    ${props.color && `color: ${props.color};`}
-    ${props.lineHeight && `line-height: ${props.lineHeight};`}
+    color: ${props.color};
+    line-height: ${props.lineHeight};
     ${props.margin !== undefined && cssSpacing('margin', props)} 
     ${withFont(props)}
     ${withJustify(props)}
