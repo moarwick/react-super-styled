@@ -34,7 +34,7 @@ export function cssSize(val, spacer) {
 
   // otherwise, assume a SPACER multiplier, e.g. -1, 2.5, etc
   const multi = Number((val.match(/[-0-9.]/g) || []).join('')); // negative multipliers ok
-  return `${multi * spacer}px`;
+  return Number.isNaN(multi) ? '0px' : `${multi * spacer}px`;
 }
 
 /**
@@ -76,10 +76,10 @@ export function cssSpacing(rule, props) {
 
   // prettier-ignore
   return css`
-    ${top && `${rule}-top: ${top};`} 
-    ${right && `${rule}-right: ${right};`}
-    ${bottom && `${rule}-bottom: ${bottom};`} 
-    ${left && `${rule}-left: ${left};`};
+    ${rule}-top: ${top};
+    ${rule}-right: ${right};
+    ${rule}-bottom: ${bottom};
+    ${rule}-left: ${left};
   `
 }
 
@@ -147,6 +147,9 @@ const displayPropTypes = {
 };
 export { displayPropTypes };
 
+/**
+ * withContainer
+ */
 const containerPropTypes = {
   container: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
 };
@@ -178,6 +181,9 @@ export function withContainer(props) {
   `
 }
 
+/**
+ * withFont
+ */
 const fontPropTypes = {
   inline: PropTypes.bool,
 
@@ -217,7 +223,7 @@ const FONT_SIZING = {
 };
 export { fontPropTypes };
 export function withFont(props) {
-  let fontStyle = ['roman', 'italic', 'oblique'].find(style => style in props);
+  let fontStyle = ['roman', 'italic', 'oblique'].find(style => style in props) || '';
   if (fontStyle === 'roman') fontStyle = 'normal';
 
   const fontWeight =
@@ -225,18 +231,21 @@ export function withFont(props) {
 
   const fontSize = props.size
     ? toCssUnits(props.size)
-    : FONT_SIZING[Object.keys(FONT_SIZING).find(size => size in props)];
+    : FONT_SIZING[Object.keys(FONT_SIZING).find(size => size in props)] || '';
 
   // prettier-ignore
   return css`
     ${props.inline && `display: inline;`}
     ${props.underline && 'text-decoration: underline;'}
-    ${fontSize && `font-size: ${fontSize};`} 
-    ${fontStyle && `font-style: ${fontStyle};`} 
-    ${fontWeight && `font-weight: ${fontWeight};`}
+    font-size: ${fontSize}; 
+    font-style: ${fontStyle}; 
+    font-weight: ${fontWeight};
   `;
 }
 
+/**
+ * withJustify
+ */
 const justifyPropTypes = {
   left: PropTypes.bool,
   center: PropTypes.bool,
@@ -251,6 +260,9 @@ export function withJustify(props) {
   `;
 }
 
+/**
+ * withRowGutters
+ */
 const gutterPropTypes = {
   gutter: PropTypes.number, // xs, or when no media
   smGutter: PropTypes.number,
@@ -270,6 +282,9 @@ export function withRowGutters({ gutter, smGutter, mdGutter, lgGutter, xlGutter,
   `;
 }
 
+/**
+ * withColumns
+ */
 const columnPropTypes = {
   col: PropTypes.number, // xs, or when no media
   smCol: PropTypes.number,
