@@ -54,19 +54,19 @@ function MyArticle({text, title}) {
 ### Interactive Docs
 Try out *React Super Styled* "live" in the [DEMO](https://moarwick.github.io/react-super-styled/). The intent behind *RSS* is to be intuitive and readable. Experiment with all listed props and inspect the results! :)
 
-> RSS is intended for building layouts. For components requiring lots of additional styling, it is recommended to create new "raw" styled components. Having said that, the dynamically generated [DEMO](https://moarwick.github.io/react-super-styled/) page is quite complex and full-on *RSS*, yet renders under 180ms in production.
+> RSS is intended for building layouts. For components requiring lots of additional styling, it is recommended to create new "raw" styled components. Having said that, the dynamically generated demo page is quite complex and 100% *RSS*, yet renders under 180ms in production.
 
 
 ### Responsive Styles
-All *RSS* components accept styling props per each media breakpoint: `styles`, `smStyles`, `mdStyles`, `lgStyles` and `xlStyles`. It's a "mobile-first" approach, so use `styles` as the default (mobile "xs") style, then pass in additional styling into any of the other style props to trigger when those breakpoints are exceeded.
+Nearly all *RSS* components accept style props per each media breakpoint: `styles`, `smStyles`, `mdStyles`, `lgStyles` and `xlStyles`. It's a "mobile-first" approach, so use `styles` as the default (mobile "xs") style, then pass in additional styling into any of the other style props to trigger when those breakpoints are exceeded.
 
-Styles can be passed in as a basic string of CSS, e.g. `color: red; font-size: 32px` or an array of CSS interpolations from Styled Components' `css` helper. Have a look at the demo [source code](https://github.com/moarwick/react-super-styled/blob/master/src/ComponentDemo.js) for usage examples.
+Styles can be passed in as a basic string of CSS, e.g. `"color: red; font-size: 32px"` or an array of CSS interpolations from Styled Components' `css` helper. Have a look at the demo [source code](https://github.com/moarwick/react-super-styled/blob/master/src/ComponentDemo.js) for usage examples.
 
 
 ### Grid
 The `Flex` (container) and `FlexItem` components support all valid Flexbox props, plus a 12-column grid implementation, including media-based columns, offsets, and gutters. As with styles, the responsive grid props are applied in the "mobile-first" order.
 
-Since gutters are optional, negative margins are applied to a `Flex` (row) only if gutter props are present. While `FlexItem` supports gutter props, they should be specified at the `Flex` row level (and will be passed down automatically to all direct `FlexItem` children).
+Since gutters are optional, negative margins are applied to a `Flex` container only when gutter props are present. While `FlexItem` supports gutter props, they should be specified at the `Flex` level (and will be passed down automatically to all *direct* `FlexItem` children).
 
 
 ### Spacing Shorthands
@@ -92,7 +92,7 @@ Majority of *RSS* components are functional native Styled Components, so alterna
 ### Utilities
 
 #### withMedia( [userTheme:Object] )( Component ) ⇒ <code>'xs'|'sm'|'md'|'lg'|'xl'</code>
-Component enhancer to supply the current "breakpoint" via prop `media`. Uses the `MEDIA_XS, MEDIA_SM, MEDIA_MD, MEDIA_LG` thresholds in [RSS theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js) to determine the breakpoint -- the `userTheme` argument is optional, supply only if customizing those breakpoints. Typically, just: `export default withMedia()(MyComponent)`.
+Component enhancer to supply the current "breakpoint" via prop `media`. Uses the `MEDIA_XS, MEDIA_SM, MEDIA_MD, MEDIA_LG` thresholds in the [theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js) to determine the breakpoint -- the `userTheme` argument is optional, supply only if customizing those breakpoints. Typically, just: `export default withMedia()(MyComponent)`.
 
 
 ### Changelog
