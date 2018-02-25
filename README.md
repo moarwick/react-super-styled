@@ -10,7 +10,7 @@ React Super Styled
 
 ### Responsive JSX layouts with [Styled Components](https://www.styled-components.com/)
 
-> Try the [DEMO](https://github.com/moarwick/react-super-styled)
+> Try the [DEMO](https://moarwick.github.io/react-super-styled/)
 
 RSS is a small React component library which aims to accelerate authoring of JSX layouts and to improve their readability:
 
