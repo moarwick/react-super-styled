@@ -1,6 +1,7 @@
 {
   "plugins": [
     "react-hot-loader/babel",
+    "transform-es2015-modules-commonjs",
     ["styled-components", { "ssr": false, "displayName": true, "preprocess": false } ]
   ],
   "presets": [
