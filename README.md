@@ -24,7 +24,6 @@ RSS is a small React component library which aims to accelerate authoring of JSX
 Caveats:
 1) Not a full-fledged "styling library" (but makes for a great "base" :)
 2) Dynamic prop parsing adds some overhead (but plenty fast for most apps :)
-3) Untested when rendering server-side (but "should" work ;)
 
 
 ### Installation
