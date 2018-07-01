@@ -4,7 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = process.argv.includes('production');
 const isDev = !isProd;
 const ENV = isProd ? 'production' : 'development';
 const DEV_PORT = '8080';
@@ -37,19 +37,6 @@ module.exports = function() {
 
   if (isProd) {
     plugins.unshift(new CleanWebpackPlugin(['demo'])); // clear folder first!
-    plugins.push(
-      new webpack.optimize.UglifyJsPlugin({
-        sourceMap: true,
-        parallel: true,
-        uglifyOptions: {
-          compress: {
-            dead_code: true,
-            drop_debugger: true,
-          },
-          warnings: true,
-        },
-      })
-    );
   }
 
   /* ----- ENTRY ----- */
@@ -68,6 +55,7 @@ module.exports = function() {
 
   return {
     devtool: isDev ? 'eval-source-map' : 'source-map',
+    mode: isDev ? 'development' : 'production',
     entry: entry,
     output: {
       filename: 'bundle.js',
