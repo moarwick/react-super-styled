@@ -2,6 +2,9 @@ import { css } from 'styled-components';
 import { toMediaColumnCss, withMediaColumns } from '../../lib/utils';
 import THEME from '../../lib/THEME';
 
+const filterOutEmpties = list => list.filter(el => el.trim());
+const withMediaColumnsFiltered = props => filterOutEmpties(withMediaColumns(props));
+
 describe('toMediaColumnCss', () => {
   let breakpoint;
   let col;
@@ -65,9 +68,6 @@ describe('toMediaColumnCss', () => {
     );
   });
 });
-
-const filterOutEmpties = list => list.filter(el => el.trim());
-const withMediaColumnsFiltered = props => filterOutEmpties(withMediaColumns(props));
 
 describe('withMediaColumns', () => {
   let props;

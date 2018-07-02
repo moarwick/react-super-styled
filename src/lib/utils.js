@@ -13,12 +13,34 @@ export function addTheme(props) {
 }
 
 /**
+ * Accept string, trim, return terminated with a semicolon
+ * If input string contains all spaces or only ';', return empty string
+ */
+export function ensureSemi(val) {
+  val = val.trim();
+  return val && val !== ';' ? (val.slice(-1) === ';' ? val : `${val};`) : '';
+}
+
+/**
  * Parse value to determine units, make default assumptions based on type (unless default passed in)
  * Return string: px|rem|em|%
  */
 export function resolveUnits(val, defaultUnits = '') {
   const match = String(val).match(/px|rem|em|%/g);
   return match ? match[0] : defaultUnits || typeof val === 'number' ? 'px' : 'rem';
+}
+
+/**
+ * Accept string or a list of strings (from SC), return a single string
+ * Filter, trim, and ensure a semicolon delimiter
+ */
+export function toCssString(val) {
+  if (typeof val === 'string') return ensureSemi(val);
+  if (!Array.isArray(val)) return '';
+  return val
+    .map(el => ensureSemi(el))
+    .join('')
+    .trim();
 }
 
 /**
@@ -421,7 +443,7 @@ const mediaStylesPropTypes = {
   xlStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
 };
 export { mediaStylesPropTypes };
-export function withMediaStyles({ styles, smStyles, mdStyles, lgStyles, xlStyles, theme }) {
+export function _withMediaStyles({ styles, smStyles, mdStyles, lgStyles, xlStyles, theme }) {
   // prettier-ignore
   return css`
     ${styles && styles};
@@ -435,21 +457,18 @@ export function withMediaStyles({ styles, smStyles, mdStyles, lgStyles, xlStyles
 /**
  * withStyles (NEW, WIP...)
  */
-export function withStyles({ styles, theme }) {
+
+export function withMediaStyles({ styles, theme }) {
   if (Array.isArray(styles)) return styles;
-
-  if (typeof styles === 'string')
-    // prettier-ignore
-    return css`${styles}`;
-
+  if (typeof styles === 'string') return css`${toCssString(styles)}`; // prettier-ignore
   if (typeof styles === 'object') {
     // prettier-ignore
     return css`
-    ${styles.xs}
-    ${styles.sm && `${theme.MEDIA_XS_MIN} { ${styles.sm} }`}
-    ${styles.md && `${theme.MEDIA_SM_MIN} { ${styles.md} }`}
-    ${styles.lg && `${theme.MEDIA_MD_MIN} { ${styles.lg} }`}
-    ${styles.xl && `${theme.MEDIA_LG_MIN} { ${styles.xl} }`}
+    ${styles.xs && toCssString(styles.xs)}
+    ${styles.sm && `${theme.MEDIA_XS_MIN} { ${toCssString(styles.sm)} }`}
+    ${styles.md && `${theme.MEDIA_SM_MIN} { ${toCssString(styles.md)} }`}
+    ${styles.lg && `${theme.MEDIA_MD_MIN} { ${toCssString(styles.lg)} }`}
+    ${styles.xl && `${theme.MEDIA_LG_MIN} { ${toCssString(styles.xl)} }`}
   `;
   }
 
