@@ -13,10 +13,28 @@ export function addTheme(props) {
 }
 
 /**
+ * Parse value to determine units, make default assumptions based on type (unless default passed in)
+ * Return string: px|rem|em|%
+ */
+export function resolveUnits(val, defaultUnits = '') {
+  const match = String(val).match(/px|rem|em|%/g);
+  return match ? match[0] : defaultUnits || typeof val === 'number' ? 'px' : 'rem';
+}
+
+/**
  * Return strings as-is, coerce numbers to 'px'
  */
 export function toCssUnits(val) {
   return typeof val === 'string' ? val : typeof val === 'number' ? `${val}px` : '';
+}
+
+/**
+ * Parse input value into a number, with optional decimal precision
+ * Always return a number, 0 if value cannot be parsed
+ */
+export function toNum(value, precision = 0) {
+  value = parseFloat(value) || 0;
+  return precision > 0 ? Number(value.toFixed(precision)) : value;
 }
 
 /**
@@ -108,6 +126,26 @@ function toColumnCss(col, offset, gutter) {
           : '0';
 
   return `margin-left: ${marginLeft}; margin-right: ${marginRight}; width: ${width};`;
+}
+
+export function toMediaColumnCss(breakpoint, col, offset, gutter) {
+  const units = resolveUnits(gutter);
+  gutter = toNum(gutter);
+  col = toNum(col) * 100;
+  offset = toNum(offset) * 100;
+  const width = gutter ? `calc(${col}% - ${gutter}${units})` : `${col}%`;
+  const marginRight = gutter ? `${gutter / 2}${units}` : '0';
+  const marginLeft =
+    offset && gutter
+      ? `calc(${offset}% + ${gutter / 2}${units})`
+      : offset && !gutter
+        ? `${offset}%`
+        : gutter
+          ? `${gutter / 2}${units}`
+          : '0';
+
+  const rule = `margin-left: ${marginLeft}; margin-right: ${marginRight}; width: ${width};`;
+  return breakpoint ? `${breakpoint} { ${rule} }` : rule;
 }
 
 /**
@@ -333,6 +371,28 @@ export function withColumns({
   `;
 }
 
+/**
+ * withMediaColumns (NEW, WIP...)
+ */
+function toMediaObj(val) {
+  return typeof val === 'object' ? val : { xs: val };
+}
+
+export function withMediaColumns({ col, offset = 0, gutter = 0, theme }) {
+  col = toMediaObj(col);
+  offset = toMediaObj(offset);
+  gutter = toMediaObj(gutter);
+
+  // prettier-ignore
+  return css`
+    ${col.xs && toMediaColumnCss(null, col.xs, offset.xs, gutter.xs)}
+    ${col.sm && toMediaColumnCss(theme.MEDIA_SM_UP, col.sm, offset.sm, gutter.sm)}
+    ${col.md && toMediaColumnCss(theme.MEDIA_MD_UP, col.md, offset.md, gutter.md)}
+    ${col.lg && toMediaColumnCss(theme.MEDIA_LG_UP, col.lg, offset.lg, gutter.lg)}
+    ${col.xl && toMediaColumnCss(theme.MEDIA_XL_UP, col.xl, offset.xl, gutter.xl)}
+  `;
+}
+
 const mediaStylesPropTypes = {
   styles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]), // use when no media
   smStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
@@ -350,6 +410,30 @@ export function withMediaStyles({ styles, smStyles, mdStyles, lgStyles, xlStyles
     ${lgStyles && `${theme.MEDIA_MD_MIN} { ${lgStyles} }`}
     ${xlStyles && `${theme.MEDIA_LG_MIN} { ${xlStyles} }`}
   `;
+}
+
+/**
+ * withStyles (NEW, WIP...)
+ */
+export function withStyles({ styles, theme }) {
+  if (Array.isArray(styles)) return styles;
+
+  if (typeof styles === 'string')
+    // prettier-ignore
+    return css`${styles}`;
+
+  if (typeof styles === 'object') {
+    // prettier-ignore
+    return css`
+    ${styles.xs}
+    ${styles.sm && `${theme.MEDIA_XS_MIN} { ${styles.sm} }`}
+    ${styles.md && `${theme.MEDIA_SM_MIN} { ${styles.md} }`}
+    ${styles.lg && `${theme.MEDIA_MD_MIN} { ${styles.lg} }`}
+    ${styles.xl && `${theme.MEDIA_LG_MIN} { ${styles.xl} }`}
+  `;
+  }
+
+  return [];
 }
 
 const spacingPropTypes = {

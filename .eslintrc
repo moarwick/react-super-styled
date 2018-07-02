@@ -13,6 +13,8 @@
       }
     ],
     "strict": 0, // for babel-eslint
+    "no-nested-ternary": 0,
+    "no-param-reassign": 0,
 
     "jsx-quotes": [2, "prefer-double"],
     "react/jsx-filename-extension": "off",
