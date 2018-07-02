@@ -109,6 +109,13 @@ function toRowGuttersCss(gutter) {
   return `margin-left: -${gutter / 2}px; margin-right: -${gutter / 2}px;`;
 }
 
+function toMediaGuttersCss(breakpoint, gutter) {
+  const units = resolveUnits(gutter);
+  gutter = toNum(gutter);
+  const rule = `margin-left: -${gutter / 2}${units}; margin-right: -${gutter / 2}${units};`;
+  return breakpoint ? `${breakpoint} { ${rule} }` : rule;
+}
+
 /**
  * Deliver correct column width and left/right margins, per the supplied props
  */
@@ -321,6 +328,19 @@ export function withRowGutters({ gutter, smGutter, mdGutter, lgGutter, xlGutter,
     ${mdGutter && `${theme.MEDIA_SM_MIN} { ${toRowGuttersCss(mdGutter)} }`}
     ${lgGutter && `${theme.MEDIA_MD_MIN} { ${toRowGuttersCss(lgGutter)} }`}
     ${xlGutter && `${theme.MEDIA_LG_MIN} { ${toRowGuttersCss(xlGutter)} }`}
+  `;
+}
+
+export function withMediaGutters({ gutter, theme }) {
+  gutter = toMediaObj(gutter);
+
+  // prettier-ignore
+  return css`
+    ${gutter.xs && toMediaGuttersCss(null, gutter.xs)}
+    ${gutter.sm && toMediaGuttersCss(theme.MEDIA_SM_UP, gutter.sm)}
+    ${gutter.md && toMediaGuttersCss(theme.MEDIA_MD_UP, gutter.md)}
+    ${gutter.lg && toMediaGuttersCss(theme.MEDIA_LG_UP, gutter.lg)}
+    ${gutter.xl && toMediaGuttersCss(theme.MEDIA_XL_UP, gutter.xl)}
   `;
 }
 
