@@ -16,7 +16,7 @@ export function addTheme(props) {
  * Return strings as-is, coerce numbers to 'px'
  */
 export function toCssUnits(val) {
-  return typeof val === 'string' ? val : typeof val === 'number' ? val + 'px' : '';
+  return typeof val === 'string' ? val : typeof val === 'number' ? `${val}px` : '';
 }
 
 /**
@@ -101,7 +101,11 @@ function toColumnCss(col, offset, gutter) {
   const marginLeft =
     offset && gutter
       ? `calc(${offset * COL_PCT}% + ${gutter / 2}px)`
-      : offset && !gutter ? `${offset * COL_PCT}%` : gutter ? `${gutter / 2}px` : '0';
+      : offset && !gutter
+        ? `${offset * COL_PCT}%`
+        : gutter
+          ? `${gutter / 2}px`
+          : '0';
 
   return `margin-left: ${marginLeft}; margin-right: ${marginRight}; width: ${width};`;
 }

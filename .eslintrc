@@ -17,5 +17,16 @@
     "jsx-quotes": [2, "prefer-double"],
     "react/jsx-filename-extension": "off",
     "react/require-default-props": "off"
+  },
+  "globals": {
+    "window": false,
+    "document": false,
+    "afterEach": true,
+    "beforeEach": true,
+    "describe": true,
+    "expect": true,
+    "it": true,
+    "jest": true,
+    "test": true
   }
 }
