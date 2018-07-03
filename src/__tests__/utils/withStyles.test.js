@@ -18,17 +18,17 @@ describe('withMediaStyles', () => {
     expect(withMediaStyles(props)).toEqual([]);
   });
 
-  it('handles styles as a (CSS) string', () => {
-    props = { ...props, styles: 'display: block; color: red;' };
-    expect(withMediaStyles(props)).toEqual(['display: block; color: red;']);
-  });
-
   it('handles styles as an empty array', () => {
     props = { ...props, styles: [] };
     expect(withMediaStyles(props)).toEqual([]);
   });
 
-  it('handles styles as an css array', () => {
+  it('handles styles as a string of CSS', () => {
+    props = { ...props, styles: 'display: block; color: red;' };
+    expect(withMediaStyles(props)).toEqual(['display: block; color: red;']);
+  });
+
+  it(`handles styles as an array of SC's rules`, () => {
     // prettier-ignore
     styles = css`
         display: block;
@@ -50,17 +50,18 @@ describe('withMediaStyles', () => {
         cursor: pointer;
       `, // can be arrays (from SC's css method)
       lg: 'display: inline-block; color: blue', // or strings
-      xs: 'display: inline;', // out of order
-      xl: ' ', // some empty
+      xs: css`
+        display: inline;
+      `, // keys out of order
+      xl: undefined, // some empty
       md: 'color: red;', // some semis, some not..
       gah: 'whoops!', // unsupported keys
     };
     expected = [
-      'display: inline;',
+      'display:inline;',
       '@media (min-width: 576px) { display:block;cursor:pointer; }',
       '@media (min-width: 768px) { color: red; }',
       '@media (min-width: 992px) { display: inline-block; color: blue; }',
-      '@media (min-width: 1200px) {  }',
     ];
     props = { ...props, styles };
     expect(filterOutEmpties(withMediaStyles(props))).toEqual(expected);

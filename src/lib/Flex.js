@@ -5,7 +5,7 @@ import {
   addTheme,
   basePropTypes,
   gutterPropTypes,
-  withRowGutters,
+  withMediaGutters,
   mediaStylesPropTypes,
   withMediaStyles,
   spacingPropTypes,
@@ -65,7 +65,7 @@ const getCss = props => css`
   align-content: ${props.alignContent};
   ${withSpacing(props)}
   ${withMediaStyles(props)}
-  ${withRowGutters(props)} // apply gutters last (overrides any prior left/right margins)
+  ${withMediaGutters(props)} // apply gutters last (overrides any prior left/right margins)
 `
 
 const FlexStyled = styled.div`

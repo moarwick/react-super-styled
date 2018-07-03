@@ -29,7 +29,7 @@ const styles = {
 
 function renderPropTypesColumns(list) {
   return list.map(propValPair => (
-    <FlexItem key={propValPair[0]} col={12} smCol={6} mdCol={4} lgCol={3}>
+    <FlexItem key={propValPair[0]} col={{ xs: 12 / 12, sm: 6 / 12, md: 4 / 12, lg: 3 / 12 }}>
       <Code bold color="firebrick">
         {propValPair[0]}:&nbsp;
         <Span normal color="black">
@@ -61,12 +61,16 @@ const ComponentDemo = props => {
         </Flex>
       </Block>
       <LiveProvider code={code} scope={scope}>
-        <Flex lgGutter={10}>
-          <FlexItem col={12} lgCol={6}>
+        <Flex gutter={{ lg: 10 }}>
+          <FlexItem col={{ xs: 12 / 12, lg: 6 / 12 }}>
             <LiveEditor style={styles.editor} />
             <LiveError />
           </FlexItem>
-          <FlexItem col={12} lgCol={6} styles={styles.preview} lgStyles="border: none">
+          <FlexItem
+            col={{ xs: 12 / 12, lg: 6 / 12 }}
+            styles={styles.preview}
+            lgStyles="border: none"
+          >
             <LivePreview />
           </FlexItem>
         </Flex>

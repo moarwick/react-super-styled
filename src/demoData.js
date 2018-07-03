@@ -1,4 +1,5 @@
 import React from 'react';
+import { css } from 'styled-components';
 import * as Components from './lib/index';
 
 const TYPES = {
@@ -13,6 +14,7 @@ const TYPES = {
   STRING: 'String',
   STRING_OR_NUMBER: 'String, Number',
   STRING_OR_ARRAY_OF_CSS: 'String, Array (css)',
+  STYLES: 'String, Array (css), Object',
 };
 
 const PROP_TYPES = {
@@ -108,7 +110,7 @@ const PROP_TYPES = {
   lgOffset: TYPES.NUMBER,
   xlOffset: TYPES.NUMBER,
 
-  styles: TYPES.STRING_OR_ARRAY_OF_CSS,
+  styles: TYPES.STYLES,
   smStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
   mdStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
   lgStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
@@ -141,11 +143,13 @@ const DEMO = {
     CODE: `
 <Section 
   padding="1"
-  styles='background-color: brown'
-  smStyles='background-color: firebrick'
-  mdStyles='background-color: orangered'
-  lgStyles='background-color: orange'
-  xlStyles='background-color: gold'
+  styles={{
+    xs: 'background-color: brown',
+    sm: 'background-color: firebrick',
+    md: 'background-color: orangered',
+    lg: 'background-color: orange',
+    xl: 'background-color: gold',
+  }}
 >
 	Watch me change styles at different &lt;&mdash;&gt; breakpoints!
 </Section>`,
@@ -195,22 +199,19 @@ const DEMO = {
     EXTRA_SCOPE: ['Block', 'Flex'],
     CODE: `
 <Block>
-  <Flex>
-    <FlexItem col={4} lgCol={4} padding="1" styles="background-color: gold">
-      4 col (xs) → 4 col (lg)
+  <Flex gutter={10}>
+    <FlexItem col={8/12} padding="1" styles="background-color: orange">
+      8 col - 10px gutter
     </FlexItem>
-    <FlexItem col={8} lgCol={4} padding="1" styles="background-color: orange">
-      8 col (xs) → 4 col (lg)
+    <FlexItem col={4/12} padding="1" styles="background-color: firebrick">
+      4 col - 10px gutter
     </FlexItem>
-    <FlexItem col={12} lgCol={4} padding="1" styles="background-color: firebrick">
-      12 col (xs) → 4 col (lg)
-    </FlexItem>
-  </Flex>
+	</Flex>
   
   <Flex margin="1 *">
     <FlexItem 
-      col={12} 
-      lgOffset={2} lgCol={8}
+      col={{ xs: 12/12, lg: 8/12 }} 
+      offset={{ lg: 2/12 }}
       padding="1" 
       styles="background-color: #999"
     >  
@@ -218,14 +219,17 @@ const DEMO = {
     </FlexItem>
 	</Flex>
 	
-  <Flex gutter={10}>
-    <FlexItem col={8} padding="1" styles="background-color: orange">
-      8 col - 10px gutter
+	<Flex>
+    <FlexItem col={{ xs: 4/12, lg: 4/12 }} padding="1" styles="background-color: gold">
+      4 col (xs) → 4 col (lg)
     </FlexItem>
-    <FlexItem col={4} padding="1" styles="background-color: firebrick">
-      4 col - 10px gutter
+    <FlexItem col={{ xs: 8/12, lg: 4/12 }} padding="1" styles="background-color: orange">
+      8 col (xs) → 4 col (lg)
     </FlexItem>
-	</Flex>
+    <FlexItem col={{ xs: 12/12, lg: 4/12 }} padding="1" styles="background-color: firebrick">
+      12 col (xs) → 4 col (lg)
+    </FlexItem>
+  </Flex>
 </Block>`,
   },
 
@@ -278,7 +282,7 @@ const DEMO = {
  * Deliver component's propTypes as a list of [propName, propType] value pairs
  */
 function getPropTypes(Component) {
-  return Object.keys(Component.propTypes || {}).map(propName => [
+  return Object.keys((Component && Component.propTypes) || {}).map(propName => [
     propName,
     PROP_TYPES[propName] || '???',
   ]);

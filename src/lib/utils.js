@@ -2,8 +2,6 @@ import PropTypes from 'prop-types';
 import { css } from 'styled-components';
 import THEME from './THEME';
 
-const COL_PCT = 8.333333333333334;
-
 /**
  * Extend the theme prop onto the base THEME, and return all props
  */
@@ -48,6 +46,13 @@ export function toCssString(val) {
  */
 export function toCssUnits(val) {
   return typeof val === 'string' ? val : typeof val === 'number' ? `${val}px` : '';
+}
+
+/**
+ * Helper to ensure that value is a (media) object
+ */
+function toMediaObj(val) {
+  return typeof val === 'object' ? val : { xs: val };
 }
 
 /**
@@ -124,13 +129,9 @@ export function cssSpacing(rule, props) {
 }
 
 /**
- * Given the supplied gutter, deliver negative left/right margin rules for FlexRow
+ * Deliver negative left/right margin rules for FlexRow
  * This is to ensure outer columns (with gutters) are flush with the container
  */
-function toRowGuttersCss(gutter) {
-  return `margin-left: -${gutter / 2}px; margin-right: -${gutter / 2}px;`;
-}
-
 function toMediaGuttersCss(breakpoint, gutter) {
   const units = resolveUnits(gutter);
   gutter = toNum(gutter);
@@ -141,22 +142,6 @@ function toMediaGuttersCss(breakpoint, gutter) {
 /**
  * Deliver correct column width and left/right margins, per the supplied props
  */
-function toColumnCss(col, offset, gutter) {
-  const colWidthPct = col * COL_PCT;
-  const width = gutter ? `calc(${colWidthPct}% - ${gutter}px)` : `${colWidthPct}%`;
-  const marginRight = gutter ? `${gutter / 2}px` : '0';
-  const marginLeft =
-    offset && gutter
-      ? `calc(${offset * COL_PCT}% + ${gutter / 2}px)`
-      : offset && !gutter
-        ? `${offset * COL_PCT}%`
-        : gutter
-          ? `${gutter / 2}px`
-          : '0';
-
-  return `margin-left: ${marginLeft}; margin-right: ${marginRight}; width: ${width};`;
-}
-
 export function toMediaColumnCss(breakpoint, col, offset, gutter) {
   const units = resolveUnits(gutter);
   gutter = toNum(gutter);
@@ -332,27 +317,12 @@ export function withJustify(props) {
 }
 
 /**
- * withRowGutters
+ * withMediaGutters
  */
 const gutterPropTypes = {
-  gutter: PropTypes.number, // xs, or when no media
-  smGutter: PropTypes.number,
-  mdGutter: PropTypes.number,
-  lgGutter: PropTypes.number,
-  xlGutter: PropTypes.number,
+  gutter: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
 };
 export { gutterPropTypes };
-export function withRowGutters({ gutter, smGutter, mdGutter, lgGutter, xlGutter, theme }) {
-  // prettier-ignore
-  return css`
-    ${gutter && toRowGuttersCss(gutter)}
-    ${smGutter && `${theme.MEDIA_XS_MIN} { ${toRowGuttersCss(smGutter)} }`}
-    ${mdGutter && `${theme.MEDIA_SM_MIN} { ${toRowGuttersCss(mdGutter)} }`}
-    ${lgGutter && `${theme.MEDIA_MD_MIN} { ${toRowGuttersCss(lgGutter)} }`}
-    ${xlGutter && `${theme.MEDIA_LG_MIN} { ${toRowGuttersCss(xlGutter)} }`}
-  `;
-}
-
 export function withMediaGutters({ gutter, theme }) {
   gutter = toMediaObj(gutter);
 
@@ -367,59 +337,8 @@ export function withMediaGutters({ gutter, theme }) {
 }
 
 /**
- * withColumns
+ * withMediaColumns
  */
-const columnPropTypes = {
-  col: PropTypes.number, // xs, or when no media
-  smCol: PropTypes.number,
-  mdCol: PropTypes.number,
-  lgCol: PropTypes.number,
-  xlCol: PropTypes.number,
-
-  offset: PropTypes.number, // xs, or when no media
-  smOffset: PropTypes.number,
-  mdOffset: PropTypes.number,
-  lgOffset: PropTypes.number,
-  xlOffset: PropTypes.number,
-
-  ...gutterPropTypes,
-};
-export { columnPropTypes };
-export function withColumns({
-  col,
-  offset,
-  gutter,
-  smCol,
-  smOffset,
-  smGutter,
-  mdCol,
-  mdOffset,
-  mdGutter,
-  lgCol,
-  lgOffset,
-  lgGutter,
-  xlCol,
-  xlOffset,
-  xlGutter,
-  theme,
-}) {
-  // prettier-ignore
-  return css`
-    ${col && toColumnCss(col, offset, gutter)}
-    ${smCol && `${theme.MEDIA_XS_MIN} { ${toColumnCss(smCol, smOffset, smGutter || gutter)} }`}
-    ${mdCol && `${theme.MEDIA_SM_MIN} { ${toColumnCss(mdCol, mdOffset, mdGutter || gutter)} }`}
-    ${lgCol && `${theme.MEDIA_MD_MIN} { ${toColumnCss(lgCol, lgOffset, lgGutter || gutter)} }`}
-    ${xlCol && `${theme.MEDIA_LG_MIN} { ${toColumnCss(xlCol, xlOffset, xlGutter || gutter)} }`}
-  `;
-}
-
-/**
- * withMediaColumns (NEW, WIP...)
- */
-function toMediaObj(val) {
-  return typeof val === 'object' ? val : { xs: val };
-}
-
 export function withMediaColumns({ col, offset = 0, gutter = 0, theme }) {
   col = toMediaObj(col);
   offset = toMediaObj(offset);
@@ -435,29 +354,17 @@ export function withMediaColumns({ col, offset = 0, gutter = 0, theme }) {
   `;
 }
 
+/**
+ * withMediaStyles
+ */
 const mediaStylesPropTypes = {
-  styles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]), // use when no media
-  smStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
-  mdStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
-  lgStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
-  xlStyles: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+  styles: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.object,
+  ]),
 };
 export { mediaStylesPropTypes };
-export function _withMediaStyles({ styles, smStyles, mdStyles, lgStyles, xlStyles, theme }) {
-  // prettier-ignore
-  return css`
-    ${styles && styles};
-    ${smStyles && `${theme.MEDIA_XS_MIN} { ${smStyles} }`}
-    ${mdStyles && `${theme.MEDIA_SM_MIN} { ${mdStyles} }`}
-    ${lgStyles && `${theme.MEDIA_MD_MIN} { ${lgStyles} }`}
-    ${xlStyles && `${theme.MEDIA_LG_MIN} { ${xlStyles} }`}
-  `;
-}
-
-/**
- * withStyles (NEW, WIP...)
- */
-
 export function withMediaStyles({ styles, theme }) {
   if (Array.isArray(styles)) return styles;
   if (typeof styles === 'string') return css`${toCssString(styles)}`; // prettier-ignore
@@ -475,6 +382,9 @@ export function withMediaStyles({ styles, theme }) {
   return [];
 }
 
+/**
+ * withSpacing
+ */
 const spacingPropTypes = {
   margin: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   padding: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

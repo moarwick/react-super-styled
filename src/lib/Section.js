@@ -3,7 +3,7 @@ import {
   containerPropTypes,
   justifyPropTypes,
   spacingPropTypes,
-  mediaStylesPropTypes
+  mediaStylesPropTypes,
 } from './utils';
 
 import Block from './Block';
@@ -13,7 +13,7 @@ const propTypes = {
   ...containerPropTypes,
   ...justifyPropTypes,
   ...spacingPropTypes,
-  ...mediaStylesPropTypes
+  ...mediaStylesPropTypes,
 };
 
 /**
