@@ -19,13 +19,13 @@ const propTypes = {
 export function getCss({ hide, show, theme }) {
   const { xs: xsHide, sm: smHide, md: mdHide, lg: lgHide, xl: xlHide } = toMediaObj(hide || false);
   const { xs: xsShow, sm: smShow, md: mdShow, lg: lgShow, xl: xlShow } = toMediaObj(show || false);
-  const rules = [[smHide, smShow], [mdHide, mdShow], [lgHide, lgShow], [xlHide, xlShow]];
+  const breakpoints = [[smHide, smShow], [mdHide, mdShow], [lgHide, lgShow], [xlHide, xlShow]];
 
   let isHideFirst = Boolean(xsHide);
   if (!isHideFirst) {
-    rules.some(([h, s]) => {
-      if (h || s) {
-        isHideFirst = !!s;
+    breakpoints.some(([bHide, bShow]) => {
+      if (bHide || bShow) {
+        isHideFirst = !!bShow;
         return true;
       }
       return false;
