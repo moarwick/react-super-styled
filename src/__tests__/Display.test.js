@@ -1,4 +1,4 @@
-import Display, { getCss } from '../lib/Display';
+import { getCss } from '../lib/Display';
 import theme from '../../lib/THEME';
 
 const filterOutEmpties = list => list.filter(el => el.trim());
@@ -11,12 +11,27 @@ describe('getCss', () => {
     props = { theme };
   });
 
-  it('returns correct default rules', () => {
+  it('returns default rules', () => {
     expected = ['display: inline;'];
     expect(filterOutEmpties(getCss(props))).toEqual(expected);
   });
 
-  it('returns staggered show -> hide -> show rules', () => {
+  it('returns "delayed" hide rule', () => {
+    props = { ...props, hide: { xl: true } };
+    expected = [
+      'display: inline;',
+      '@media only screen and (min-width: 1200px) { display: none; }',
+    ];
+    expect(filterOutEmpties(getCss(props))).toEqual(expected);
+  });
+
+  it('returns "delayed" show rule', () => {
+    props = { ...props, show: { sm: true } };
+    expected = ['display: none;', '@media only screen and (min-width: 576px) { display: inline; }'];
+    expect(filterOutEmpties(getCss(props))).toEqual(expected);
+  });
+
+  it('returns multiple show -> hide -> show rules', () => {
     props = { ...props, hide: { sm: true }, show: { md: true } };
     expected = [
       'display: inline;',
@@ -26,7 +41,7 @@ describe('getCss', () => {
     expect(filterOutEmpties(getCss(props))).toEqual(expected);
   });
 
-  it('returns staggered hide -> show -> hide rules', () => {
+  it('returns multiple hide -> show -> hide rules', () => {
     props = { ...props, show: { sm: 'block' }, hide: { lg: true } };
     expected = [
       'display: none;',
