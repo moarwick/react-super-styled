@@ -37,10 +37,11 @@ const getCss = props => css`
   ${withJustify(props)}
   ${withSpacing(props)}
   ${withMediaStyles(props)}
-`
+`;
 
 const Span = styled.span`
   ${props => getCss(addTheme(props))};
 `;
+Span.displayName = 'Span';
 Span.propTypes = propTypes;
 export default Span;

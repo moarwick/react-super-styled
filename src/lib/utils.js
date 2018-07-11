@@ -224,11 +224,11 @@ export function withContainer(props) {
     margin-right: auto;
     max-width: ${props.theme.CONTAINER_SMALL}px;
 
-    ${props.theme.MEDIA_MD_MIN} { 
+    ${props.theme.MEDIA_MD_UP} { 
       max-width: ${props.theme.CONTAINER_MEDIUM}px;
     }
     
-    ${props.theme.MEDIA_LG_MIN} { 
+    ${props.theme.MEDIA_LG_UP} { 
       max-width: ${props.theme.CONTAINER_LARGE}px;
     }
   `
@@ -369,10 +369,10 @@ export function withMediaStyles({ styles, theme }) {
     // prettier-ignore
     return css`
     ${styles.xs && toCssString(styles.xs)}
-    ${styles.sm && `${theme.MEDIA_XS_MIN} { ${toCssString(styles.sm)} }`}
-    ${styles.md && `${theme.MEDIA_SM_MIN} { ${toCssString(styles.md)} }`}
-    ${styles.lg && `${theme.MEDIA_MD_MIN} { ${toCssString(styles.lg)} }`}
-    ${styles.xl && `${theme.MEDIA_LG_MIN} { ${toCssString(styles.xl)} }`}
+    ${styles.sm && `${theme.MEDIA_SM_UP} { ${toCssString(styles.sm)} }`}
+    ${styles.md && `${theme.MEDIA_MD_UP} { ${toCssString(styles.md)} }`}
+    ${styles.lg && `${theme.MEDIA_LG_UP} { ${toCssString(styles.lg)} }`}
+    ${styles.xl && `${theme.MEDIA_XL_UP} { ${toCssString(styles.xl)} }`}
   `;
   }
 

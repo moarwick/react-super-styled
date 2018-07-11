@@ -39,7 +39,7 @@ const THEME = {
   MEDIA_MD_DOWN: `@media only screen and (max-width: ${MEDIA_LG_START - 1}px)`,
   MEDIA_LG_DOWN: `@media only screen and (max-width: ${MEDIA_XL_START - 1}px)`,
 
-  // applies at and above given width breakpoint (deprecate)
+  // applies at and above given width breakpoint (deprecate!!!)
   MEDIA_XS_MIN: `@media (min-width: ${MEDIA_XS}px)`,
   MEDIA_SM_MIN: `@media (min-width: ${MEDIA_SM}px)`,
   MEDIA_MD_MIN: `@media (min-width: ${MEDIA_MD}px)`,
@@ -51,7 +51,7 @@ const THEME = {
   MEDIA_MD_MAX: `@media (max-width: ${MEDIA_MD - 1}px)`,
   MEDIA_LG_MAX: `@media (max-width: ${MEDIA_LG - 1}px)`,
 
-  SPACER: 10, // multiplier for margin, padding shorthands
+  SPACER: 10, // multiplier for margin, padding shorthands (to rem!!!)
 };
 
 export default THEME;

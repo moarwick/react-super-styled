@@ -6,14 +6,14 @@ import { Block, Flex, FlexItem, Heading, Rule, Section, Text, Span } from './lib
 const Code = styled.code`
   color: firebrick;
   font-weight: bold;
-  font-size: 0.95rem;
+  font-size: 1.2rem;
 `;
 
 const styles = {
   section: css`
     background-color: #fff;
     box-shadow: 1px 1px 10px 0 rgba(0, 100, 0, 0.2);
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
   `,
   propNames: css`
     background: linear-gradient(to right, #eee, #bbb);

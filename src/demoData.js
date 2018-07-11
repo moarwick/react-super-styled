@@ -168,7 +168,7 @@ const DEMO = {
     EXTRA_SCOPE: ['Block'],
     CODE: `
 <Block padding="1" styles='background-color: gold'>
-	I will build a <Span bold medium>GREAT</Span> wall, 
+	I will build a <Span bold large>GREAT</Span> wall, 
 	and <Span underline>nobody</Span> builds walls better than me! 
 	<Span color="olive" italic margin="* * * 1">– D. Trump</Span>
 </Block>`,
