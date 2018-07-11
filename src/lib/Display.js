@@ -33,8 +33,7 @@ export function getCss({ hide, show, theme }) {
   }
 
   return css`
-    ${!xsShow && isHideFirst && 'display: none;'}
-    ${!isHideFirst && toDisplayCss(false, xsShow)}
+    ${xsShow ? toDisplayCss(false, xsShow) : isHideFirst ? 'display: none;' : null}
     ${(smHide || smShow) && `${theme.MEDIA_SM_UP} { ${toDisplayCss(smHide, smShow)} }`}
     ${(mdHide || mdShow) && `${theme.MEDIA_MD_UP} { ${toDisplayCss(mdHide, mdShow)} }`}
     ${(lgHide || lgShow) && `${theme.MEDIA_LG_UP} { ${toDisplayCss(lgHide, lgShow)} }`}

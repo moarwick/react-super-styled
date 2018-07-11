@@ -12,16 +12,25 @@ describe('getCss', () => {
   });
 
   it('returns default rules', () => {
-    expected = ['display: inline;'];
+    expected = [];
+    expect(filterOutEmpties(getCss(props))).toEqual(expected);
+  });
+
+  it('returns initial (xs) hide rule', () => {
+    props = { ...props, hide: true };
+    expected = ['display: none;'];
+    expect(filterOutEmpties(getCss(props))).toEqual(expected);
+  });
+
+  it('returns initial (xs) show rule', () => {
+    props = { ...props, show: 'block' };
+    expected = ['display: block;'];
     expect(filterOutEmpties(getCss(props))).toEqual(expected);
   });
 
   it('returns "delayed" hide rule', () => {
     props = { ...props, hide: { xl: true } };
-    expected = [
-      'display: inline;',
-      '@media only screen and (min-width: 1200px) { display: none; }',
-    ];
+    expected = ['@media only screen and (min-width: 1200px) { display: none; }'];
     expect(filterOutEmpties(getCss(props))).toEqual(expected);
   });
 
@@ -34,7 +43,6 @@ describe('getCss', () => {
   it('returns multiple show -> hide -> show rules', () => {
     props = { ...props, hide: { sm: true }, show: { md: true } };
     expected = [
-      'display: inline;',
       '@media only screen and (min-width: 576px) { display: none; }',
       '@media only screen and (min-width: 768px) { display: inline; }',
     ];
