@@ -51,7 +51,7 @@ export function toCssUnits(val) {
 /**
  * Helper to ensure that value is a (media) object
  */
-function toMediaObj(val) {
+export function toMediaObj(val) {
   return typeof val === 'object' ? val : { xs: val };
 }
 
@@ -188,18 +188,15 @@ const basePropTypes = {
 };
 export { basePropTypes };
 
-const displayPropTypes = {
-  hide: PropTypes.bool, // xs, or when no media
-  smHide: PropTypes.bool,
-  mdHide: PropTypes.bool,
-  lgHide: PropTypes.bool,
-  xlHide: PropTypes.bool,
+export const columnPropTypes = {
+  col: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
+  offset: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
+  gutter: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.object]),
+};
 
-  show: PropTypes.oneOf([true, false, 'inline', 'inline-block', 'block']), // xs, or when no media
-  smShow: PropTypes.oneOf([true, false, 'inline', 'inline-block', 'block']),
-  mdShow: PropTypes.oneOf([true, false, 'inline', 'inline-block', 'block']),
-  lgShow: PropTypes.oneOf([true, false, 'inline', 'inline-block', 'block']),
-  xlShow: PropTypes.oneOf([true, false, 'inline', 'inline-block', 'block']),
+const displayPropTypes = {
+  hide: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  show: PropTypes.oneOfType([PropTypes.bool, PropTypes.string, PropTypes.object]),
 };
 export { displayPropTypes };
 
