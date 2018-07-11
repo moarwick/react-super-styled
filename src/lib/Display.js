@@ -3,7 +3,7 @@ import { addTheme, basePropTypes, displayPropTypes, toMediaObj } from './utils';
 
 function toDisplayCss(hide, show) {
   if (hide) return 'display: none;';
-  if (typeof show === 'boolean' || !show) show = 'block';
+  if (typeof show === 'boolean' || !show) show = 'inline';
   return `display: ${show};`;
 }
 

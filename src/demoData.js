@@ -254,10 +254,10 @@ const DEMO = {
     EXTRA_SCOPE: ['Span'],
     CODE: `
 <Span block color="gold" padding="1">
-  <Display lgHide>I'm shown as "block" by default, up until LG.</Display>
-  <Display mdShow="inline">I appear at MD as "inline".</Display>
-  <Display mdShow="inline"> #MeToo!</Display>
-  <Display smHide lgShow>See me go hide at SM, back at LG!</Display>
+  <Display hide={{ lg: true }}>I'm shown as "inline" by default, up until LG.</Display>
+  <Display show={{ md: 'block' }}>I appear at MD as "block".</Display>
+  <Display show={{ md: 'block' }}> #MeToo!</Display>
+  <Display hide={{ sm: true }} show={{ xl: true }}>See me go hide at SM, back at XL!</Display>
 </Span>`,
   },
 

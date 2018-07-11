@@ -12,11 +12,21 @@ describe('getCss', () => {
   });
 
   it('returns correct default rules', () => {
-    expected = ['display: block;'];
+    expected = ['display: inline;'];
     expect(filterOutEmpties(getCss(props))).toEqual(expected);
   });
 
-  it('returns correct staggered hide -> show -> hide rules', () => {
+  it('returns staggered show -> hide -> show rules', () => {
+    props = { ...props, hide: { sm: true }, show: { md: true } };
+    expected = [
+      'display: inline;',
+      '@media only screen and (min-width: 576px) { display: none; }',
+      '@media only screen and (min-width: 768px) { display: inline; }',
+    ];
+    expect(filterOutEmpties(getCss(props))).toEqual(expected);
+  });
+
+  it('returns staggered hide -> show -> hide rules', () => {
     props = { ...props, show: { sm: 'block' }, hide: { lg: true } };
     expected = [
       'display: none;',
