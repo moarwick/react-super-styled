@@ -21,14 +21,16 @@ export function getCss({ hide, show, theme }) {
   const { xs: xsShow, sm: smShow, md: mdShow, lg: lgShow, xl: xlShow } = toMediaObj(show || false);
   const rules = [[smHide, smShow], [mdHide, mdShow], [lgHide, lgShow], [xlHide, xlShow]];
 
-  let isHideFirst = false;
-  rules.some(([h, s]) => {
-    if (h || s) {
-      isHideFirst = !!s;
-      return true;
-    }
-    return false;
-  });
+  let isHideFirst = Boolean(xsHide);
+  if (!isHideFirst) {
+    rules.some(([h, s]) => {
+      if (h || s) {
+        isHideFirst = !!s;
+        return true;
+      }
+      return false;
+    });
+  }
 
   return css`
     ${!xsShow && isHideFirst && 'display: none;'}
