@@ -63,14 +63,16 @@ const styles = {
     box-shadow: 1px 1px 10px 0 rgba(0, 100, 0, 0.2);
     margin-bottom: 20px;
   `,
-  title: css`
-    font-family: 'Racing Sans One', cursive;
-    font-size: 32px;
-    margin: 0;
-  `,
-  titleMd: css`
-    font-size: 48px;
-  `,
+  title: {
+    xs: css`
+      font-family: 'Racing Sans One', cursive;
+      font-size: 3.2rem;
+      margin: 0;
+    `,
+    md: css`
+      font-size: 4.8rem;
+    `,
+  },
 };
 
 class App extends React.Component {
@@ -87,7 +89,7 @@ class App extends React.Component {
       <div>
         <Block container={CONTAINER_WIDTH} styles="position: relative">
           <Header href="https://github.com/moarwick/react-super-styled">
-            <Heading normal styles={styles.title} mdStyles={styles.titleMd}>
+            <Heading normal styles={styles.title}>
               &lt; ReactSuperStyled /&gt;
             </Heading>
             <RssLogoWrapper>
@@ -103,7 +105,7 @@ class App extends React.Component {
                 <GitHubLogo />
               </Display>
             </GitHubLogoWrapper>
-            <Text center bold large italic margin="0 * 1">
+            <Text center bold large italic margin="0 0 1rem">
               Responsive JSX layouts with Styled Components
             </Text>
           </Header>
@@ -116,28 +118,28 @@ class App extends React.Component {
             Wrappers &raquo;
           </Heading>
           {DEMO.WRAPPERS.map((demoProps, index) => (
-            <ComponentDemo key={'wrappers-' + index} {...demoProps} />
+            <ComponentDemo key={`wrappers-${index}`} {...demoProps} />
           ))}
 
           <Heading h3 color="#676" xLarge normal>
             Grid &raquo;
           </Heading>
           {DEMO.GRID.map((demoProps, index) => (
-            <ComponentDemo key={'grid-' + index} {...demoProps} />
+            <ComponentDemo key={`grid-${index}`} {...demoProps} />
           ))}
 
           <Heading h3 color="#676" xLarge normal>
             Typography &raquo;
           </Heading>
           {DEMO.TYPOGRAPHY.map((demoProps, index) => (
-            <ComponentDemo key={'type-' + index} {...demoProps} />
+            <ComponentDemo key={`type-${index}`} {...demoProps} />
           ))}
 
           <Heading h3 color="#676" xLarge normal>
             Misc &raquo;
           </Heading>
           {DEMO.MISC.map((demoProps, index) => (
-            <ComponentDemo key={'misc-' + index} {...demoProps} />
+            <ComponentDemo key={`misc-${index}`} {...demoProps} />
           ))}
 
           <Heading h3 color="#676" xLarge normal>
@@ -145,7 +147,7 @@ class App extends React.Component {
           </Heading>
 
           <Section styles={styles.section}>
-            <Block padding="1 2">
+            <Block padding="1rem 2rem">
               <Heading color="firebrick" margin={0} inline xLarge normal>
                 withMedia&nbsp;&nbsp;
               </Heading>
@@ -156,7 +158,7 @@ class App extends React.Component {
               </Text>
             </Block>
             <Rule borderStyle="dotted" color="#999" />
-            <Block padding="1 2">
+            <Block padding="1rem 2rem">
               <pre>export default withMedia()(MyComponent)</pre>
               <Text>
                 <Span italic color="#999">

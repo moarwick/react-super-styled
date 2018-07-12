@@ -98,10 +98,6 @@ const PROP_TYPES = {
   offset: TYPES.NUMBER_OR_OBJECT,
 
   styles: TYPES.STYLES,
-  smStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
-  mdStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
-  lgStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
-  xlStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
 
   borderStyle: TYPES.STRING,
   colorTo: TYPES.STRING,
