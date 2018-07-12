@@ -26,7 +26,7 @@ const propTypes = {
 const defaultProps = {
   borderStyle: 'solid',
   color: '#000',
-  height: 1,
+  height: 0.1,
 };
 
 const getCss = props => {
@@ -45,11 +45,12 @@ const getCss = props => {
 
   const colorTo = props.colorTo || color;
   const background = `linear-gradient(to right, ${color}, ${colorTo})`;
+
   // prettier-ignore
   return css`
     background: ${background};
     height: ${toCssUnits(height)}; 
-    ${margin && cssSpacing('margin', props)}
+    ${margin && cssSpacing('margin', margin)}
     ${withMediaStyles(props)};
   `
 };

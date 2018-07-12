@@ -10,6 +10,7 @@ const TYPES = {
   FUNC: 'Function',
   NODE: 'React Elem(s)',
   NUMBER: 'Number',
+  NUMBER_OR_OBJECT: 'Number, Object',
   OBJECT: 'Object',
   STRING: 'String',
   STRING_OR_NUMBER: 'String, Number',
@@ -92,23 +93,9 @@ const PROP_TYPES = {
   flexShrink: TYPES.NUMBER,
   order: TYPES.NUMBER,
 
-  gutter: TYPES.NUMBER,
-  smGutter: TYPES.NUMBER,
-  mdGutter: TYPES.NUMBER,
-  lgGutter: TYPES.NUMBER,
-  xlGutter: TYPES.NUMBER,
-
-  col: TYPES.NUMBER,
-  smCol: TYPES.NUMBER,
-  mdCol: TYPES.NUMBER,
-  lgCol: TYPES.NUMBER,
-  xlCol: TYPES.NUMBER,
-
-  offset: TYPES.NUMBER,
-  smOffset: TYPES.NUMBER,
-  mdOffset: TYPES.NUMBER,
-  lgOffset: TYPES.NUMBER,
-  xlOffset: TYPES.NUMBER,
+  gutter: TYPES.NUMBER_OR_OBJECT,
+  col: TYPES.NUMBER_OR_OBJECT,
+  offset: TYPES.NUMBER_OR_OBJECT,
 
   styles: TYPES.STYLES,
   smStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
@@ -130,11 +117,11 @@ const DEMO = {
     CODE: `
 <Block 
   center
-  margin="2 20 * 2" 
-  padding="1"
-  styles='background-color: orange; border: 2px solid white'
+  margin="2rem 1rem" 
+  padding={1}
+  styles="background-color: orange; border: 2px solid white"
 >
-  I'm using margins & padding "shorthands".
+  I'm using margin & padding "shorthands".
 </Block>`,
   },
 
@@ -142,7 +129,7 @@ const DEMO = {
     DESCRIPTION: 'Block variant, renders SECTION tag.',
     CODE: `
 <Section 
-  padding="1"
+  padding={1}
   styles={{
     xs: 'background-color: brown',
     sm: 'background-color: firebrick',
@@ -158,7 +145,7 @@ const DEMO = {
   ARTICLE: {
     DESCRIPTION: 'Block variant, renders ARTICLE tag.',
     CODE: `
-<Article center padding="1" styles='background-color: gold'>
+<Article center padding={1} styles='background-color: gold'>
 	I'm also just like <em>Block</em>, but more "semantic"  ¯\\_(ツ)_/¯
 </Article>`,
   },
@@ -167,10 +154,10 @@ const DEMO = {
     DESCRIPTION: <span>SPAN wrapper, allows for typography and display controls.</span>,
     EXTRA_SCOPE: ['Block'],
     CODE: `
-<Block padding="1" styles='background-color: gold'>
+<Block padding={1} styles='background-color: gold'>
 	I will build a <Span bold large>GREAT</Span> wall, 
 	and <Span underline>nobody</Span> builds walls better than me! 
-	<Span color="olive" italic margin="* * * 1">– D. Trump</Span>
+	<Span color="olive" italic margin="0 0 0 1rem">– D. Trump</Span>
 </Block>`,
   },
 
@@ -200,19 +187,19 @@ const DEMO = {
     CODE: `
 <Block>
   <Flex gutter={10}>
-    <FlexItem col={8/12} padding="1" styles="background-color: orange">
+    <FlexItem col={8/12} padding={1} styles="background-color: orange">
       8 col - 10px gutter
     </FlexItem>
-    <FlexItem col={4/12} padding="1" styles="background-color: firebrick">
+    <FlexItem col={4/12} padding={1} styles="background-color: firebrick">
       4 col - 10px gutter
     </FlexItem>
 	</Flex>
   
-  <Flex margin="1 *">
+  <Flex margin="1rem 0">
     <FlexItem 
       col={{ xs: 12/12, lg: 8/12 }} 
       offset={{ lg: 2/12 }}
-      padding="1" 
+      padding={1} 
       styles="background-color: #999"
     >  
       12 col (xs) → 2 col offset, 8 col (lg)
@@ -220,13 +207,13 @@ const DEMO = {
 	</Flex>
 	
 	<Flex>
-    <FlexItem col={{ xs: 4/12, lg: 4/12 }} padding="1" styles="background-color: gold">
+    <FlexItem col={{ xs: 4/12, lg: 4/12 }} padding={1} styles="background-color: gold">
       4 col (xs) → 4 col (lg)
     </FlexItem>
-    <FlexItem col={{ xs: 8/12, lg: 4/12 }} padding="1" styles="background-color: orange">
+    <FlexItem col={{ xs: 8/12, lg: 4/12 }} padding={1} styles="background-color: orange">
       8 col (xs) → 4 col (lg)
     </FlexItem>
-    <FlexItem col={{ xs: 12/12, lg: 4/12 }} padding="1" styles="background-color: firebrick">
+    <FlexItem col={{ xs: 12/12, lg: 4/12 }} padding={1} styles="background-color: firebrick">
       12 col (xs) → 4 col (lg)
     </FlexItem>
   </Flex>
@@ -253,7 +240,7 @@ const DEMO = {
     DESCRIPTION: 'Wrapper to show or hide children based on media breakpoints. Renders SPAN tag.',
     EXTRA_SCOPE: ['Span'],
     CODE: `
-<Span block color="gold" padding="1">
+<Span block color="gold" padding={1}>
   <Display hide={{ lg: true }}>I'm shown as "inline" by default, up until LG.</Display>
   <Display show={{ md: 'block' }}>I appear at MD as "block".</Display>
   <Display show={{ md: 'block' }}> #MeToo!</Display>
@@ -265,15 +252,15 @@ const DEMO = {
     DESCRIPTION: 'A "smarter" HR, just for fun. Apply border styles or gradients. Renders DIV tag.',
     EXTRA_SCOPE: ['Span'],
     CODE: `
-<Span block color="gold" padding="1">
+<Span block color="gold" padding={1}>
 	dotted
-	<Rule borderStyle="dotted" color="gold" margin="1 * 2"/>
+	<Rule borderStyle="dotted" color="gold" margin="1rem 0 2rem"/>
 	
 	dashed
-	<Rule borderStyle="dashed" color="orange" height={4} margin="1 * 2"/>
+	<Rule borderStyle="dashed" color="orange" height={0.4} margin="1rem 0 2rem"/>
 		
 	gradient
-	<Rule color="firebrick" colorTo="gold" height={10} margin="1 * *"/>
+	<Rule color="firebrick" colorTo="gold" height={1} margin="1rem 0 0"/>
 </Span>`,
   },
 };

@@ -42,6 +42,5 @@ const getCss = props => css`
 const Span = styled.span`
   ${props => getCss(addTheme(props))};
 `;
-Span.displayName = 'Span';
 Span.propTypes = propTypes;
 export default Span;

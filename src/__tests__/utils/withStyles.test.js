@@ -59,9 +59,9 @@ describe('withMediaStyles', () => {
     };
     expected = [
       'display:inline;',
-      '@media (min-width: 576px) { display:block;cursor:pointer; }',
-      '@media (min-width: 768px) { color: red; }',
-      '@media (min-width: 992px) { display: inline-block; color: blue; }',
+      '@media only screen and (min-width: 576px) { display:block;cursor:pointer; }',
+      '@media only screen and (min-width: 768px) { color: red; }',
+      '@media only screen and (min-width: 992px) { display: inline-block; color: blue; }',
     ];
     props = { ...props, styles };
     expect(filterOutEmpties(withMediaStyles(props))).toEqual(expected);

@@ -42,10 +42,10 @@ export function toCssString(val) {
 }
 
 /**
- * Return strings as-is, coerce numbers to 'px'
+ * Return strings as-is, coerce numbers to 'rem'
  */
 export function toCssUnits(val) {
-  return typeof val === 'string' ? val : typeof val === 'number' ? `${val}px` : '';
+  return typeof val === 'string' ? val : typeof val === 'number' ? `${val}rem` : '';
 }
 
 /**
@@ -65,67 +65,14 @@ export function toNum(value, precision = 0) {
 }
 
 /**
- * Parse an incoming string into a valid CSS size unit, e.g. 10px, 2.5em, 50%
- * If the string does not match known units, assume it is a SPACER multiplier
- *
- * Ex. cssSize('10px') --> '10px'
- *     cssSize('3')    --> '30px'
+ * Deliver CSS 'padding' or 'margin' rules derived from passed in prop
+ * Numbers are assumed to be 'rem'
  */
-export function cssSize(val, spacer) {
-  // check if val matches legit pattern, e.g. 1px, 50%, 2.5em, or 'auto'
-  // if true, return val as-is
-  const isExplicit = /^[-0-9.]+(px|em|rem|%)$/.test(val) || val === 'auto';
-  if (isExplicit) return val;
-
-  // otherwise, assume a SPACER multiplier, e.g. -1, 2.5, etc
-  const multi = Number((val.match(/[-0-9.]/g) || []).join('')); // negative multipliers ok
-  return Number.isNaN(multi) ? '0px' : `${multi * spacer}px`;
-}
-
-/**
- * Deliver CSS 'padding' or 'margin' rules derived from a shorthand string
- * Expect a space delimited string of up to 4 elems, in the CSS shorthand order "top right bottom left"
- * The values can be in known CSS units (12px), or numbers only (5) as SPACER multipliers (50px)
- * If a '*' is supplied for any direction, no rule is applied for it
- *
- * Ex. spacingCss('padding', '1 * -5px 10%') -->
- *   padding-top: 10px;
- *   padding-bottom: -5px;
- *   padding-left: 10%;
- */
-export function cssSpacing(rule, props) {
-  // rule = ['margin', 'padding'].find(supportedRule => supportedRule === rule.trim());
-
-  if (!rule) return '';
-
-  const values = props[rule];
-  let top;
-  let right;
-  let bottom;
-  let left;
-
-  if (typeof values === 'number') {
-    top = `${values}px`;
-    right = `${values}px`;
-  } else {
-    [top, right, bottom, left] = String(values)
-      .split(' ')
-      .slice(0, 4); // limit to 4 elems
-  }
-
-  const spacer = props.theme.SPACER;
-  top = top && top !== '*' ? cssSize(top, spacer) : ''; // do not apply rule if '0'
-  right = right !== '*' ? (right ? cssSize(right, spacer) : top) : ''; // if not supplied, apply 'top'
-  bottom = bottom !== '*' ? (bottom ? cssSize(bottom, spacer) : top) : ''; // if not supplied, apply 'top'
-  left = left !== '*' ? (left ? cssSize(left, spacer) : right) : ''; // if not supplied, apply 'right'
-
-  // prettier-ignore
+export function cssSpacing(rule, value) {
+  if (typeof value === 'number') value += 'rem';
   return css`
-    ${rule}-top: ${top};
-    ${rule}-right: ${right};
-    ${rule}-bottom: ${bottom};
-    ${rule}-left: ${left};
-  `
+    ${rule}: ${value};
+  `;
 }
 
 /**
@@ -391,7 +338,7 @@ export function withSpacing(props) {
   // we no-op only if 'undefined', to allow for number 0 to clear margins/padding
   // prettier-ignore
   return css`
-    ${props.margin !== undefined && cssSpacing('margin', props)} 
-    ${props.padding !== undefined && cssSpacing('padding', props)}
+    ${props.margin && cssSpacing('margin', props.margin)} 
+    ${props.padding && cssSpacing('padding', props.padding)}
   `
 }

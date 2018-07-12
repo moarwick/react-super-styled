@@ -48,15 +48,15 @@ const ComponentDemo = props => {
 
   return (
     <Section styles={styles.section}>
-      <Block padding="1 2">
+      <Block padding="1rem 2rem">
         <Heading color="firebrick" margin={0} inline xLarge normal>
           {name}&nbsp;&nbsp;
         </Heading>
         <Text inline>{description}</Text>
       </Block>
       <Rule borderStyle="dotted" color="#999" />
-      <Block padding="* 2">
-        <Flex gutter={10} margin="1 * 2">
+      <Block padding="0 2rem">
+        <Flex gutter={10} margin="1rem 0 2rem">
           {renderedPropTypesList}
         </Flex>
       </Block>
