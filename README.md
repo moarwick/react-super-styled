@@ -20,10 +20,6 @@ RSS is a small React component library which aims to accelerate authoring of JSX
 * Spacing "shorthands" for margin, padding
 * Customizable theme, breakpoints
 
-Caveats:
-1) Not a full-fledged "styling library", makes for a great "base"!
-2) Dynamic prop parsing adds some "overhead"
-
 > Some Breaking "improvements" in v0.5.0, but well worth it :)
 
 ### Installation
@@ -56,7 +52,7 @@ function MyArticle({text, title}) {
 ### Interactive Docs
 Try out *React Super Styled* "live" in the [DEMO](https://moarwick.github.io/react-super-styled/). The intent behind *RSS* is to be intuitive and readable. Experiment with all listed props and inspect the results! :)
 
-> RSS is intended for building layouts. For components requiring lots of specific styling, it is recommended to create new "raw" styled components. Having said that, the dynamically generated demo page is quite complex and 100% *RSS*, yet renders under 180ms in production.
+> RSS is intended for building layouts, proritizing dev speed and code readability. Dynamic prop parsing adds some "overhead". The library may be inappropriate for complex components requiring lots of custom styling, ultra dense layouts, tables, or wherever maximum render performance is critical. Don't build Reddit with it! :) 
 
 
 ### Responsive
@@ -96,8 +92,8 @@ The *RSS* theme does not come with any predefined font sizing. You can specify b
 Per "best practices", it is recommended to use `rem`s, at least for typography. Setting following resets on your document tends to work well, establishing `1rem` as `10px`:
 
 ```
-html { font-size: 62.5%; } 
-body { font-size: 1.4rem; }
+html { font-size: 62.5%; }   // 1rem
+body { font-size: 1.4rem; }  // ~14px
 ```
 
 ### Theme
