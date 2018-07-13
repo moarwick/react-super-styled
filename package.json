@@ -31,7 +31,7 @@
     "precommit": "lint-staged",
     "postcommit": "git reset",
     "dist": "rimraf lib && babel src/lib --out-dir lib",
-    "prepublish": "npm run dist",
+    "prepublishOnly": "npm run dist",
     "test": "jest --watch --no-cache"
   },
   "dependencies": {
