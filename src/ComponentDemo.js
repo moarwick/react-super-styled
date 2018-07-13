@@ -6,7 +6,7 @@ import { Block, Flex, FlexItem, Heading, Rule, Section, Text, Span } from './lib
 const Code = styled.code`
   color: firebrick;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 `;
 
 const styles = {

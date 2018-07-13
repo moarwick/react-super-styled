@@ -141,7 +141,7 @@ const DEMO = {
   ARTICLE: {
     DESCRIPTION: 'Block variant, renders ARTICLE tag.',
     CODE: `
-<Article center padding={1} styles='background-color: gold'>
+<Article center padding={1} styles="background-color: gold">
 	I'm also just like <em>Block</em>, but more "semantic"  ¯\\_(ツ)_/¯
 </Article>`,
   },
@@ -150,7 +150,7 @@ const DEMO = {
     DESCRIPTION: <span>SPAN wrapper, allows for typography and display controls.</span>,
     EXTRA_SCOPE: ['Block'],
     CODE: `
-<Block padding={1} styles='background-color: gold'>
+<Block padding={1} styles="background-color: gold">
 	I will build a <Span bold large>GREAT</Span> wall, 
 	and <Span underline>nobody</Span> builds walls better than me! 
 	<Span color="olive" italic margin="0 0 0 1rem">– D. Trump</Span>
@@ -160,9 +160,8 @@ const DEMO = {
   FLEX: {
     DESCRIPTION: (
       <span>
-        Flex "container", renders DIV tag. Supports standard flex props, plus props for
-        media-enabled 12-column grid. Defaults to&nbsp;
-        <code>'wrap'</code>.
+        Flex "container", renders DIV tag. Supports standard flex props, plus a grid gutter.
+        Defaults to&nbsp;<code>'wrap'</code>.
       </span>
     ),
     EXTRA_SCOPE: ['Text'],
@@ -175,8 +174,7 @@ const DEMO = {
   FLEXITEM: {
     DESCRIPTION: (
       <span>
-        Flex "item" wrapper, renders DIV tag. Supports standard flex props, plus props for
-        media-enabled 12-column grid (gutters are passed down by <code>Flex</code>).
+        Flex "item" wrapper, renders DIV tag. Supports standard flex props, plus grid column props.
       </span>
     ),
     EXTRA_SCOPE: ['Block', 'Flex'],
@@ -219,7 +217,7 @@ const DEMO = {
   HEADING: {
     DESCRIPTION: 'Renders H1, H2, H3, H4, or H5 tag.',
     CODE: `
-<Heading h2 center color='gold' margin={0} normal underline xxLarge>
+<Heading h2 center color="gold" margin={0} normal underline xxLarge>
 	Super Styled
 </Heading>`,
   },
@@ -227,7 +225,7 @@ const DEMO = {
   TEXT: {
     DESCRIPTION: 'Text paragraph, renders P tag.',
     CODE: `
-<Text color='gold' center italic large>
+<Text color="gold" center italic large>
 	Pack my box with five dozen liquor jugs.
 </Text>`,
   },
