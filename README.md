@@ -20,7 +20,7 @@ RSS is a small React component library which aims to accelerate authoring of JSX
 * Spacing "shorthands" for margin, padding
 * Customizable theme, breakpoints
 
-> Some Breaking "improvements" in v0.5.0, but well worth it :)
+> Some Breaking "improvements" in v0.5.0+, but well worth it :)
 
 ### Installation
 ```
