@@ -24,7 +24,7 @@ function getWindowWidth() {
  * HOC to supply a 'media' prop to its enhanced component, based on current browser width
  * Value will be one of: 'xs' (default), 'sm', 'md', 'lg', 'xl'
  */
-const withMedia = (userTheme = {}) => EnhancedComponent => {
+const withMedia = (EnhancedComponent, userTheme = {}) => {
   const { MEDIA_SM, MEDIA_MD, MEDIA_LG, MEDIA_XL } = { ...THEME, ...userTheme };
 
   const mediaRanges = {

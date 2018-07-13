@@ -6,8 +6,6 @@ const MEDIA_MD = 768; // MD range: 768 - 991
 const MEDIA_LG = 992; // LG range: 992 - 1199
 const MEDIA_XL = 1200; // XL range: 1200 - Infinity
 
-// XL range: 1200+
-
 /**
  * Theming Variables
  */

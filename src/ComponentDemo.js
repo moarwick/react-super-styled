@@ -56,7 +56,7 @@ const ComponentDemo = props => {
       </Block>
       <Rule borderStyle="dotted" color="#999" />
       <Block padding="0 2rem">
-        <Flex gutter={10} margin="1rem 0 2rem">
+        <Flex gutter={1} margin="1rem 0 2rem">
           {renderedPropTypesList}
         </Flex>
       </Block>

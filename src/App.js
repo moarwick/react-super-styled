@@ -93,7 +93,7 @@ class App extends React.Component {
               &lt; ReactSuperStyled /&gt;
             </Heading>
             <RssLogoWrapper>
-              <Display smShow>
+              <Display show={{ sm: true }}>
                 <Flex alignItems="center">
                   <RssLogo />&nbsp;&nbsp;
                   {version}
@@ -101,7 +101,7 @@ class App extends React.Component {
               </Display>
             </RssLogoWrapper>
             <GitHubLogoWrapper>
-              <Display smShow>
+              <Display show={{ sm: true }}>
                 <GitHubLogo />
               </Display>
             </GitHubLogoWrapper>
@@ -152,14 +152,12 @@ class App extends React.Component {
                 withMedia&nbsp;&nbsp;
               </Heading>
               <Text inline>
-                Component enhancer to supply the current "breakpoint" via prop &nbsp;<code>
-                  media
-                </code>.
+                Enhancer HOC to supply the current "breakpoint" via prop &nbsp;<code>media</code>.
               </Text>
             </Block>
             <Rule borderStyle="dotted" color="#999" />
             <Block padding="1rem 2rem">
-              <pre>export default withMedia()(MyComponent)</pre>
+              <pre>export default withMedia(MyComponent, [userTheme])</pre>
               <Text>
                 <Span italic color="#999">
                   Current value:&nbsp;&nbsp;
@@ -174,4 +172,4 @@ class App extends React.Component {
   }
 }
 
-export default withMedia()(App);
+export default withMedia(App);
