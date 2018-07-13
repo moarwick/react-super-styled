@@ -61,7 +61,7 @@ const ComponentDemo = props => {
         </Flex>
       </Block>
       <LiveProvider code={code} scope={scope}>
-        <Flex gutter={{ lg: 10 }}>
+        <Flex gutter={{ lg: 1 }}>
           <FlexItem col={{ xs: 12 / 12, lg: 6 / 12 }}>
             <LiveEditor style={styles.editor} />
             <LiveError />

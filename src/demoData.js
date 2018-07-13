@@ -180,7 +180,7 @@ const DEMO = {
     EXTRA_SCOPE: ['Block', 'Flex'],
     CODE: `
 <Block>
-  <Flex gutter={10}>
+  <Flex gutter={2}>
     <FlexItem col={8/12} padding={1} styles="background-color: orange">
       8 col - 10px gutter
     </FlexItem>

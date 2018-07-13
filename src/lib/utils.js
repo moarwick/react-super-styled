@@ -25,7 +25,7 @@ export function ensureSemi(val) {
  */
 export function resolveUnits(val, defaultUnits = '') {
   const match = String(val).match(/px|rem|em|%/g);
-  return match ? match[0] : defaultUnits || typeof val === 'number' ? 'px' : 'rem';
+  return match ? match[0] : defaultUnits || 'rem';
 }
 
 /**
