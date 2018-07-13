@@ -9,7 +9,7 @@ import { version } from '../package.json';
 const CONTAINER_WIDTH = 1280;
 
 const RssLogo = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width={64} height={64}>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width={40} height={40}>
     <g>
       <path fill="#676" d="M634.5 481.5L319 633 4.5 481.5v-327L319 6l315.5 146.5z" />
       <path
@@ -63,14 +63,16 @@ const styles = {
     box-shadow: 1px 1px 10px 0 rgba(0, 100, 0, 0.2);
     margin-bottom: 20px;
   `,
-  title: css`
-    font-family: 'Racing Sans One', cursive;
-    font-size: 32px;
-    margin: 0;
-  `,
-  titleMd: css`
-    font-size: 48px;
-  `,
+  title: {
+    xs: css`
+      font-family: 'Racing Sans One', cursive;
+      font-size: 3.2rem;
+      margin: 0;
+    `,
+    md: css`
+      font-size: 4.8rem;
+    `,
+  },
 };
 
 class App extends React.Component {
@@ -87,11 +89,11 @@ class App extends React.Component {
       <div>
         <Block container={CONTAINER_WIDTH} styles="position: relative">
           <Header href="https://github.com/moarwick/react-super-styled">
-            <Heading normal styles={styles.title} mdStyles={styles.titleMd}>
+            <Heading normal styles={styles.title}>
               &lt; ReactSuperStyled /&gt;
             </Heading>
             <RssLogoWrapper>
-              <Display smShow>
+              <Display show={{ sm: true }}>
                 <Flex alignItems="center">
                   <RssLogo />&nbsp;&nbsp;
                   {version}
@@ -99,11 +101,11 @@ class App extends React.Component {
               </Display>
             </RssLogoWrapper>
             <GitHubLogoWrapper>
-              <Display smShow>
+              <Display show={{ sm: true }}>
                 <GitHubLogo />
               </Display>
             </GitHubLogoWrapper>
-            <Text center bold large italic margin="0 * 1">
+            <Text center bold large italic margin="0 0 1rem">
               Responsive JSX layouts with Styled Components
             </Text>
           </Header>
@@ -116,28 +118,28 @@ class App extends React.Component {
             Wrappers &raquo;
           </Heading>
           {DEMO.WRAPPERS.map((demoProps, index) => (
-            <ComponentDemo key={'wrappers-' + index} {...demoProps} />
+            <ComponentDemo key={`wrappers-${index}`} {...demoProps} />
           ))}
 
           <Heading h3 color="#676" xLarge normal>
             Grid &raquo;
           </Heading>
           {DEMO.GRID.map((demoProps, index) => (
-            <ComponentDemo key={'grid-' + index} {...demoProps} />
+            <ComponentDemo key={`grid-${index}`} {...demoProps} />
           ))}
 
           <Heading h3 color="#676" xLarge normal>
             Typography &raquo;
           </Heading>
           {DEMO.TYPOGRAPHY.map((demoProps, index) => (
-            <ComponentDemo key={'type-' + index} {...demoProps} />
+            <ComponentDemo key={`type-${index}`} {...demoProps} />
           ))}
 
           <Heading h3 color="#676" xLarge normal>
             Misc &raquo;
           </Heading>
           {DEMO.MISC.map((demoProps, index) => (
-            <ComponentDemo key={'misc-' + index} {...demoProps} />
+            <ComponentDemo key={`misc-${index}`} {...demoProps} />
           ))}
 
           <Heading h3 color="#676" xLarge normal>
@@ -145,19 +147,17 @@ class App extends React.Component {
           </Heading>
 
           <Section styles={styles.section}>
-            <Block padding="1 2">
+            <Block padding="1rem 2rem">
               <Heading color="firebrick" margin={0} inline xLarge normal>
                 withMedia&nbsp;&nbsp;
               </Heading>
               <Text inline>
-                Component enhancer to supply the current "breakpoint" via prop &nbsp;<code>
-                  media
-                </code>.
+                Enhancer HOC to supply the current "breakpoint" via prop &nbsp;<code>media</code>.
               </Text>
             </Block>
             <Rule borderStyle="dotted" color="#999" />
-            <Block padding="1 2">
-              <pre>export default withMedia()(MyComponent)</pre>
+            <Block padding="1rem 2rem">
+              <pre>export default withMedia(MyComponent, [userTheme])</pre>
               <Text>
                 <Span italic color="#999">
                   Current value:&nbsp;&nbsp;
@@ -172,4 +172,4 @@ class App extends React.Component {
   }
 }
 
-export default withMedia()(App);
+export default withMedia(App);

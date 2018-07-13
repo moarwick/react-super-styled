@@ -4,7 +4,7 @@ import {
   addTheme,
   basePropTypes,
   columnPropTypes,
-  withColumns,
+  withMediaColumns,
   spacingPropTypes,
   withSpacing,
   mediaStylesPropTypes,
@@ -53,7 +53,7 @@ function getCss({ flex, flexGrow, flexShrink, flexBasis, ...props }) {
     flex: ${flex};
     align-self: ${props.alignSelf || 'auto'};
     order: ${props.order || 0}; 
-    ${withColumns(props)}
+    ${withMediaColumns(props)}
     ${withSpacing(props)}
     ${withMediaStyles(props)}
   `

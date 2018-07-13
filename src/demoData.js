@@ -1,4 +1,5 @@
 import React from 'react';
+import { css } from 'styled-components';
 import * as Components from './lib/index';
 
 const TYPES = {
@@ -9,10 +10,12 @@ const TYPES = {
   FUNC: 'Function',
   NODE: 'React Elem(s)',
   NUMBER: 'Number',
+  NUMBER_OR_OBJECT: 'Number, Object',
   OBJECT: 'Object',
   STRING: 'String',
   STRING_OR_NUMBER: 'String, Number',
   STRING_OR_ARRAY_OF_CSS: 'String, Array (css)',
+  STYLES: 'String, Array (css), Object',
 };
 
 const PROP_TYPES = {
@@ -90,29 +93,11 @@ const PROP_TYPES = {
   flexShrink: TYPES.NUMBER,
   order: TYPES.NUMBER,
 
-  gutter: TYPES.NUMBER,
-  smGutter: TYPES.NUMBER,
-  mdGutter: TYPES.NUMBER,
-  lgGutter: TYPES.NUMBER,
-  xlGutter: TYPES.NUMBER,
+  gutter: TYPES.NUMBER_OR_OBJECT,
+  col: TYPES.NUMBER_OR_OBJECT,
+  offset: TYPES.NUMBER_OR_OBJECT,
 
-  col: TYPES.NUMBER,
-  smCol: TYPES.NUMBER,
-  mdCol: TYPES.NUMBER,
-  lgCol: TYPES.NUMBER,
-  xlCol: TYPES.NUMBER,
-
-  offset: TYPES.NUMBER,
-  smOffset: TYPES.NUMBER,
-  mdOffset: TYPES.NUMBER,
-  lgOffset: TYPES.NUMBER,
-  xlOffset: TYPES.NUMBER,
-
-  styles: TYPES.STRING_OR_ARRAY_OF_CSS,
-  smStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
-  mdStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
-  lgStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
-  xlStyles: TYPES.STRING_OR_ARRAY_OF_CSS,
+  styles: TYPES.STYLES,
 
   borderStyle: TYPES.STRING,
   colorTo: TYPES.STRING,
@@ -128,11 +113,11 @@ const DEMO = {
     CODE: `
 <Block 
   center
-  margin="2 20 * 2" 
-  padding="1"
-  styles='background-color: orange; border: 2px solid white'
+  margin="2rem 1rem" 
+  padding={1}
+  styles="background-color: orange; border: 2px solid white"
 >
-  I'm using margins & padding "shorthands".
+  I'm using margin & padding "shorthands".
 </Block>`,
   },
 
@@ -140,12 +125,14 @@ const DEMO = {
     DESCRIPTION: 'Block variant, renders SECTION tag.',
     CODE: `
 <Section 
-  padding="1"
-  styles='background-color: brown'
-  smStyles='background-color: firebrick'
-  mdStyles='background-color: orangered'
-  lgStyles='background-color: orange'
-  xlStyles='background-color: gold'
+  padding={1}
+  styles={{
+    xs: 'background-color: brown',
+    sm: 'background-color: firebrick',
+    md: 'background-color: orangered',
+    lg: 'background-color: orange',
+    xl: 'background-color: gold',
+  }}
 >
 	Watch me change styles at different &lt;&mdash;&gt; breakpoints!
 </Section>`,
@@ -154,7 +141,7 @@ const DEMO = {
   ARTICLE: {
     DESCRIPTION: 'Block variant, renders ARTICLE tag.',
     CODE: `
-<Article center padding="1" styles='background-color: gold'>
+<Article center padding={1} styles="background-color: gold">
 	I'm also just like <em>Block</em>, but more "semantic"  ¯\\_(ツ)_/¯
 </Article>`,
   },
@@ -163,19 +150,18 @@ const DEMO = {
     DESCRIPTION: <span>SPAN wrapper, allows for typography and display controls.</span>,
     EXTRA_SCOPE: ['Block'],
     CODE: `
-<Block padding="1" styles='background-color: gold'>
-	I will build a <Span bold medium>GREAT</Span> wall, 
+<Block padding={1} styles="background-color: gold">
+	I will build a <Span bold large>GREAT</Span> wall, 
 	and <Span underline>nobody</Span> builds walls better than me! 
-	<Span color="olive" italic margin="* * * 1">– D. Trump</Span>
+	<Span color="olive" italic margin="0 0 0 1rem">– D. Trump</Span>
 </Block>`,
   },
 
   FLEX: {
     DESCRIPTION: (
       <span>
-        Flex "container", renders DIV tag. Supports standard flex props, plus props for
-        media-enabled 12-column grid. Defaults to&nbsp;
-        <code>'wrap'</code>.
+        Flex "container", renders DIV tag. Supports standard flex props, plus a grid gutter.
+        Defaults to&nbsp;<code>'wrap'</code>.
       </span>
     ),
     EXTRA_SCOPE: ['Text'],
@@ -188,51 +174,50 @@ const DEMO = {
   FLEXITEM: {
     DESCRIPTION: (
       <span>
-        Flex "item" wrapper, renders DIV tag. Supports standard flex props, plus props for
-        media-enabled 12-column grid (gutters are passed down by <code>Flex</code>).
+        Flex "item" wrapper, renders DIV tag. Supports standard flex props, plus grid column props.
       </span>
     ),
     EXTRA_SCOPE: ['Block', 'Flex'],
     CODE: `
 <Block>
-  <Flex>
-    <FlexItem col={4} lgCol={4} padding="1" styles="background-color: gold">
-      4 col (xs) → 4 col (lg)
+  <Flex gutter={2}>
+    <FlexItem col={8/12} padding={1} styles="background-color: orange">
+      8 col - 10px gutter
     </FlexItem>
-    <FlexItem col={8} lgCol={4} padding="1" styles="background-color: orange">
-      8 col (xs) → 4 col (lg)
+    <FlexItem col={4/12} padding={1} styles="background-color: firebrick">
+      4 col - 10px gutter
     </FlexItem>
-    <FlexItem col={12} lgCol={4} padding="1" styles="background-color: firebrick">
-      12 col (xs) → 4 col (lg)
-    </FlexItem>
-  </Flex>
+	</Flex>
   
-  <Flex margin="1 *">
+  <Flex margin="1rem 0">
     <FlexItem 
-      col={12} 
-      lgOffset={2} lgCol={8}
-      padding="1" 
+      col={{ xs: 12/12, lg: 8/12 }} 
+      offset={{ lg: 2/12 }}
+      padding={1} 
       styles="background-color: #999"
     >  
       12 col (xs) → 2 col offset, 8 col (lg)
     </FlexItem>
 	</Flex>
 	
-  <Flex gutter={10}>
-    <FlexItem col={8} padding="1" styles="background-color: orange">
-      8 col - 10px gutter
+	<Flex>
+    <FlexItem col={{ xs: 4/12, lg: 4/12 }} padding={1} styles="background-color: gold">
+      4 col (xs) → 4 col (lg)
     </FlexItem>
-    <FlexItem col={4} padding="1" styles="background-color: firebrick">
-      4 col - 10px gutter
+    <FlexItem col={{ xs: 8/12, lg: 4/12 }} padding={1} styles="background-color: orange">
+      8 col (xs) → 4 col (lg)
     </FlexItem>
-	</Flex>
+    <FlexItem col={{ xs: 12/12, lg: 4/12 }} padding={1} styles="background-color: firebrick">
+      12 col (xs) → 4 col (lg)
+    </FlexItem>
+  </Flex>
 </Block>`,
   },
 
   HEADING: {
     DESCRIPTION: 'Renders H1, H2, H3, H4, or H5 tag.',
     CODE: `
-<Heading h2 center color='gold' margin={0} normal underline xxLarge>
+<Heading h2 center color="gold" margin={0} normal underline xxLarge>
 	Super Styled
 </Heading>`,
   },
@@ -240,7 +225,7 @@ const DEMO = {
   TEXT: {
     DESCRIPTION: 'Text paragraph, renders P tag.',
     CODE: `
-<Text color='gold' center italic large>
+<Text color="gold" center italic large>
 	Pack my box with five dozen liquor jugs.
 </Text>`,
   },
@@ -249,11 +234,11 @@ const DEMO = {
     DESCRIPTION: 'Wrapper to show or hide children based on media breakpoints. Renders SPAN tag.',
     EXTRA_SCOPE: ['Span'],
     CODE: `
-<Span block color="gold" padding="1">
-  <Display lgHide>I'm shown as "block" by default, up until LG.</Display>
-  <Display mdShow="inline">I appear at MD as "inline".</Display>
-  <Display mdShow="inline"> #MeToo!</Display>
-  <Display smHide lgShow>See me go hide at SM, back at LG!</Display>
+<Span block color="gold" padding={1}>
+  <Display hide={{ lg: true }}>I'm shown as "inline" by default, up until LG.</Display>
+  <Display show={{ md: 'block' }}>I appear at MD as "block".</Display>
+  <Display show={{ md: 'block' }}> #MeToo!</Display>
+  <Display hide={{ sm: true }} show={{ xl: true }}>See me go hide at SM, back at XL!</Display>
 </Span>`,
   },
 
@@ -261,15 +246,15 @@ const DEMO = {
     DESCRIPTION: 'A "smarter" HR, just for fun. Apply border styles or gradients. Renders DIV tag.',
     EXTRA_SCOPE: ['Span'],
     CODE: `
-<Span block color="gold" padding="1">
+<Span block color="gold" padding={1}>
 	dotted
-	<Rule borderStyle="dotted" color="gold" margin="1 * 2"/>
+	<Rule borderStyle="dotted" color="gold" margin="1rem 0 2rem"/>
 	
 	dashed
-	<Rule borderStyle="dashed" color="orange" height={4} margin="1 * 2"/>
+	<Rule borderStyle="dashed" color="orange" height={0.4} margin="1rem 0 2rem"/>
 		
 	gradient
-	<Rule color="firebrick" colorTo="gold" height={10} margin="1 * *"/>
+	<Rule color="firebrick" colorTo="gold" height={1} margin="1rem 0 0"/>
 </Span>`,
   },
 };
@@ -278,7 +263,7 @@ const DEMO = {
  * Deliver component's propTypes as a list of [propName, propType] value pairs
  */
 function getPropTypes(Component) {
-  return Object.keys(Component.propTypes || {}).map(propName => [
+  return Object.keys((Component && Component.propTypes) || {}).map(propName => [
     propName,
     PROP_TYPES[propName] || '???',
   ]);

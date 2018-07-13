@@ -37,7 +37,7 @@ const getCss = props => css`
   ${withJustify(props)}
   ${withSpacing(props)}
   ${withMediaStyles(props)}
-`
+`;
 
 const Span = styled.span`
   ${props => getCss(addTheme(props))};

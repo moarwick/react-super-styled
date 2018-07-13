@@ -1,9 +1,9 @@
 import styled, { css } from 'styled-components';
-import { addTheme, basePropTypes, displayPropTypes } from './utils';
+import { addTheme, basePropTypes, displayPropTypes, toMediaObj } from './utils';
 
 function toDisplayCss(hide, show) {
   if (hide) return 'display: none;';
-  if (!show || typeof show === 'boolean') show = 'block';
+  if (typeof show === 'boolean' || !show) show = 'inline';
   return `display: ${show};`;
 }
 
@@ -16,40 +16,30 @@ const propTypes = {
   ...displayPropTypes,
 };
 
-const getCss = props => {
-  const {
-    hide,
-    smHide,
-    mdHide,
-    lgHide,
-    xlHide,
+export function getCss({ hide, show, theme }) {
+  const { xs: xsHide, sm: smHide, md: mdHide, lg: lgHide, xl: xlHide } = toMediaObj(hide || false);
+  const { xs: xsShow, sm: smShow, md: mdShow, lg: lgShow, xl: xlShow } = toMediaObj(show || false);
+  const breakpoints = [[smHide, smShow], [mdHide, mdShow], [lgHide, lgShow], [xlHide, xlShow]];
 
-    show,
-    smShow,
-    mdShow,
-    lgShow,
-    xlShow,
+  let isHideFirst = Boolean(xsHide);
+  if (!isHideFirst) {
+    breakpoints.some(([bHide, bShow]) => {
+      if (bHide || bShow) {
+        isHideFirst = !!bShow;
+        return true;
+      }
+      return false;
+    });
+  }
 
-    theme,
-  } = props;
-
-  const xsShow = !hide && (show || smHide || mdHide || lgHide || xlHide);
-  const xsHide = hide || (!xsShow && (smShow || mdShow || lgShow || xlShow));
-  const isSmRules = smHide || smShow;
-  const isMdRules = mdHide || mdShow;
-  const isLgRules = lgHide || lgShow;
-  const isXlRules = xlHide || xlShow;
-
-  // prettier-ignore
   return css`
-    ${xsHide && 'display: none;'}
-    ${xsShow && toDisplayCss(false, show)}
-    ${isSmRules && `${theme.MEDIA_XS_MIN} { ${toDisplayCss(smHide, smShow)} }`}
-    ${isMdRules && `${theme.MEDIA_SM_MIN} { ${toDisplayCss(mdHide, mdShow)} }`}
-    ${isLgRules && `${theme.MEDIA_MD_MIN} { ${toDisplayCss(lgHide, lgShow)} }`}
-    ${isXlRules && `${theme.MEDIA_LG_MIN} { ${toDisplayCss(xlHide, xlShow)} }`}
-  `
-};
+    ${xsShow ? toDisplayCss(false, xsShow) : isHideFirst ? 'display: none;' : null}
+    ${(smHide || smShow) && `${theme.MEDIA_SM_UP} { ${toDisplayCss(smHide, smShow)} }`}
+    ${(mdHide || mdShow) && `${theme.MEDIA_MD_UP} { ${toDisplayCss(mdHide, mdShow)} }`}
+    ${(lgHide || lgShow) && `${theme.MEDIA_LG_UP} { ${toDisplayCss(lgHide, lgShow)} }`}
+    ${(xlHide || xlShow) && `${theme.MEDIA_XL_UP} { ${toDisplayCss(xlHide, xlShow)} }`}
+  `;
+}
 
 const Display = styled.span`
   ${props => getCss(addTheme(props))};
