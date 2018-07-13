@@ -42,21 +42,21 @@ describe('toMediaColumnCss', () => {
     );
   });
 
-  it('delivers correct rules per gutter, px units, no offset', () => {
-    col = 12 / 12;
-    offset = 0;
-    gutter = 30;
-    expect(toMediaColumnCss(breakpoint, col, offset, gutter)).toEqual(
-      'margin-left: 15px; margin-right: 15px; width: calc(100% - 30px);'
-    );
-  });
-
   it('delivers correct rules per gutter, rem units, no offset', () => {
     col = 12 / 12;
     offset = 0;
-    gutter = '3rem';
+    gutter = 3;
     expect(toMediaColumnCss(breakpoint, col, offset, gutter)).toEqual(
       'margin-left: 1.5rem; margin-right: 1.5rem; width: calc(100% - 3rem);'
+    );
+  });
+
+  it('delivers correct rules per gutter, px units, no offset', () => {
+    col = 12 / 12;
+    offset = 0;
+    gutter = '20px';
+    expect(toMediaColumnCss(breakpoint, col, offset, gutter)).toEqual(
+      'margin-left: 10px; margin-right: 10px; width: calc(100% - 20px);'
     );
   });
 

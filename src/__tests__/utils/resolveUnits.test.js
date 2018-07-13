@@ -7,8 +7,8 @@ describe('resolveUnits', () => {
     expect(resolveUnits('24%')).toBe('%');
   });
 
-  it('defaults to px when value is a number', () => {
-    expect(resolveUnits(100)).toBe('px');
+  it('defaults to rem when value is a number', () => {
+    expect(resolveUnits(100)).toBe('rem');
   });
 
   it('defaults to rem on other types', () => {
