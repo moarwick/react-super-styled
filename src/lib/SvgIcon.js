@@ -46,23 +46,20 @@ export function parseDimensions(width, height, viewBox) {
  */
 const propTypes = {
   ...basePropTypes,
-  //   basic?: boolean,
-  //   block?: boolean,
-  //   border?: string,
   //   color?: string,
-  //   bgColor?: string,
-  //   inset?: number | string,
   //   height?: number | string,
   //   width?: number | string,
+  //   stroke?: number | string,
+  //   viewBox?: string,
+
+  //   block?: boolean,
+  //   border?: string,
+  //   bgColor?: string,
+  //   inset?: number | string,
   //   offsetX?: number | string,
   //   offsetY?: number | string,
   //   onClick?: Function,
   //   radius?: number | string,
-  //   stroke?: number | string,
-  //   styles?: Object | string,
-  //   testId?: string,
-  //   testSlug?: string,
-  //   viewBox?: string,
   ...mediaStylesPropTypes,
 };
 
@@ -127,7 +124,6 @@ const Svg = styled.svg`
 
 const SvgIcon = props => {
   const {
-    basic,
     block,
     border,
     bgColor,
@@ -149,12 +145,14 @@ const SvgIcon = props => {
   const widthPx = units === 'px' ? width : width * 10; // assume 1rem === 10px
   const heightPx = units === 'px' ? height : height * 10; // assume 1rem === 10px
 
-  // render "simple" svg-only version
-  // TODO: can be derived, based on props passed in?
-  if (basic) {
+  // if "advanced" props not passed in, render "simple" svg-only version
+  const isBasic =
+    !block && !border && !bgColor && !onClick && !inset && !offsetX && !offsetY && !radius;
+
+  if (isBasic) {
     return (
       <BasicSvg
-        ref={innerRef}
+        innerRef={innerRef}
         height={heightPx}
         width={widthPx}
         viewBox={viewBox}
@@ -173,34 +171,36 @@ const SvgIcon = props => {
   offsetX = toNum(offsetX);
   offsetY = toNum(offsetY);
 
-  const outerHeight = inset * 2 + height;
-  const outerWidth = inset * 2 + width;
-  const outerHeightPx = units === 'px' ? outerHeight : outerHeight * 10; // assume 1rem === 10px
-  const outerWidthPx = units === 'px' ? outerWidth : outerWidth * 10; // assume 1rem === 10px
-  const outerHeightUnits = toCssUnits(outerHeight, units); // TODO just templ?
-  const outerWidthUnits = toCssUnits(outerWidth, units); // TODO just templ?
-  const isBackground = !!(bgColor || border || inset);
+  const widthUnits = `${width}${units}`;
+  const heightUnits = `${height}${units}`;
+  const innerHeight = Math.max(0, height - inset * 2);
+  const innerWidth = Math.max(0, width - inset * 2);
+  const innerHeightPx = units === 'px' ? innerHeight : innerHeight * 10;
+  const innerWidthPx = units === 'px' ? innerWidth : innerWidth * 10;
 
   if (radius) {
     const rUnits = resolveUnits(String(radius || ''));
     radius = `${toNum(radius)}${rUnits}`;
   }
 
+  const isBackground = !!(bgColor || border || inset);
+
   return (
     <Wrapper
-      ref={innerRef}
+      innerRef={innerRef}
       block={block}
-      outerHeight={outerHeightUnits}
-      outerWidth={outerWidthUnits}
+      outerHeight={heightUnits}
+      outerWidth={widthUnits}
+      styles={styles}
     >
-      <svg viewBox={viewBox} height={outerHeightPx} width={outerWidthPx} xmlns={XMLNS}>
+      <svg viewBox={viewBox} height={heightPx} width={widthPx} xmlns={XMLNS}>
         {/* sizing placeholder */}
       </svg>
       {isBackground && (
         <Background
           bgColor={bgColor}
-          sizeY={outerHeightUnits}
-          sizeX={outerWidthUnits}
+          sizeY={heightUnits}
+          sizeX={widthUnits}
           left={`${offsetX}${units}`}
           top={`${offsetY}${units}`}
           onClick={onClick}
@@ -208,8 +208,8 @@ const SvgIcon = props => {
         />
       )}
       <Svg
-        height={heightPx}
-        width={widthPx}
+        height={innerHeightPx}
+        width={innerWidthPx}
         viewBox={viewBox}
         xmlns={XMLNS}
         left={`${offsetX + inset}${units}`}

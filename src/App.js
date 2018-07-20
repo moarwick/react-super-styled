@@ -99,7 +99,7 @@ function IconClose(props) {
 const SvgIconCode = `
 <Span>
   <IconClose color="gold" />
-  <IconClose color="orange" height={2} inset={0.5} bgColor="gray" radius="50%" />
+  <IconClose color="orange" height={3} inset={0.5} bgColor="gray" radius="50%" />
 </Span>
 `;
 
