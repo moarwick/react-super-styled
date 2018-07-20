@@ -291,6 +291,8 @@ function getDemoComponentData(name) {
 
   const Component = Components[name];
 
+  console.log(getScopeForReactLive(name));
+
   return {
     code: DEMO[key].CODE.trim(),
     name,

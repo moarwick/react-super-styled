@@ -1,8 +1,21 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 
-import { Block, Display, Flex, Heading, Rule, Section, Span, Text, withMedia } from './lib/index';
-import ComponentDemo from './ComponentDemo';
+import {
+  Block,
+  Display,
+  Flex,
+  FlexItem,
+  Heading,
+  Rule,
+  Section,
+  Span,
+  Text,
+  withMedia,
+  SvgIcon,
+} from './lib/index';
+import ComponentDemo, { styles as editorStyles } from './ComponentDemo';
 import DEMO from './demoData';
 import { version } from '../package.json';
 
@@ -75,6 +88,21 @@ const styles = {
   },
 };
 
+function IconClose(props) {
+  return (
+    <SvgIcon {...props}>
+      <path d="M22 20.8L13.1 12l8.8-8.9-1.1-1-8.8 8.8-8.8-8.8-1.1 1.1 8.8 8.8-8.8 8.8 1.1 1.1L12 13l8.9 8.9z" />
+    </SvgIcon>
+  );
+}
+
+const SvgIconCode = `
+<Span>
+  <IconClose color="gold" />
+  <IconClose color="orange" height={4} />
+</Span>
+`;
+
 class App extends React.Component {
   componentWillMount() {
     console.time('App Render');
@@ -141,6 +169,36 @@ class App extends React.Component {
           {DEMO.MISC.map((demoProps, index) => (
             <ComponentDemo key={`misc-${index}`} {...demoProps} />
           ))}
+
+          <Section styles={editorStyles.section}>
+            <Block padding="1rem 2rem">
+              <Heading color="firebrick" margin={0} inline xLarge normal>
+                SvgIcon&nbsp;&nbsp;
+              </Heading>
+              <Text inline>Handy SVG wrapper for icons and the like!</Text>
+            </Block>
+            <Rule borderStyle="dotted" color="#999" />
+            <Block padding="0 2rem">
+              <Flex gutter={1} margin="1rem 0 2rem">
+                {[]}
+              </Flex>
+            </Block>
+            <LiveProvider code={SvgIconCode} scope={{ IconClose, Span }}>
+              <Flex gutter={{ lg: 1 }}>
+                <FlexItem col={{ xs: 12 / 12, lg: 6 / 12 }}>
+                  <LiveEditor style={editorStyles.editor} />
+                  <LiveError />
+                </FlexItem>
+                <FlexItem
+                  col={{ xs: 12 / 12, lg: 6 / 12 }}
+                  styles={editorStyles.preview}
+                  lgStyles="border: none"
+                >
+                  <LivePreview />
+                </FlexItem>
+              </Flex>
+            </LiveProvider>
+          </Section>
 
           <Heading h3 color="#676" xLarge normal>
             Utilities &raquo;

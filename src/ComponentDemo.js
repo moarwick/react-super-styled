@@ -9,7 +9,7 @@ const Code = styled.code`
   font-size: 1.4rem;
 `;
 
-const styles = {
+export const styles = {
   section: css`
     background-color: #fff;
     box-shadow: 1px 1px 10px 0 rgba(0, 100, 0, 0.2);

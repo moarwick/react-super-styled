@@ -6,8 +6,7 @@ import THEME from './THEME';
  * Extend the theme prop onto the base THEME, and return all props
  */
 export function addTheme(props) {
-  props.theme = props.theme ? { ...THEME, ...props.theme } : THEME;
-  return props;
+  return { ...props, theme: props.theme ? { ...THEME, ...props.theme } : THEME };
 }
 
 /**
@@ -42,10 +41,10 @@ export function toCssString(val) {
 }
 
 /**
- * Return strings as-is, coerce numbers to 'rem'
+ * Return strings as-is, coerce numbers to 'rem' (default '0rem')
  */
 export function toCssUnits(val) {
-  return typeof val === 'string' ? val : typeof val === 'number' ? `${val}rem` : '';
+  return typeof val === 'string' ? val : typeof val === 'number' ? `${val}rem` : '0rem';
 }
 
 /**
