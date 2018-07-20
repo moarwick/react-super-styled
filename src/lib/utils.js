@@ -43,8 +43,8 @@ export function toCssString(val) {
 /**
  * Return strings as-is, coerce numbers to 'rem' (default '0rem')
  */
-export function toCssUnits(val) {
-  return typeof val === 'string' ? val : typeof val === 'number' ? `${val}rem` : '0rem';
+export function toCssUnits(val, units = 'rem') {
+  return typeof val === 'string' ? val : typeof val === 'number' ? `${val}${units}` : '0rem';
 }
 
 /**
