@@ -2,8 +2,6 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
 
-import PropTypes from 'prop-types';
-import Rule from 'lib/Rule';
 import {
   addTheme,
   basePropTypes,
@@ -26,7 +24,7 @@ export function parseViewBoxRatio(viewBox) {
   const coords = (viewBox || DEFAULT_VIEWBOX).split(' ').map(val => toNum(val));
   if (coords.length !== 4) return 1;
   const [x1, y1, x2, y2] = coords;
-  return (x2 - x1) / (y2 - y1);
+  return (x2 - x1) / (y2 - y1) || 1;
 }
 
 /**
@@ -36,8 +34,8 @@ export function parseDimensions(width, height, viewBox) {
   const ratio = parseViewBoxRatio(viewBox);
 
   if (!width && !height) height = DEFAULT_ICON_SIZE;
-  if (height && !width) width = toNum(height * ratio);
-  if (width && !height) height = toNum(width / ratio);
+  if (height && !width) width = toNum(height) * ratio;
+  if (width && !height) height = toNum(width) / ratio;
 
   return [width, height];
 }
@@ -70,8 +68,8 @@ const propTypes = {
 
 const defaultProps = {
   inset: 0,
-  height: DEFAULT_ICON_SIZE,
-  width: DEFAULT_ICON_SIZE,
+  height: 0,
+  width: 0,
   viewBox: DEFAULT_VIEWBOX,
   theme: {},
 };
@@ -104,16 +102,21 @@ const SvgIcon = props => {
   } = props;
 
   props = addTheme(props);
-  const units = resolveUnits(`${props.width} ${props.height || ''} ${inset || ''}`);
+  const units = resolveUnits(`${props.width} ${props.height} ${inset}`);
   let width = toNum(props.width);
   let height = toNum(props.height);
   [width, height] = parseDimensions(width, height, viewBox);
-  const heightSvg = units === 'px' ? height : height * 10; // assume 10x for 'rem'
-  const widthSvg = units === 'px' ? width : width * 10; // assume 10x for 'rem'
+
+  console.log('---->', viewBox, width, height);
+
+  const widthPx = units === 'px' ? width : width * 10; // assume 10x for 'rem'
+  const heightPx = units === 'px' ? height : height * 10; // assume 10x for 'rem'
   const color = props.color || props.theme.COLOR_BLACK || '#000';
 
+  console.log('--->>', widthPx, heightPx);
+
   return (
-    <Svg {...props} height={heightSvg} width={widthSvg} xmlns="http://www.w3.org/2000/svg">
+    <Svg {...props} height={heightPx} width={widthPx} xmlns="http://www.w3.org/2000/svg">
       <g fill={color} stroke={color} strokeWidth={toCssUnits(stroke)}>
         {children}
       </g>
