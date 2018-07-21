@@ -11,7 +11,7 @@ React Super Styled
 
 > Try the [DEMO](https://moarwick.github.io/react-super-styled/)
 
-RSS is a small React component library which aims to accelerate authoring of JSX layouts and to improve their readability:
+RSS is a small React component library which aims to accelerate authoring of JSX layouts and improve their readability:
 
 * Semantic component and prop naming
 * Handy boolean props for common styling rules
@@ -19,6 +19,7 @@ RSS is a small React component library which aims to accelerate authoring of JSX
 * Flexbox and flex-based grid (arbitrary columns)
 * Spacing "shorthands" for margin, padding
 * Customizable theme, breakpoints
+* Plus: A highly-configurable SVG icon wrapper, utilities
 
 > Some Breaking "improvements" in v0.5.0+, but well worth it :)
 
@@ -36,10 +37,10 @@ Your React project should be using Styled Components as a dependency. If not, [i
 
 ### Usage Example
 ```
-import styled, { css } from 'styled-components';
+import { css } from 'styled-components';
 import { Article, Heading, Text } from 'react-super-styled'
 
-function MyArticle({text, title}) {
+function MyArticle({ text, title }) {
   return (
     <Article margin="1rem 0" styles={{ md: css`padding: 2rem` }}>
       <Heading h3 center color="firebrick" large>{title}</Heading>
@@ -52,7 +53,7 @@ function MyArticle({text, title}) {
 ### Interactive Docs
 Try out *React Super Styled* "live" in the [DEMO](https://moarwick.github.io/react-super-styled/). The intent behind *RSS* is to be intuitive and readable. Experiment with all listed props and inspect the results! :)
 
-> RSS is intended for building layouts, proritizing dev speed and code readability. Dynamic prop parsing adds some "overhead". The library may be inappropriate for complex components requiring lots of custom styling, ultra dense layouts, tables, or wherever maximum render performance is critical. Don't build Reddit with it! :) 
+> RSS is intended for building layouts, prioritizing dev speed and code readability. Dynamic prop parsing adds some "overhead", so RSS may be inappropriate for complex components requiring lots of custom styling, ultra dense layouts, tables, recursive or iterative applications, or whenever maximum performance is critical. Don't build Reddit with it! :) 
 
 
 ### Responsive
@@ -89,7 +90,7 @@ Web layouts involve frequent tweaking of margins and padding, so most *RSS* comp
 ### Typography
 The *RSS* theme does not come with any predefined font sizing. You can specify browser-interpreted sizing, e.g. `small`, `medium` (matches 100%), `large`, `xLarge`, `xxLarge`, as well as relative sizing & weights, e.g. `smaller`, `larger`, `lighter`, `bolder`. Explicit sizing can be set via the `size` prop, which accepts numbers (`rem`) or strings with any valid units. 
 
-Per "best practices", it is recommended to use `rem`s, at least for typography. Setting following resets on your document tends to work well, establishing `1rem` as `10px`:
+Per "best practices", it's recommended to use `rems`. Setting the following resets on your document tends to work well, establishing `1rem` as `10px`:
 
 ```
 html { font-size: 62.5%; }   // 1rem
@@ -108,8 +109,8 @@ Majority of *RSS* components are functional native Styled Components, so alterna
 
 ### Utilities
 
-#### withMedia( Component, [userTheme:Object] ) ⇒ <code>'xs'|'sm'|'md'|'lg'|'xl'</code>
-Enhancer HOC to supply the current "breakpoint" via prop `media`. Uses the `MEDIA_SM, MEDIA_MD, MEDIA_LG, MEDIA_XL` thresholds in the [theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js) to determine the breakpoint -- the `userTheme` argument is optional, supply only if customizing those breakpoints.
+#### withWindow( Component, [userTheme: Object] )
+Enhancer HOC to supply current `window` sizing and `media` breakpoint via props. References the [theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js) to determine the breakpoint. The `userTheme` argument is optional, supply only if customizing those breakpoints.
 
 
 ### Changelog

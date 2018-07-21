@@ -17,6 +17,7 @@
     "no-param-reassign": 0,
 
     "jsx-quotes": [2, "prefer-double"],
+    "react/destructuring-assignment": "off",
     "react/jsx-filename-extension": "off",
     "react/require-default-props": "off"
   },
