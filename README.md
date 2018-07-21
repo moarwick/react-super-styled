@@ -90,7 +90,7 @@ Web layouts involve frequent tweaking of margins and padding, so most *RSS* comp
 ### Typography
 The *RSS* theme does not come with any predefined font sizing. You can specify browser-interpreted sizing, e.g. `small`, `medium` (matches 100%), `large`, `xLarge`, `xxLarge`, as well as relative sizing & weights, e.g. `smaller`, `larger`, `lighter`, `bolder`. Explicit sizing can be set via the `size` prop, which accepts numbers (`rem`) or strings with any valid units. 
 
-Per "best practices", it is recommended to use `rem`s, at least for typography. Setting following resets on your document tends to work well, establishing `1rem` as `10px`:
+Per "best practices", it's recommended to use `rems`. Setting the following resets on your document tends to work well, establishing `1rem` as `10px`:
 
 ```
 html { font-size: 62.5%; }   // 1rem
