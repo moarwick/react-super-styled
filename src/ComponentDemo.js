@@ -3,13 +3,13 @@ import styled, { css } from 'styled-components';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import { Block, Flex, FlexItem, Heading, Rule, Section, Text, Span } from './lib/index';
 
-const Code = styled.code`
+export const Code = styled.code`
   color: firebrick;
   font-weight: bold;
   font-size: 1.4rem;
 `;
 
-const styles = {
+export const styles = {
   section: css`
     background-color: #fff;
     box-shadow: 1px 1px 10px 0 rgba(0, 100, 0, 0.2);
@@ -27,7 +27,7 @@ const styles = {
   `,
 };
 
-function renderPropTypesColumns(list) {
+export function renderPropTypesColumns(list) {
   return list.map(propValPair => (
     <FlexItem key={propValPair[0]} col={{ xs: 12 / 12, sm: 6 / 12, md: 4 / 12, lg: 3 / 12 }}>
       <Code bold color="firebrick">

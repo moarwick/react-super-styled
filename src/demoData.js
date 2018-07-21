@@ -102,6 +102,17 @@ const PROP_TYPES = {
   borderStyle: TYPES.STRING,
   colorTo: TYPES.STRING,
   height: TYPES.STRING_OR_NUMBER,
+
+  width: TYPES.STRING_OR_NUMBER,
+  stroke: TYPES.STRING_OR_NUMBER,
+  inset: TYPES.STRING_OR_NUMBER,
+  offsetX: TYPES.STRING_OR_NUMBER,
+  offsetY: TYPES.STRING_OR_NUMBER,
+  radius: TYPES.STRING_OR_NUMBER,
+  border: TYPES.STRING,
+  bgColor: TYPES.STRING,
+  viewBox: TYPES.STRING,
+  onClick: TYPES.FUNC,
 };
 
 /**
@@ -262,7 +273,7 @@ const DEMO = {
 /**
  * Deliver component's propTypes as a list of [propName, propType] value pairs
  */
-function getPropTypes(Component) {
+export function getPropTypes(Component) {
   return Object.keys((Component && Component.propTypes) || {}).map(propName => [
     propName,
     PROP_TYPES[propName] || '???',

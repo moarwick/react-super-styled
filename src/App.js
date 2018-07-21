@@ -1,9 +1,22 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 
-import { Block, Display, Flex, Heading, Rule, Section, Span, Text, withMedia } from './lib/index';
-import ComponentDemo from './ComponentDemo';
-import DEMO from './demoData';
+import {
+  Block,
+  Display,
+  Flex,
+  FlexItem,
+  Heading,
+  Rule,
+  Section,
+  Span,
+  Text,
+  withWindow,
+  SvgIcon,
+} from './lib/index';
+import ComponentDemo, { renderPropTypesColumns, styles as editorStyles } from './ComponentDemo';
+import DEMO, { getPropTypes } from './demoData';
 import { version } from '../package.json';
 
 const CONTAINER_WIDTH = 1280;
@@ -57,6 +70,11 @@ const Header = styled.a`
   text-decoration: none;
 `;
 
+export const Code = styled.code`
+  color: ${props => props.color || 'firebrick'};
+  font-size: 1.6rem;
+`;
+
 const styles = {
   section: css`
     background-color: #fff;
@@ -75,6 +93,19 @@ const styles = {
   },
 };
 
+const IconClose = props => (
+  <SvgIcon {...props}>
+    <path d="M22 20.8L13.1 12l8.8-8.9-1.1-1-8.8 8.8-8.8-8.8-1.1 1.1 8.8 8.8-8.8 8.8 1.1 1.1L12 13l8.9 8.9z" />
+  </SvgIcon>
+);
+
+const SvgIconCode = `<Flex margin={1} alignItems="center">
+  <IconClose color="orange" stroke={0.4} />
+  <IconClose color="gold" width={3} inset={0.2} border="1px solid gold" offsetX={1} />
+  <IconClose color="black" height={4} inset={0.5} bgColor="gray" radius="50%" offsetX={2} />
+</Flex>
+`;
+
 class App extends React.Component {
   componentWillMount() {
     console.time('App Render');
@@ -85,6 +116,8 @@ class App extends React.Component {
   }
 
   render() {
+    const { media, window } = this.props;
+
     return (
       <div>
         <Block container={CONTAINER_WIDTH} styles="position: relative">
@@ -142,6 +175,52 @@ class App extends React.Component {
             <ComponentDemo key={`misc-${index}`} {...demoProps} />
           ))}
 
+          <Section styles={editorStyles.section}>
+            <Block padding="1rem 2rem">
+              <Heading color="firebrick" margin={0} inline xLarge normal>
+                SvgIcon&nbsp;&nbsp;
+              </Heading>
+              <Text inline>A highly-configurable SVG wrapper for icon components.</Text>
+            </Block>
+            <Rule borderStyle="dotted" color="#999" />
+            <Block padding="0 2rem">
+              <Flex gutter={1} margin="1rem 0 2rem">
+                {renderPropTypesColumns(getPropTypes(SvgIcon))}
+              </Flex>
+            </Block>
+            <Rule borderStyle="dotted" color="#999" />
+            <Block padding="0 2rem">
+              <Text>
+                Renders a simple SVG or a more complex SPAN-wrapped structure (depending on props),
+                expecting inner SVG content as children. To create an icon component, wrap any SVG
+                content with <Code>SvgIcon</Code> and pass in <Code>viewBox</Code> (if different
+                from the default <Code>viewBox="0 0 24 24"</Code>).
+              </Text>
+              <pre style={{ backgroundColor: '#ddd', padding: '1rem' }}>
+                {`const IconClose = props => (
+  <SvgIcon {...props} viewBox="0 0 24 24">
+    <path d="M22 20.8L13.1 12l8.8-8.9-1.1-1-8.8 8.8-8.8-8.8-1.1 1.1 8.8 8.8-8.8 8.8 1.1 1.1L12 13l8.9 8.9z" />
+  </SvgIcon>
+);`}
+              </pre>
+            </Block>
+            <LiveProvider code={SvgIconCode} scope={{ Flex, IconClose, Span }}>
+              <Flex gutter={{ lg: 1 }}>
+                <FlexItem col={{ xs: 12 / 12, lg: 6 / 12 }}>
+                  <LiveEditor style={editorStyles.editor} />
+                  <LiveError />
+                </FlexItem>
+                <FlexItem
+                  col={{ xs: 12 / 12, lg: 6 / 12 }}
+                  styles={editorStyles.preview}
+                  lgStyles="border: none"
+                >
+                  <LivePreview />
+                </FlexItem>
+              </Flex>
+            </LiveProvider>
+          </Section>
+
           <Heading h3 color="#676" xLarge normal>
             Utilities &raquo;
           </Heading>
@@ -149,20 +228,23 @@ class App extends React.Component {
           <Section styles={styles.section}>
             <Block padding="1rem 2rem">
               <Heading color="firebrick" margin={0} inline xLarge normal>
-                withMedia&nbsp;&nbsp;
+                withWindow&nbsp;&nbsp;
               </Heading>
               <Text inline>
-                Enhancer HOC to supply the current "breakpoint" via prop &nbsp;<code>media</code>.
+                Enhancer HOC to supply the current <Code>window</Code> size and <Code>media</Code>{' '}
+                breakpoint to any component.
               </Text>
             </Block>
             <Rule borderStyle="dotted" color="#999" />
             <Block padding="1rem 2rem">
-              <pre>export default withMedia(MyComponent, [userTheme])</pre>
+              <pre style={{ backgroundColor: '#ddd', padding: '1rem' }}>
+                export default withWindow(MyComponent, [userTheme])
+              </pre>
               <Text>
-                <Span italic color="#999">
-                  Current value:&nbsp;&nbsp;
-                </Span>
-                <strong>{this.props.media}</strong>
+                <Code>media:</Code> <Code color="black">{media}</Code>
+              </Text>
+              <Text>
+                <Code>window:</Code> <Code color="black">{JSON.stringify(window, null, 2)}</Code>
               </Text>
             </Block>
           </Section>
@@ -172,4 +254,4 @@ class App extends React.Component {
   }
 }
 
-export default withMedia(App);
+export default withWindow(App);

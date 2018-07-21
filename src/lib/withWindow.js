@@ -15,16 +15,20 @@ function getCurrentMedia(ranges, width = 0) {
   return media;
 }
 
-function getWindowWidth() {
-  return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+function getWindowSize() {
+  const width =
+    window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  const height =
+    window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+  return { width, height };
 }
 
 /**
- * withMedia
- * HOC to supply a 'media' prop to its enhanced component, based on current browser width
- * Value will be one of: 'xs' (default), 'sm', 'md', 'lg', 'xl'
+ * withWindow
+ * HOC to supply current 'window' sizing and 'media' breakpoint to the enhanced component
+ * Value of 'media' will be one of: 'xs' (default), 'sm', 'md', 'lg', 'xl'
  */
-const withMedia = (EnhancedComponent, userTheme = {}) => {
+const withWindow = (EnhancedComponent, userTheme = {}) => {
   const { MEDIA_SM, MEDIA_MD, MEDIA_LG, MEDIA_XL } = { ...THEME, ...userTheme };
 
   const mediaRanges = {
@@ -38,6 +42,7 @@ const withMedia = (EnhancedComponent, userTheme = {}) => {
   return class extends React.Component {
     state = {
       media: '',
+      window: { width: 0, height: 0 },
     };
 
     async componentDidMount() {
@@ -55,15 +60,22 @@ const withMedia = (EnhancedComponent, userTheme = {}) => {
     }
 
     handleResize = () => {
-      const media = getCurrentMedia(mediaRanges, getWindowWidth());
-      this.setState({ media });
+      const window = getWindowSize();
+      const media = getCurrentMedia(mediaRanges, window.width);
+      this.setState({ media, window });
     };
 
     render() {
       if (window && !this.state.media) return null;
-      return <EnhancedComponent media={this.state.media || 'xs'} {...this.props} />;
+      return (
+        <EnhancedComponent
+          media={this.state.media || 'xs'}
+          window={this.state.window}
+          {...this.props}
+        />
+      );
     }
   };
 };
 
-export default withMedia;
+export default withWindow;
