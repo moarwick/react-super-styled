@@ -15,11 +15,7 @@ import {
   withMedia,
   SvgIcon,
 } from './lib/index';
-import ComponentDemo, {
-  Code,
-  renderPropTypesColumns,
-  styles as editorStyles,
-} from './ComponentDemo';
+import ComponentDemo, { renderPropTypesColumns, styles as editorStyles } from './ComponentDemo';
 import DEMO, { getPropTypes } from './demoData';
 import { version } from '../package.json';
 
@@ -72,6 +68,11 @@ const Header = styled.a`
   display: block;
   text-align: center;
   text-decoration: none;
+`;
+
+export const Code = styled.code`
+  color: firebrick;
+  font-size: 1.6rem;
 `;
 
 const styles = {
@@ -188,12 +189,14 @@ class App extends React.Component {
             <Rule borderStyle="dotted" color="#999" />
             <Block padding="0 2rem">
               <Text>
-                Renders a simple SVG or a more complex SPAN-wrapped structure (depending on props).
-                To create an icon, wrap any SVG content with <strong>SvgIcon</strong>:
+                Renders a simple SVG or a more complex SPAN-wrapped structure (depending on props),
+                expecting inner SVG content as children. To create an icon component, wrap any SVG
+                content with <Code>SvgIcon</Code> and pass in <Code>viewBox</Code> (if different
+                from the default <Code>viewBox="0 0 24 24"</Code>).
               </Text>
               <pre style={{ backgroundColor: '#ddd', padding: '1rem' }}>
                 {`const IconClose = props => (
-  <SvgIcon {...props}>
+  <SvgIcon {...props} viewBox="0 0 24 24">
     <path d="M22 20.8L13.1 12l8.8-8.9-1.1-1-8.8 8.8-8.8-8.8-1.1 1.1 8.8 8.8-8.8 8.8 1.1 1.1L12 13l8.9 8.9z" />
   </SvgIcon>
 );`}
