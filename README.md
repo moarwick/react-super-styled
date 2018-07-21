@@ -108,7 +108,7 @@ Majority of *RSS* components are functional native Styled Components, so alterna
 
 ### Utilities
 
-#### withMedia( Component, [userTheme:Object] ) ⇒ <code>'xs'|'sm'|'md'|'lg'|'xl'</code>
+#### withWindow( Component, [userTheme:Object] ) ⇒ <code>'xs'|'sm'|'md'|'lg'|'xl'</code>
 Enhancer HOC to supply the current "breakpoint" via prop `media`. Uses the `MEDIA_SM, MEDIA_MD, MEDIA_LG, MEDIA_XL` thresholds in the [theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js) to determine the breakpoint -- the `userTheme` argument is optional, supply only if customizing those breakpoints.
 
 

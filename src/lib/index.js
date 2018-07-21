@@ -11,4 +11,4 @@ export { default as Text } from './Text';
 export { default as SvgIcon } from './SvgIcon';
 
 export { default as RSS_THEME } from './THEME';
-export { default as withMedia } from './withMedia';
+export { default as withWindow } from './withWindow';

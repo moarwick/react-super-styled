@@ -12,7 +12,7 @@ import {
   Section,
   Span,
   Text,
-  withMedia,
+  withWindow,
   SvgIcon,
 } from './lib/index';
 import ComponentDemo, { renderPropTypesColumns, styles as editorStyles } from './ComponentDemo';
@@ -71,7 +71,7 @@ const Header = styled.a`
 `;
 
 export const Code = styled.code`
-  color: firebrick;
+  color: ${props => props.color || 'firebrick'};
   font-size: 1.6rem;
 `;
 
@@ -116,6 +116,8 @@ class App extends React.Component {
   }
 
   render() {
+    const { media, window } = this.props;
+
     return (
       <div>
         <Block container={CONTAINER_WIDTH} styles="position: relative">
@@ -226,20 +228,23 @@ class App extends React.Component {
           <Section styles={styles.section}>
             <Block padding="1rem 2rem">
               <Heading color="firebrick" margin={0} inline xLarge normal>
-                withMedia&nbsp;&nbsp;
+                withWindow&nbsp;&nbsp;
               </Heading>
               <Text inline>
-                Enhancer HOC to supply the current "breakpoint" via prop &nbsp;<code>media</code>.
+                Enhancer HOC to supply the current <Code>window</Code> size and <Code>media</Code>{' '}
+                "breakpoint" to any component.
               </Text>
             </Block>
             <Rule borderStyle="dotted" color="#999" />
             <Block padding="1rem 2rem">
-              <pre>export default withMedia(MyComponent, [userTheme])</pre>
+              <pre style={{ backgroundColor: '#ddd', padding: '1rem' }}>
+                export default withWindow(MyComponent, [userTheme])
+              </pre>
               <Text>
-                <Span italic color="#999">
-                  Current value:&nbsp;&nbsp;
-                </Span>
-                <strong>{this.props.media}</strong>
+                <Code>media:</Code> <Code color="black">{media}</Code>
+              </Text>
+              <Text>
+                <Code>window:</Code> <Code color="black">{JSON.stringify(window, null, 2)}</Code>
               </Text>
             </Block>
           </Section>
@@ -249,4 +254,4 @@ class App extends React.Component {
   }
 }
 
-export default withMedia(App);
+export default withWindow(App);
