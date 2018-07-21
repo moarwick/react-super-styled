@@ -1,11 +1,10 @@
-// @flow
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import {
   addTheme,
   basePropTypes,
-  cssSpacing,
   resolveUnits,
   toCssUnits,
   toNum,
@@ -13,10 +12,15 @@ import {
   withMediaStyles,
 } from './utils';
 
+// ----- CONSTANTS -----
+
 export const DEFAULT_VIEWBOX_SIZE = 24;
 export const DEFAULT_VIEWBOX = `0 0 ${DEFAULT_VIEWBOX_SIZE} ${DEFAULT_VIEWBOX_SIZE}`;
 export const DEFAULT_ICON_SIZE = 1.4;
 const XMLNS = 'http://www.w3.org/2000/svg';
+
+// ----- HELPER UTILS -----
+
 /**
  * Calculate width-to-height aspect ratio from viewBox (default 1)
  */
@@ -40,44 +44,15 @@ export function parseDimensions(width, height, viewBox) {
   return [width, height];
 }
 
-/**
- * A highly flexible SVG icon wrapper
- * Adapted from https://gist.github.com/moarwick/1229e9bd73ad52be73d54975cdac0d1e
- */
-const propTypes = {
-  ...basePropTypes,
-  //   color?: string,
-  //   height?: number | string,
-  //   width?: number | string,
-  //   stroke?: number | string,
-  //   viewBox?: string,
-
-  //   block?: boolean,
-  //   border?: string,
-  //   bgColor?: string,
-  //   inset?: number | string,
-  //   offsetX?: number | string,
-  //   offsetY?: number | string,
-  //   onClick?: Function,
-  //   radius?: number | string,
-  ...mediaStylesPropTypes,
-};
-
-const defaultProps = {
-  color: '#000',
-  inset: 0,
-  height: 0,
-  width: 0,
-  viewBox: DEFAULT_VIEWBOX,
-  theme: {},
-};
+// ----- SUB-COMPONENTS -----
 
 const getWrapperCss = props => css`
-  display: ${props.block ? 'block' : 'inline-block'};
+  display: inline-block;
   position: relative;
   font-size: 0;
   height: ${props.outerHeight};
   width: ${props.outerWidth};
+  ${withMediaStyles(props)};
 `;
 
 const getBackgroundCss = props => css`
@@ -122,34 +97,57 @@ const Svg = styled.svg`
   ${props => getSvgCss(props)};
 `;
 
+// ----- MAIN COMPONENT -----
+
+/**
+ * SvgIcon
+ *
+ * An highly-configurable SVG content wrapper
+ * Adapted from https://gist.github.com/moarwick/1229e9bd73ad52be73d54975cdac0d1e
+ */
+const propTypes = {
+  // basic svg
+  ...basePropTypes,
+  color: PropTypes.string,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  stroke: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  viewBox: PropTypes.string,
+
+  // complex, span-wrapped svg
+  border: PropTypes.string,
+  bgColor: PropTypes.string,
+  inset: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  offsetX: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  offsetY: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onClick: PropTypes.func,
+  radius: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  ...mediaStylesPropTypes,
+};
+
+const defaultProps = {
+  color: '#000',
+  inset: 0,
+  height: 0,
+  width: 0,
+  viewBox: DEFAULT_VIEWBOX,
+  theme: {},
+};
+
 const SvgIcon = props => {
-  const {
-    block,
-    border,
-    bgColor,
-    color,
-    onClick,
-    stroke,
-    viewBox,
-    children,
-    innerRef,
-    styles,
-  } = props;
   props = addTheme(props);
   let { inset, offsetX, offsetY, radius } = props;
-  const units = resolveUnits(`${props.width} ${props.height} ${inset} ${offsetX} ${offsetY}`);
-  let width = toNum(props.width);
-  let height = toNum(props.height);
-  [width, height] = parseDimensions(width, height, viewBox);
+  const { border, bgColor, children, color, onClick, stroke, viewBox, innerRef, styles } = props;
 
+  const units = resolveUnits(`${props.width} ${props.height} ${inset} ${offsetX} ${offsetY}`);
+  const [width, height] = parseDimensions(toNum(props.width), toNum(props.height), viewBox);
   const widthPx = units === 'px' ? width : width * 10; // assume 1rem === 10px
   const heightPx = units === 'px' ? height : height * 10; // assume 1rem === 10px
 
-  // if "advanced" props not passed in, render "simple" svg-only version
-  const isBasic =
-    !block && !border && !bgColor && !onClick && !inset && !offsetX && !offsetY && !radius;
+  const isAdvanced = border || bgColor || radius || inset || offsetX || offsetY || onClick;
 
-  if (isBasic) {
+  // if "advanced" functionality not required, render a "basic" svg-only version
+  if (!isAdvanced) {
     return (
       <BasicSvg
         innerRef={innerRef}
@@ -166,7 +164,7 @@ const SvgIcon = props => {
     );
   }
 
-  // render the full wrapper...
+  // otherwise, render the full wrapper...
   inset = toNum(inset);
   offsetX = toNum(offsetX);
   offsetY = toNum(offsetY);
@@ -179,26 +177,21 @@ const SvgIcon = props => {
   const innerWidthPx = units === 'px' ? innerWidth : innerWidth * 10;
 
   if (radius) {
-    const rUnits = resolveUnits(String(radius || ''));
-    radius = `${toNum(radius)}${rUnits}`;
+    const radiusUnits = resolveUnits(String(radius || ''));
+    radius = `${toNum(radius)}${radiusUnits}`;
   }
 
   const isBackground = !!(bgColor || border || inset);
 
   return (
-    <Wrapper
-      innerRef={innerRef}
-      block={block}
-      outerHeight={heightUnits}
-      outerWidth={widthUnits}
-      styles={styles}
-    >
+    <Wrapper innerRef={innerRef} outerHeight={heightUnits} outerWidth={widthUnits} styles={styles}>
       <svg viewBox={viewBox} height={heightPx} width={widthPx} xmlns={XMLNS}>
         {/* sizing placeholder */}
       </svg>
       {isBackground && (
         <Background
           bgColor={bgColor}
+          border={border}
           sizeY={heightUnits}
           sizeX={widthUnits}
           left={`${offsetX}${units}`}

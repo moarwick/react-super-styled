@@ -15,8 +15,12 @@ import {
   withMedia,
   SvgIcon,
 } from './lib/index';
-import ComponentDemo, { styles as editorStyles } from './ComponentDemo';
-import DEMO from './demoData';
+import ComponentDemo, {
+  Code,
+  renderPropTypesColumns,
+  styles as editorStyles,
+} from './ComponentDemo';
+import DEMO, { getPropTypes } from './demoData';
 import { version } from '../package.json';
 
 const CONTAINER_WIDTH = 1280;
@@ -88,19 +92,17 @@ const styles = {
   },
 };
 
-function IconClose(props) {
-  return (
-    <SvgIcon {...props}>
-      <path d="M22 20.8L13.1 12l8.8-8.9-1.1-1-8.8 8.8-8.8-8.8-1.1 1.1 8.8 8.8-8.8 8.8 1.1 1.1L12 13l8.9 8.9z" />
-    </SvgIcon>
-  );
-}
+const IconClose = props => (
+  <SvgIcon {...props}>
+    <path d="M22 20.8L13.1 12l8.8-8.9-1.1-1-8.8 8.8-8.8-8.8-1.1 1.1 8.8 8.8-8.8 8.8 1.1 1.1L12 13l8.9 8.9z" />
+  </SvgIcon>
+);
 
-const SvgIconCode = `
-<Span>
-  <IconClose color="gold" />
-  <IconClose color="orange" height={3} inset={0.5} bgColor="gray" radius="50%" />
-</Span>
+const SvgIconCode = `<Flex margin={1} alignItems="center">
+  <IconClose color="orange" stroke={0.4} />
+  <IconClose color="gold" width={3} inset={0.2} border="1px solid gold" offsetX={1} />
+  <IconClose color="black" height={4} inset={0.5} bgColor="gray" radius="50%" offsetX={2} />
+</Flex>
 `;
 
 class App extends React.Component {
@@ -175,15 +177,29 @@ class App extends React.Component {
               <Heading color="firebrick" margin={0} inline xLarge normal>
                 SvgIcon&nbsp;&nbsp;
               </Heading>
-              <Text inline>Handy SVG wrapper for icons and the like!</Text>
+              <Text inline>A highly-configurable SVG wrapper for icon components.</Text>
             </Block>
             <Rule borderStyle="dotted" color="#999" />
             <Block padding="0 2rem">
               <Flex gutter={1} margin="1rem 0 2rem">
-                {[]}
+                {renderPropTypesColumns(getPropTypes(SvgIcon))}
               </Flex>
             </Block>
-            <LiveProvider code={SvgIconCode} scope={{ IconClose, Span }}>
+            <Rule borderStyle="dotted" color="#999" />
+            <Block padding="0 2rem">
+              <Text>
+                Renders a simple SVG or a more complex SPAN-wrapped structure (depending on props).
+                To create an icon, wrap any SVG content with <strong>SvgIcon</strong>:
+              </Text>
+              <pre style={{ backgroundColor: '#ddd', padding: '1rem' }}>
+                {`const IconClose = props => (
+  <SvgIcon {...props}>
+    <path d="M22 20.8L13.1 12l8.8-8.9-1.1-1-8.8 8.8-8.8-8.8-1.1 1.1 8.8 8.8-8.8 8.8 1.1 1.1L12 13l8.9 8.9z" />
+  </SvgIcon>
+);`}
+              </pre>
+            </Block>
+            <LiveProvider code={SvgIconCode} scope={{ Flex, IconClose, Span }}>
               <Flex gutter={{ lg: 1 }}>
                 <FlexItem col={{ xs: 12 / 12, lg: 6 / 12 }}>
                   <LiveEditor style={editorStyles.editor} />
