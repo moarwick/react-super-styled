@@ -37,10 +37,10 @@ Your React project should be using Styled Components as a dependency. If not, [i
 
 ### Usage Example
 ```
-import styled, { css } from 'styled-components';
+import { css } from 'styled-components';
 import { Article, Heading, Text } from 'react-super-styled'
 
-function MyArticle({text, title}) {
+function MyArticle({ text, title }) {
   return (
     <Article margin="1rem 0" styles={{ md: css`padding: 2rem` }}>
       <Heading h3 center color="firebrick" large>{title}</Heading>
