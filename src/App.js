@@ -232,7 +232,7 @@ class App extends React.Component {
               </Heading>
               <Text inline>
                 Enhancer HOC to supply the current <Code>window</Code> size and <Code>media</Code>{' '}
-                "breakpoint" to any component.
+                breakpoint to any component.
               </Text>
             </Block>
             <Rule borderStyle="dotted" color="#999" />
