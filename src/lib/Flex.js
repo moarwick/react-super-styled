@@ -66,7 +66,7 @@ const getCss = props => css`
   ${withSpacing(props)}
   ${withMediaStyles(props)}
   ${withMediaGutters(props)} // apply gutters last (overrides any prior left/right margins)
-`
+`;
 
 const FlexStyled = styled.div`
   ${props => getCss(addTheme(props))};
@@ -76,11 +76,13 @@ function Flex(props) {
   const { children, gutter, smGutter, mdGutter, lgGutter } = props;
 
   // pass gutter props to any FlexItem children
-  const childrenWithGutterProps = React.Children.map(children, child => {
-    return child && child.type && child.type.displayName === 'FlexItem'
-      ? React.cloneElement(child, { gutter, smGutter, mdGutter, lgGutter })
-      : child;
-  });
+  const childrenWithGutterProps = React.Children.map(
+    children,
+    child =>
+      child && child.type && child.type.displayName === 'FlexItem'
+        ? React.cloneElement(child, { gutter, smGutter, mdGutter, lgGutter })
+        : child
+  );
 
   return <FlexStyled {...props}>{childrenWithGutterProps}</FlexStyled>;
 }

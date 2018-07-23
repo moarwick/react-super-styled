@@ -78,10 +78,12 @@ export function cssSpacing(rule, value) {
  * Deliver negative left/right margin rules for FlexRow
  * This is to ensure outer columns (with gutters) are flush with the container
  */
-function toMediaGuttersCss(breakpoint, gutter) {
+export function toMediaGuttersCss(breakpoint, gutter) {
   const units = resolveUnits(gutter);
   gutter = toNum(gutter);
-  const rule = `margin-left: -${gutter / 2}${units}; margin-right: -${gutter / 2}${units};`;
+  const rule = gutter
+    ? `margin-left: -${gutter / 2}${units}; margin-right: -${gutter / 2}${units};`
+    : 'margin-left: 0; margin-right: 0;';
   return breakpoint ? `${breakpoint} { ${rule} }` : rule;
 }
 
@@ -270,13 +272,15 @@ export function withMediaGutters({ gutter, theme }) {
   gutter = toMediaObj(gutter);
 
   // prettier-ignore
-  return css`
-    ${gutter.xs && toMediaGuttersCss(null, gutter.xs)}
-    ${gutter.sm && toMediaGuttersCss(theme.MEDIA_SM_UP, gutter.sm)}
-    ${gutter.md && toMediaGuttersCss(theme.MEDIA_MD_UP, gutter.md)}
-    ${gutter.lg && toMediaGuttersCss(theme.MEDIA_LG_UP, gutter.lg)}
-    ${gutter.xl && toMediaGuttersCss(theme.MEDIA_XL_UP, gutter.xl)}
+  const result = css`
+    ${'xs' in gutter && toMediaGuttersCss(null, gutter.xs)}
+    ${'sm' in gutter && toMediaGuttersCss(theme.MEDIA_SM_UP, gutter.sm)}
+    ${'md' in gutter && toMediaGuttersCss(theme.MEDIA_MD_UP, gutter.md)}
+    ${'lg' in gutter && toMediaGuttersCss(theme.MEDIA_LG_UP, gutter.lg)}
+    ${'xl' in gutter && toMediaGuttersCss(theme.MEDIA_XL_UP, gutter.xl)}
   `;
+
+  return result;
 }
 
 /**
@@ -289,11 +293,11 @@ export function withMediaColumns({ col, offset = 0, gutter = 0, theme }) {
 
   // prettier-ignore
   return css`
-    ${col.xs && toMediaColumnCss(null, col.xs, offset.xs, gutter.xs)}
-    ${col.sm && toMediaColumnCss(theme.MEDIA_SM_UP, col.sm, offset.sm, gutter.sm)}
-    ${col.md && toMediaColumnCss(theme.MEDIA_MD_UP, col.md, offset.md, gutter.md)}
-    ${col.lg && toMediaColumnCss(theme.MEDIA_LG_UP, col.lg, offset.lg, gutter.lg)}
-    ${col.xl && toMediaColumnCss(theme.MEDIA_XL_UP, col.xl, offset.xl, gutter.xl)}
+    ${'xs' in col && toMediaColumnCss(null, col.xs, offset.xs, gutter.xs)}
+    ${'sm' in col && toMediaColumnCss(theme.MEDIA_SM_UP, col.sm, offset.sm, gutter.sm)}
+    ${'md' in col && toMediaColumnCss(theme.MEDIA_MD_UP, col.md, offset.md, gutter.md)}
+    ${'lg' in col && toMediaColumnCss(theme.MEDIA_LG_UP, col.lg, offset.lg, gutter.lg)}
+    ${'xl' in col && toMediaColumnCss(theme.MEDIA_XL_UP, col.xl, offset.xl, gutter.xl)}
   `;
 }
 

@@ -1,4 +1,3 @@
-import { css } from 'styled-components';
 import { toMediaColumnCss, withMediaColumns } from '../../lib/utils';
 import THEME from '../../lib/THEME';
 
@@ -19,25 +18,19 @@ describe('toMediaColumnCss', () => {
   });
 
   it('delivers correct rules per col', () => {
-    expect(toMediaColumnCss(breakpoint, col)).toEqual(
-      'margin-left: 0; margin-right: 0; width: 100%;'
-    );
+    expect(toMediaColumnCss(breakpoint, col)).toBe('margin-left: 0; margin-right: 0; width: 100%;');
 
     col = 6 / 12;
-    expect(toMediaColumnCss(breakpoint, col)).toEqual(
-      'margin-left: 0; margin-right: 0; width: 50%;'
-    );
+    expect(toMediaColumnCss(breakpoint, col)).toBe('margin-left: 0; margin-right: 0; width: 50%;');
 
     col = 3 / 12;
-    expect(toMediaColumnCss(breakpoint, col)).toEqual(
-      'margin-left: 0; margin-right: 0; width: 25%;'
-    );
+    expect(toMediaColumnCss(breakpoint, col)).toBe('margin-left: 0; margin-right: 0; width: 25%;');
   });
 
   it('delivers correct rules per offset', () => {
     col = 3 / 12;
     offset = 6 / 12;
-    expect(toMediaColumnCss(breakpoint, col, offset)).toEqual(
+    expect(toMediaColumnCss(breakpoint, col, offset)).toBe(
       'margin-left: 50%; margin-right: 0; width: 25%;'
     );
   });
@@ -46,7 +39,7 @@ describe('toMediaColumnCss', () => {
     col = 12 / 12;
     offset = 0;
     gutter = 3;
-    expect(toMediaColumnCss(breakpoint, col, offset, gutter)).toEqual(
+    expect(toMediaColumnCss(breakpoint, col, offset, gutter)).toBe(
       'margin-left: 1.5rem; margin-right: 1.5rem; width: calc(100% - 3rem);'
     );
   });
@@ -55,7 +48,7 @@ describe('toMediaColumnCss', () => {
     col = 12 / 12;
     offset = 0;
     gutter = '20px';
-    expect(toMediaColumnCss(breakpoint, col, offset, gutter)).toEqual(
+    expect(toMediaColumnCss(breakpoint, col, offset, gutter)).toBe(
       'margin-left: 10px; margin-right: 10px; width: calc(100% - 20px);'
     );
   });
@@ -63,7 +56,7 @@ describe('toMediaColumnCss', () => {
   it('delivers correct media rules with breakpoint', () => {
     breakpoint = THEME.MEDIA_SM_UP;
     col = 12 / 12;
-    expect(toMediaColumnCss(breakpoint, col, offset, gutter)).toEqual(
+    expect(toMediaColumnCss(breakpoint, col, offset, gutter)).toBe(
       '@media only screen and (min-width: 576px) { margin-left: 0; margin-right: 0; width: 100%; }'
     );
   });
