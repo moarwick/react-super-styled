@@ -107,12 +107,13 @@ const SvgIconCode = `<Flex margin={1} alignItems="center">
 `;
 
 class App extends React.Component {
-  componentWillMount() {
-    console.time('App Render');
+  constructor() {
+    super();
+    console.time('Mounted In');
   }
 
   componentDidMount() {
-    console.timeEnd('App Render');
+    console.timeEnd('Mounted In');
   }
 
   render() {
@@ -147,15 +148,6 @@ class App extends React.Component {
         <Rule borderStyle="dotted" color="#676" />
 
         <Block container={CONTAINER_WIDTH}>
-          <Flex gutter={{ xs: 0, sm: 2 }}>
-            <FlexItem col={8 / 12} padding={1} styles="background-color: orange">
-              8 col - 10px gutter
-            </FlexItem>
-            <FlexItem col={4 / 12} padding={1} styles="background-color: firebrick">
-              4 col - 10px gutter
-            </FlexItem>
-          </Flex>
-
           <Heading h3 color="#676" xLarge normal>
             Wrappers &raquo;
           </Heading>
