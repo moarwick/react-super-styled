@@ -21,7 +21,7 @@ RSS is a small React component library which aims to accelerate authoring of JSX
 * Customizable theme, breakpoints
 * Plus: A highly-configurable SVG icon wrapper, utilities
 
-> Some Breaking "improvements" in v0.5.0+, but well worth it :)
+> Some breaking "improvements" in v0.5.0+, but well worth it :)
 
 ### Installation
 ```
