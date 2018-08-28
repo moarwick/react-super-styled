@@ -45,7 +45,7 @@ const withWindow = (EnhancedComponent, userTheme = {}) => {
       window: { width: 0, height: 0 },
     };
 
-    async componentDidMount() {
+    componentDidMount() {
       if (window) {
         throttleEvent('resize', 'throttledWindowResize', window);
         window.addEventListener('throttledWindowResize', this.handleResize);
