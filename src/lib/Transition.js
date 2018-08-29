@@ -24,9 +24,9 @@ const TRANSITION = {
  *  - Supports "children as a function" (receives 'transition' arg)
  */
 const propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]).isRequired,
   delay: PropTypes.number,
-  trigger: PropTypes.bool,
+  trigger: PropTypes.bool.isRequired,
   mountOnInit: PropTypes.bool, // render 'children' initially even if 'trigger' is false
   unmountAfterExit: PropTypes.number, // delay before removing 'children' after exit (should match your css transition duration)
 };

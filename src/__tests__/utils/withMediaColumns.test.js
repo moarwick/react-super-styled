@@ -75,7 +75,12 @@ describe('withMediaColumns', () => {
     };
   });
 
-  it('delivers correct rules, no media', () => {
+  it('delivers correct rules, no grid props', () => {
+    props = { theme: THEME };
+    expect(withMediaColumnsFiltered(props)).toEqual([]);
+  });
+
+  it('delivers correct rules, base props (no media)', () => {
     expected = ['margin-left: 0; margin-right: 0; width: 100%;'];
     expect(withMediaColumnsFiltered(props)).toEqual(expected);
 

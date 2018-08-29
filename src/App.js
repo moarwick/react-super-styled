@@ -12,7 +12,7 @@ import {
   Section,
   Span,
   Text,
-  withWindow,
+  WindowSize,
   SvgIcon,
 } from './lib/index';
 import ComponentDemo, { renderPropTypesColumns, styles as editorStyles } from './ComponentDemo';
@@ -106,7 +106,7 @@ const SvgIconCode = `<Flex margin={1} alignItems="center">
 </Flex>
 `;
 
-class App extends React.Component {
+export default class App extends React.Component {
   constructor() {
     super();
     console.time('Mounted In');
@@ -117,8 +117,6 @@ class App extends React.Component {
   }
 
   render() {
-    const { media, window } = this.props;
-
     return (
       <div>
         <Block container={CONTAINER_WIDTH} styles="position: relative">
@@ -222,6 +220,57 @@ class App extends React.Component {
             </LiveProvider>
           </Section>
 
+          {/* WindowSize */}
+
+          <Section styles={editorStyles.section} padding="0 0 1rem">
+            <Block padding="1rem 2rem">
+              <Heading color="firebrick" margin={0} inline xLarge normal>
+                WindowSize&nbsp;&nbsp;
+              </Heading>
+              <Text inline>
+                Wrapper to to supply the current <Code>window</Code> size (object) and{' '}
+                <Code>media</Code> breakpoint (string) to any component as props.
+              </Text>
+            </Block>
+
+            <Rule borderStyle="dotted" color="#999" />
+
+            <Block padding="0 2rem">
+              <Flex gutter={1} margin="1rem 0 2rem">
+                {renderPropTypesColumns(getPropTypes(WindowSize))}
+              </Flex>
+            </Block>
+            <Rule borderStyle="dotted" color="#999" />
+            <Block padding="0 2rem">
+              <Text>
+                Can be applied through "render props" (children as a function), or as a
+                "cloneElement" wrapper.
+              </Text>
+
+              <pre style={{ backgroundColor: '#ddd', padding: '1rem' }}>
+                {`<WindowSize>
+   { ({ media, window }) => <SomeComponent media={media} window={window} /> }
+</WindowSize>
+
+<WindowSize>
+  <SomeComponent />
+</WindowSize>`}
+              </pre>
+
+              <WindowSize>
+                {({ media, window }) => (
+                  <div>
+                    <Text>
+                      <Code>media:</Code> <Code color="black">{media}</Code>&nbsp;&nbsp;&nbsp;&nbsp;
+                      <Code>window:</Code>{' '}
+                      <Code color="black">{JSON.stringify(window, null, 2)}</Code>
+                    </Text>
+                  </div>
+                )}
+              </WindowSize>
+            </Block>
+          </Section>
+
           <Heading h3 color="#676" xLarge normal>
             Utilities &raquo;
           </Heading>
@@ -232,20 +281,7 @@ class App extends React.Component {
                 withWindow&nbsp;&nbsp;
               </Heading>
               <Text inline>
-                Enhancer HOC to supply the current <Code>window</Code> size and <Code>media</Code>{' '}
-                breakpoint to any component.
-              </Text>
-            </Block>
-            <Rule borderStyle="dotted" color="#999" />
-            <Block padding="1rem 2rem">
-              <pre style={{ backgroundColor: '#ddd', padding: '1rem' }}>
-                export default withWindow(MyComponent, [userTheme])
-              </pre>
-              <Text>
-                <Code>media:</Code> <Code color="black">{media}</Code>
-              </Text>
-              <Text>
-                <Code>window:</Code> <Code color="black">{JSON.stringify(window, null, 2)}</Code>
+                DEPRECATED, use <Code>WindowSize</Code>.
               </Text>
             </Block>
           </Section>
@@ -254,5 +290,3 @@ class App extends React.Component {
     );
   }
 }
-
-export default withWindow(App);

@@ -51,7 +51,10 @@ export function toCssUnits(val, units = 'rem') {
  * Helper to ensure that value is a (media) object
  */
 export function toMediaObj(val) {
-  return typeof val === 'object' ? val : { xs: val };
+  if (typeof val === 'number' || typeof val === 'string' || typeof val === 'boolean')
+    return { xs: val };
+  if (typeof val === 'object' && Object.keys(val).length) return val;
+  return {};
 }
 
 /**
@@ -338,7 +341,6 @@ const spacingPropTypes = {
 };
 export { spacingPropTypes };
 export function withSpacing(props) {
-  // we no-op only if 'undefined', to allow for number 0 to clear margins/padding
   // prettier-ignore
   return css`
     ${props.margin && cssSpacing('margin', props.margin)} 

@@ -2,8 +2,10 @@ import React from 'react';
 import { throttleEvent } from './utils';
 import THEME from './THEME';
 
+const defaultMedia = 'xs';
+
 function getCurrentMedia(ranges, width = 0) {
-  let media = 'xs';
+  let media = defaultMedia;
   Object.keys(ranges).some(key => {
     const [min, max] = ranges[key];
     if (width >= min && width <= max) {
@@ -25,7 +27,7 @@ function getWindowSize() {
 
 /**
  * withWindow
- * HOC to supply current 'window' sizing and 'media' breakpoint to the enhanced component
+ * HOC to supply current 'media' breakpoint and 'window' sizing the enhanced component
  * Value of 'media' will be one of: 'xs' (default), 'sm', 'md', 'lg', 'xl'
  */
 const withWindow = (EnhancedComponent, userTheme = {}) => {
@@ -41,7 +43,7 @@ const withWindow = (EnhancedComponent, userTheme = {}) => {
 
   return class extends React.Component {
     state = {
-      media: '',
+      media: defaultMedia,
       window: { width: 0, height: 0 },
     };
 
@@ -66,13 +68,8 @@ const withWindow = (EnhancedComponent, userTheme = {}) => {
     };
 
     render() {
-      if (window && !this.state.media) return null;
       return (
-        <EnhancedComponent
-          media={this.state.media || 'xs'}
-          window={this.state.window}
-          {...this.props}
-        />
+        <EnhancedComponent media={this.state.media} window={this.state.window} {...this.props} />
       );
     }
   };
