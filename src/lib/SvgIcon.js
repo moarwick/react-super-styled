@@ -136,8 +136,22 @@ const defaultProps = {
 
 const SvgIcon = props => {
   props = addTheme(props);
-  let { inset, offsetX, offsetY, radius } = props;
-  const { border, bgColor, children, color, onClick, stroke, viewBox, innerRef, styles } = props;
+  let {
+    inset,
+    offsetX,
+    offsetY,
+    radius,
+    border,
+    bgColor,
+    children,
+    color,
+    onClick,
+    stroke,
+    viewBox,
+    innerRef,
+    styles,
+    ...attribs
+  } = props;
 
   const units = resolveUnits(`${props.width} ${props.height} ${inset} ${offsetX} ${offsetY}`);
   const [width, height] = parseDimensions(toNum(props.width), toNum(props.height), viewBox);
@@ -150,6 +164,7 @@ const SvgIcon = props => {
   if (!isAdvanced) {
     return (
       <BasicSvg
+        {...attribs}
         innerRef={innerRef}
         height={heightPx}
         width={widthPx}
@@ -184,7 +199,13 @@ const SvgIcon = props => {
   const isBackground = !!(bgColor || border || inset);
 
   return (
-    <Wrapper innerRef={innerRef} outerHeight={heightUnits} outerWidth={widthUnits} styles={styles}>
+    <Wrapper
+      {...attribs}
+      innerRef={innerRef}
+      outerHeight={heightUnits}
+      outerWidth={widthUnits}
+      styles={styles}
+    >
       <svg viewBox={viewBox} height={heightPx} width={widthPx} xmlns={XMLNS}>
         {/* sizing placeholder */}
       </svg>
