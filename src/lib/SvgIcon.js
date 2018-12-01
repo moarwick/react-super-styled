@@ -108,6 +108,7 @@ const Svg = styled.svg`
 const propTypes = {
   // basic svg
   ...basePropTypes,
+  innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   color: PropTypes.string,
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -137,6 +138,7 @@ const defaultProps = {
 const SvgIcon = props => {
   props = addTheme(props);
   let {
+    innerRef,
     inset,
     offsetX,
     offsetY,
@@ -148,7 +150,6 @@ const SvgIcon = props => {
     onClick,
     stroke,
     viewBox,
-    innerRef,
     styles,
     ...attribs
   } = props;
@@ -165,7 +166,7 @@ const SvgIcon = props => {
     return (
       <BasicSvg
         {...attribs}
-        innerRef={innerRef}
+        ref={innerRef}
         height={heightPx}
         width={widthPx}
         viewBox={viewBox}
@@ -201,7 +202,7 @@ const SvgIcon = props => {
   return (
     <Wrapper
       {...attribs}
-      innerRef={innerRef}
+      ref={innerRef}
       outerHeight={heightUnits}
       outerWidth={widthUnits}
       styles={styles}

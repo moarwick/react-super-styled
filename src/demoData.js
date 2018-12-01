@@ -1,26 +1,31 @@
 import React from 'react';
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 import * as Components from './lib/index';
+
+export const Code = styled.code`
+  color: ${props => props.color || 'firebrick'};
+  font-size: 1.6rem;
+`;
 
 const TYPES = {
   ARRAY: 'Array',
   BOOL: 'Boolean',
-  BOOL_OR_NUMBER: 'Boolean, Number',
-  BOOL_OR_STRING: 'Boolean, String',
-  FUNC: 'Function',
+  BOOL_OR_NUMBER: 'Boolean|Number',
+  BOOL_OR_STRING: 'Boolean|String',
+  FUNC: 'Function|Object',
+  FUNC_OR_OBJECT: 'Function|Object',
   NODE: 'React Elem(s)',
   NUMBER: 'Number',
-  NUMBER_OR_OBJECT: 'Number, Object',
+  NUMBER_OR_OBJECT: 'Number|Object',
   OBJECT: 'Object',
   STRING: 'String',
-  STRING_OR_NUMBER: 'String, Number',
-  STRING_OR_ARRAY_OF_CSS: 'String, Array (css)',
-  STYLES: 'String, Array (css), Object',
+  STRING_OR_NUMBER: 'String|Number',
+  STRING_OR_ARRAY_OF_CSS: 'String|Array (css)',
+  STYLES: 'String|Array (css)|Object',
 };
 
 const PROP_TYPES = {
   children: TYPES.NODE,
-  innerRef: TYPES.FUNC,
   theme: TYPES.OBJECT,
 
   hide: TYPES.BOOL,
@@ -74,12 +79,6 @@ const PROP_TYPES = {
   center: TYPES.BOOL,
   right: TYPES.BOOL,
 
-  h1: TYPES.BOOL,
-  h2: TYPES.BOOL,
-  h3: TYPES.BOOL,
-  h4: TYPES.BOOL,
-  h5: TYPES.BOOL,
-
   flexDirection: TYPES.STRING,
   flexWrap: TYPES.STRING,
   justifyContent: TYPES.STRING,
@@ -103,6 +102,7 @@ const PROP_TYPES = {
   colorTo: TYPES.STRING,
   height: TYPES.STRING_OR_NUMBER,
 
+  innerRef: TYPES.FUNC_OR_OBJECT,
   width: TYPES.STRING_OR_NUMBER,
   stroke: TYPES.STRING_OR_NUMBER,
   inset: TYPES.STRING_OR_NUMBER,
@@ -226,9 +226,13 @@ const DEMO = {
   },
 
   HEADING: {
-    DESCRIPTION: 'Renders H1, H2, H3, H4, or H5 tag.',
+    DESCRIPTION: (
+      <span>
+        Renders H1 tag. Use the <Code>as</Code> prop to apply H2, H3...
+      </span>
+    ),
     CODE: `
-<Heading h2 center color="gold" margin={0} normal underline xxLarge>
+<Heading as="h2" center color="gold" margin={0} normal underline xxLarge>
 	Super Styled
 </Heading>`,
   },

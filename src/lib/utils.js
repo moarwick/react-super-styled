@@ -134,7 +134,6 @@ export function throttleEvent(type, name, obj) {
 
 const basePropTypes = {
   children: PropTypes.node,
-  innerRef: PropTypes.func,
   theme: PropTypes.object,
 };
 export { basePropTypes };

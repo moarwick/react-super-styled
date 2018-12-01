@@ -87,7 +87,7 @@ export default class WindowSize extends React.Component {
 
     const windowProps = {
       media,
-      window: { width, height },
+      windowSize: { width, height },
     };
 
     if (typeof children === 'function') {
