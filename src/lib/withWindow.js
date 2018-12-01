@@ -69,7 +69,11 @@ const withWindow = (EnhancedComponent, userTheme = {}) => {
 
     render() {
       return (
-        <EnhancedComponent media={this.state.media} window={this.state.window} {...this.props} />
+        <EnhancedComponent
+          media={this.state.media}
+          windowSize={this.state.window}
+          {...this.props}
+        />
       );
     }
   };
