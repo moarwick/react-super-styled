@@ -59,7 +59,7 @@ Try out *React Super Styled* "live" in the [DEMO](https://moarwick.github.io/rea
 ### Responsive
 Nearly all *RSS* components accept a `styles` prop, with responsive support. Styles can be passed in as a basic string of CSS, e.g. `"color: red; font-size: 2rem"` or an array of CSS interpolations from Styled Components' `css` helper. To specify styles per breakpoint, pass in an object with any of the following supported breakpoint keys: 
 
-```{ xs: '...', sm: '...', md: '...', lg: '...', xl: '...' }```
+```styles = {{ xs: "...", sm: "...", md: "...", lg: "...", xl: "..." }}```
 
 
 ### Grid
