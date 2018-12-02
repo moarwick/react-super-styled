@@ -228,7 +228,7 @@ export default class App extends React.Component {
                 WindowSize&nbsp;&nbsp;
               </Heading>
               <Text inline>
-                Wrapper to to supply the current <Code>window</Code> size (object) and{' '}
+                Wrapper to to supply the current <Code>windowSize</Code> (object) and{' '}
                 <Code>media</Code> breakpoint (string) to any component as props.
               </Text>
             </Block>
@@ -244,12 +244,12 @@ export default class App extends React.Component {
             <Block padding="0 2rem">
               <Text>
                 Can be applied through "render props" (children as a function), or as a
-                "cloneElement" wrapper.
+                "cloneElement" wrapper
               </Text>
 
               <pre style={{ backgroundColor: '#ddd', padding: '1rem' }}>
                 {`<WindowSize>
-   { ({ media, window }) => <SomeComponent media={media} window={window} /> }
+   { ({ media, windowSize }) => <SomeComponent media={media} windowSize={windowSize} /> }
 </WindowSize>
 
 <WindowSize>
@@ -258,31 +258,16 @@ export default class App extends React.Component {
               </pre>
 
               <WindowSize>
-                {({ media, window }) => (
+                {({ media, windowSize }) => (
                   <div>
                     <Text>
                       <Code>media:</Code> <Code color="black">{media}</Code>&nbsp;&nbsp;&nbsp;&nbsp;
-                      <Code>window:</Code>{' '}
-                      <Code color="black">{JSON.stringify(window, null, 2)}</Code>
+                      <Code>windowSize:</Code>{' '}
+                      <Code color="black">{JSON.stringify(windowSize, null, 2)}</Code>
                     </Text>
                   </div>
                 )}
               </WindowSize>
-            </Block>
-          </Section>
-
-          <Heading h3 color="#676" xLarge normal>
-            Utilities &raquo;
-          </Heading>
-
-          <Section styles={styles.section}>
-            <Block padding="1rem 2rem">
-              <Heading color="firebrick" margin={0} inline xLarge normal>
-                withWindow&nbsp;&nbsp;
-              </Heading>
-              <Text inline>
-                DEPRECATED, use <Code>WindowSize</Code>.
-              </Text>
             </Block>
           </Section>
         </Block>

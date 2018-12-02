@@ -9,7 +9,6 @@ export { default as Section } from './Section';
 export { default as Span } from './Span';
 export { default as Text } from './Text';
 export { default as SvgIcon } from './SvgIcon';
-export { default as Transition } from './Transition';
 export { default as WindowSize } from './WindowSize';
 export { default as withWindow } from './withWindow';
 

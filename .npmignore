@@ -7,3 +7,5 @@ webpack.config.js
 .babelrc
 .eslintrc
 _config.yml
+.idea
+.idea/

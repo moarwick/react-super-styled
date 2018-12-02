@@ -15,7 +15,7 @@ import {
 
 /**
  * Heading
- * Renders <h1> - <h4> tag
+ * Renders <h1> tag
  */
 const propTypes = {
   ...basePropTypes,
