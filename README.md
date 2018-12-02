@@ -21,7 +21,7 @@ RSS is a small React component library which aims to accelerate authoring of JSX
 * Customizable theme, breakpoints
 * Plus: A highly-configurable SVG icon wrapper, utilities
 
-> Some breaking "improvements" in v0.5.0+, but well worth it :)
+> Some breaking "improvements" in 0.5.0, 0.7.0 -- see [Releases](https://github.com/moarwick/react-super-styled/releases)
 
 ### Installation
 ```
@@ -32,7 +32,7 @@ or
 yarn add react-super-styled
 ```
 
-Your React project should be using Styled Components as a dependency. If not, [install it](https://www.styled-components.com/docs/basics#installation).
+Your React project should be using Styled Components v4.0+ as a dependency. If not, [install it](https://www.styled-components.com/docs/basics#installation).
 
 
 ### Usage Example
@@ -43,7 +43,7 @@ import { Article, Heading, Text } from 'react-super-styled'
 function MyArticle({ text, title }) {
   return (
     <Article margin="1rem 0" styles={{ md: css`padding: 2rem` }}>
-      <Heading h3 center color="firebrick" large>{title}</Heading>
+      <Heading center color="firebrick" large>{title}</Heading>
       <Text italic">{text}</Text>
     </Article>
   )
@@ -57,7 +57,7 @@ Try out *React Super Styled* "live" in the [DEMO](https://moarwick.github.io/rea
 
 
 ### Responsive
-Nearly all *RSS* components accept a `style` prop, with responsive support. Styles can be passed in as a basic string of CSS, e.g. `"color: red; font-size: 2rem"` or an array of CSS interpolations from Styled Components' `css` helper. To specify styles per breakpoint, pass in an object with any of the following supported breakpoint keys: 
+Nearly all *RSS* components accept a `styles` prop, with responsive support. Styles can be passed in as a basic string of CSS, e.g. `"color: red; font-size: 2rem"` or an array of CSS interpolations from Styled Components' `css` helper. To specify styles per breakpoint, pass in an object with any of the following supported breakpoint keys: 
 
 ```{ xs: '...', sm: '...', md: '...', lg: '...', xl: '...' }```
 
@@ -104,14 +104,7 @@ Should you want to override any of those values, you can pass in your own theme 
 
 
 ### Extending Styling
-Majority of *RSS* components are functional native Styled Components, so alternatively, they can be extended via Styled Components' [extend method](https://www.styled-components.com/docs/basics#extending-styles). For `Heading` and `Flex` you can use the `styled(Component)` approach.
-
-
-### Utilities
-
-#### withWindow( Component, [userTheme: Object] )
-Enhancer HOC to supply current `window` sizing and `media` breakpoint via props. References the [theme](https://github.com/moarwick/react-super-styled/blob/master/src/lib/THEME.js) to determine the breakpoint. The `userTheme` argument is optional, supply only if customizing those breakpoints.
-
+Majority of *RSS* components are functional native Styled Components, so their styling can be extended further using the [styled(Component)](https://www.styled-components.com/docs/basics#extending-styles) constructor. As of SC v4, you can also pass in a tag name via the "as" prop.
 
 ### Changelog
-* See [Releases](https://github.com/moarwick/react-super-styled/releases)
+* [Releases](https://github.com/moarwick/react-super-styled/releases)

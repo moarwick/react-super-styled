@@ -5,7 +5,7 @@
     ["styled-components", { "ssr": false, "displayName": true, "preprocess": false } ]
   ],
   "presets": [
-    ["env", { "modules": false }],
+    "env",
     "stage-0",
     "react"
   ]

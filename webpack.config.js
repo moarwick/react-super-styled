@@ -31,9 +31,9 @@ module.exports = function() {
     new ProgressBarPlugin(),
   ];
 
-  if (isDev) {
-    plugins.push(new webpack.HotModuleReplacementPlugin());
-  }
+  // if (isDev) {
+  //   plugins.push(new webpack.HotModuleReplacementPlugin());
+  // }
 
   if (isProd) {
     plugins.unshift(new CleanWebpackPlugin(['demo'])); // clear folder first!
